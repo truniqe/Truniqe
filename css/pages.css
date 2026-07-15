@@ -268,6 +268,39 @@
   }
 }
 
+/* Horizontal properties grid for home page */
+.horizontal-properties-grid {
+  display: flex;
+  overflow-x: auto;
+  gap: var(--sp-6);
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  padding-bottom: var(--sp-2);
+}
+
+.horizontal-properties-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.horizontal-properties-grid .property-card {
+  flex: 0 0 calc((100% - (var(--sp-6) * 2)) / 3);
+  scroll-snap-align: start;
+}
+
+@media (max-width: 1024px) {
+  .horizontal-properties-grid .property-card {
+    flex: 0 0 calc((100% - var(--sp-6)) / 2);
+  }
+}
+
+@media (max-width: 600px) {
+  .horizontal-properties-grid .property-card {
+    flex: 0 0 280px;
+  }
+}
+
 /* Editorial strip / "Why Truniqe" */
 .why-strip {
   background: var(--navy);
