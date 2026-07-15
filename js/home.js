@@ -15,6 +15,7 @@ async function init() {
   setupAngleFilters();
   await loadFeaturedProperties();
   setupScrollBehavior();
+  setupCollectionsSlider();
 }
 
 // ---- Navigation ----
@@ -126,7 +127,7 @@ async function loadFeaturedProperties(tag = null) {
   if (!grid) return;
 
   // Show skeletons
-  grid.innerHTML = Array(6).fill(0).map(() => `
+  grid.innerHTML = Array(5).fill(0).map(() => `
     <div class="property-card">
       <div class="property-card-image skeleton" style="aspect-ratio:4/3"></div>
       <div class="property-card-body">
@@ -140,7 +141,7 @@ async function loadFeaturedProperties(tag = null) {
   try {
     const properties = await fetchProperties({
       tags: tag ? [tag] : [],
-      limit: 6,
+      limit: 5,
     });
 
     if (!properties.length) {
@@ -224,6 +225,64 @@ document.addEventListener('keydown', (e) => {
     window.location.href = `/property.html?id=${e.target.dataset.id}`;
   }
 });
+
+// ---- Collections Horizontal Slider Arrows ----
+function setupCollectionsSlider() {
+  const wrapper = document.querySelector('.collections-slider-wrapper');
+  if (!wrapper) return;
+
+  const grid = wrapper.querySelector('.collections-grid');
+  const leftArrow = wrapper.querySelector('.slider-arrow-left');
+  const rightArrow = wrapper.querySelector('.slider-arrow-right');
+  if (!grid || !leftArrow || !rightArrow) return;
+
+  const updateArrows = () => {
+    const scrollLeft = grid.scrollLeft;
+    const maxScrollLeft = grid.scrollWidth - grid.clientWidth;
+
+    // Show/hide arrows depending on scroll position
+    if (scrollLeft <= 2) {
+      leftArrow.style.opacity = '0';
+      leftArrow.style.pointerEvents = 'none';
+    } else {
+      leftArrow.style.opacity = '1';
+      leftArrow.style.pointerEvents = 'auto';
+    }
+
+    if (scrollLeft >= maxScrollLeft - 2) {
+      rightArrow.style.opacity = '0';
+      rightArrow.style.pointerEvents = 'none';
+    } else {
+      rightArrow.style.opacity = '1';
+      rightArrow.style.pointerEvents = 'auto';
+    }
+  };
+
+  const scrollAmount = () => {
+    const card = grid.querySelector('.collection-card');
+    return card ? card.clientWidth + 20 : 300; // card width + gap (20px)
+  };
+
+  leftArrow.addEventListener('click', () => {
+    grid.scrollBy({
+      left: -scrollAmount(),
+      behavior: 'smooth'
+    });
+  });
+
+  rightArrow.addEventListener('click', () => {
+    grid.scrollBy({
+      left: scrollAmount(),
+      behavior: 'smooth'
+    });
+  });
+
+  grid.addEventListener('scroll', updateArrows);
+  window.addEventListener('resize', updateArrows);
+
+  // Initial check
+  setTimeout(updateArrows, 100);
+}
 
 // ---- Boot ----
 document.addEventListener('DOMContentLoaded', init);
