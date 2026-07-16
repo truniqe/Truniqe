@@ -47,9 +47,12 @@ export async function initAuth() {
     notifyListeners();
 
     if (event === 'SIGNED_IN') {
-      // Redirect if there's a return URL
       const returnUrl = new URLSearchParams(window.location.search).get('return');
-      if (returnUrl) window.location.href = decodeURIComponent(returnUrl);
+      if (returnUrl) {
+        window.location.href = decodeURIComponent(returnUrl);
+      } else if (window.location.pathname.includes('/auth.html')) {
+        window.location.href = '/';
+      }
     }
 
     if (event === 'SIGNED_OUT') {
@@ -83,16 +86,6 @@ export async function signIn({ email, password }) {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) throw error;
   return data;
-}
-
-export async function signInWithGoogle() {
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: `${window.location.origin}/auth.html`,
-    },
-  });
-  if (error) throw error;
 }
 
 export async function signOut() {
