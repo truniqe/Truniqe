@@ -70,30 +70,59 @@ function setupSearch() {
   const checkinInput = document.getElementById('search-checkin');
   const checkoutInput = document.getElementById('search-checkout');
   const guestsInput = document.getElementById('search-guests');
+  const suggestionChips = document.querySelectorAll('.suggestion-chip');
 
-  // Set min dates
-  const today = new Date().toISOString().split('T')[0];
-  if (checkinInput) checkinInput.min = today;
-  if (checkoutInput) checkoutInput.min = today;
+  const formatDate = (date) => date.toISOString().split('T')[0];
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+  const todayStr = formatDate(today);
+  const tomorrowStr = formatDate(tomorrow);
+
+  if (checkinInput) {
+    checkinInput.min = todayStr;
+    if (!checkinInput.value) checkinInput.value = todayStr;
+  }
+
+  if (checkoutInput) {
+    checkoutInput.min = tomorrowStr;
+    if (!checkoutInput.value) checkoutInput.value = tomorrowStr;
+  }
 
   checkinInput?.addEventListener('change', () => {
     if (checkoutInput) {
-      const nextDay = new Date(checkinInput.value);
+      const nextDay = new Date(checkinInput.value || todayStr);
       nextDay.setDate(nextDay.getDate() + 1);
-      checkoutInput.min = nextDay.toISOString().split('T')[0];
+      checkoutInput.min = formatDate(nextDay);
       if (checkoutInput.value && checkoutInput.value <= checkinInput.value) {
-        checkoutInput.value = nextDay.toISOString().split('T')[0];
+        checkoutInput.value = formatDate(nextDay);
       }
     }
   });
 
+  suggestionChips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const destination = chip.getAttribute('data-destination');
+      if (destInput) {
+        destInput.value = destination;
+        destInput.focus();
+      }
+    });
+  });
+
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    if (checkinInput?.value && checkoutInput?.value && checkoutInput.value <= checkinInput.value) {
+      showToast('Please choose a valid stay window', 'Check-out must be after check-in.', 'warning');
+      return;
+    }
+
     const params = new URLSearchParams();
-    if (destInput?.value)    params.set('destination', destInput.value);
+    if (destInput?.value) params.set('destination', destInput.value);
     if (checkinInput?.value) params.set('checkin', checkinInput.value);
     if (checkoutInput?.value) params.set('checkout', checkoutInput.value);
-    if (guestsInput?.value)  params.set('guests', guestsInput.value);
+    if (guestsInput?.value) params.set('guests', guestsInput.value);
     window.location.href = `/properties.html?${params}`;
   });
 }
