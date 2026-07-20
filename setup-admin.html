@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Setup Admin</title>
+</head>
+<body style="font-family: sans-serif; padding: 2rem;">
+  <h1>Setting up Admin Account...</h1>
+  <p id="status">Please wait...</p>
+  <pre id="logs" style="background:#f4f4f4; padding: 1rem; border-radius: 8px; margin-top: 1rem;"></pre>
+
+  <script type="module">
+    import { signUp, signIn } from './js/auth.js';
+    import { supabase } from './js/supabase.js';
+
+    async function setupAdmin() {
+      const statusEl = document.getElementById('status');
+      const logsEl = document.getElementById('logs');
+      
+      const log = (msg) => {
+        console.log(msg);
+        logsEl.innerText += msg + "\n";
+      };
+
+      try {
+        statusEl.innerText = "Attempting to sign up...";
+        log("Trying signUp...");
+        
+        let sessionData = null;
+        try {
+          sessionData = await signUp({ email: 'truniqe@gmail.com', password: 'NagarMohit@24', name: 'Admin' });
+          log("SignUp response: " + JSON.stringify(sessionData));
+          
+          if (!sessionData.session && sessionData.user) {
+            log("⚠️ SignUp succeeded but no session was created. You likely have 'Confirm Email' enabled in Supabase.");
+            log("👉 Please check your email inbox for a confirmation link, or go to Supabase Dashboard -> Authentication -> Providers -> Email, and disable 'Confirm email'.");
+            return;
+          }
+        } catch (err) {
+          log("SignUp failed (User might already exist): " + err.message);
+          
+          statusEl.innerText = "User might already exist, attempting to sign in...";
+          log("Trying signIn...");
+          sessionData = await signIn({ email: 'truniqe@gmail.com', password: 'NagarMohit@24' });
+          log("SignIn response: " + JSON.stringify(sessionData));
+        }
+
+        statusEl.innerText = "Updating role to admin...";
+        log("Fetching current user...");
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          log("User found: " + user.id);
+          const { error } = await supabase.from('profiles').update({ role: 'admin' }).eq('id', user.id);
+          if (error) {
+            statusEl.innerText = "Error updating role: " + error.message;
+            log("Role update error: " + error.message);
+          } else {
+            statusEl.innerText = "Admin created successfully! Redirecting to Admin Dashboard in 3 seconds...";
+            log("✅ Success! Role updated to 'admin'.");
+            setTimeout(() => {
+              window.location.href = '/dashboard/admin/index.html';
+            }, 3000);
+          }
+        } else {
+            statusEl.innerText = "Could not get current user. Are you logged in?";
+            log("❌ supabase.auth.getUser() returned no user.");
+        }
+      } catch (err) {
+        statusEl.innerText = "An error occurred. Check logs below.";
+        log("❌ Fatal Error: " + err.message);
+      }
+    }
+
+    setupAdmin();
+  </script>
+</body>
+</html>

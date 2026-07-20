@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Property Form | Truniqe</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛</text></svg>">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/admin.css">
+</head>
+
+<body>
+<div class="admin-app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside class="admin-sidebar" id="admin-sidebar" role="navigation" aria-label="Admin navigation">
+    <div class="admin-sidebar-logo">
+      <a href="/" class="admin-sidebar-logo-text">Trun<span>iqe</span></a>
+      <span class="admin-badge">ADMIN</span>
+    </div>
+
+    <nav class="admin-nav">
+      <div class="admin-nav-section-label">Main</div>
+      <a href="/dashboard/admin/index.html" class="admin-nav-item">
+        <span class="icon">📋</span> Bookings
+      </a>
+      <a href="/dashboard/admin/properties.html" class="admin-nav-item">
+        <span class="icon">🏨</span> Properties
+      </a>
+      <a href="/dashboard/admin/room-types.html" class="admin-nav-item">
+        <span class="icon">🛏</span> Room Types
+      </a>
+
+      <div class="admin-nav-section-label">Finance</div>
+      <a href="/dashboard/admin/profit.html" class="admin-nav-item">
+        <span class="icon">📊</span> Profit & Shares
+      </a>
+
+      <div class="admin-nav-section-label">Content</div>
+      <a href="/dashboard/admin/property-form.html" class="admin-nav-item active">
+        <span class="icon">➕</span> Add Property
+      </a>
+    </nav>
+
+    <div class="admin-sidebar-footer">
+      <a href="/" class="admin-nav-item">
+        <span class="icon">↗</span> View Site
+      </a>
+      <div class="admin-user">
+        <div class="admin-user-avatar" id="admin-user-initial">A</div>
+        <div class="admin-user-info">
+          <div class="admin-user-name" id="admin-user-name">Admin</div>
+          <div class="admin-user-role">Administrator</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="admin-overlay" id="admin-overlay"></div>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div style="display:flex;align-items:center;gap:var(--sp-4)">
+        <button class="admin-menu-toggle" id="admin-menu-toggle" aria-label="Toggle sidebar">☰</button>
+        <h1 class="admin-page-title" id="form-title">Add Property</h1>
+      </div>
+      <div class="admin-topbar-actions">
+        <a href="/dashboard/admin/properties.html" class="btn btn-secondary btn-sm">← Back to Properties</a>
+        <button class="btn btn-primary btn-sm" id="save-btn" type="button">Save Property</button>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <div class="property-form-layout">
+
+        <!-- Left Column: Main Form -->
+        <div>
+
+          <!-- Basic Info -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <h2 class="form-section-title">Basic Information</h2>
+            </div>
+            <div class="form-section-body">
+              <div class="form-group">
+                <label class="form-label" for="prop-name">Property Name *</label>
+                <input type="text" id="prop-name" class="form-input" placeholder="e.g. Haveli Dharampura" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="prop-tagline">Tagline</label>
+                <input type="text" id="prop-tagline" class="form-input" placeholder="A one-liner that captures the essence">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="prop-story">Editorial Story *</label>
+                <textarea id="prop-story" class="form-input" rows="6"
+                  placeholder="The curator's note — what makes this property worth the journey?"></textarea>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4)">
+                <div class="form-group">
+                  <label class="form-label" for="prop-location">Location / City *</label>
+                  <input type="text" id="prop-location" class="form-input" placeholder="e.g. Jaisalmer">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prop-state">State *</label>
+                  <input type="text" id="prop-state" class="form-input" placeholder="e.g. Rajasthan">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Owner Info (for WhatsApp notifications) -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <h2 class="form-section-title">Property Owner</h2>
+              <p style="font-size:var(--text-sm);color:var(--text-muted);margin-top:var(--sp-1)">
+                Used for WhatsApp booking notifications
+              </p>
+            </div>
+            <div class="form-section-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4)">
+                <div class="form-group">
+                  <label class="form-label" for="prop-owner-name">Owner Name</label>
+                  <input type="text" id="prop-owner-name" class="form-input" placeholder="e.g. Rajesh Sharma">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="prop-owner-phone">Owner WhatsApp Number</label>
+                  <input type="tel" id="prop-owner-phone" class="form-input" placeholder="e.g. 9876543210 (without +91)">
+                  <p style="font-size:var(--text-xs);color:var(--text-muted);margin-top:var(--sp-1)">
+                    Enter without country code. Used to send booking alerts via WhatsApp.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Angle Tags -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <h2 class="form-section-title">Angle Tags</h2>
+            </div>
+            <div class="form-section-body">
+              <div class="tag-selector" id="tag-selector"></div>
+            </div>
+          </div>
+
+          <!-- Amenities -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <h2 class="form-section-title">Amenities</h2>
+            </div>
+            <div class="form-section-body">
+              <div class="amenity-selector" id="amenity-selector"></div>
+            </div>
+          </div>
+
+          <!-- Room Types -->
+          <div class="form-section">
+            <div class="form-section-header" style="display:flex;align-items:center;justify-content:space-between">
+              <h2 class="form-section-title">Room Types</h2>
+              <button class="btn btn-secondary btn-sm" id="add-room-btn" type="button">+ Add Room</button>
+            </div>
+            <div id="room-types-container" class="form-section-body" style="gap:var(--sp-3)"></div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Images & Status -->
+        <div>
+
+          <!-- Cover Image -->
+          <div class="form-section" style="margin-bottom:var(--sp-5)">
+            <div class="form-section-header">
+              <h2 class="form-section-title">Cover Image</h2>
+            </div>
+            <div class="form-section-body">
+              <div class="upload-zone" id="cover-upload-zone">
+                <input type="file" id="cover-image-input" accept="image/*" aria-label="Upload cover image">
+                <span class="upload-icon">🖼</span>
+                <span class="upload-title">Drop cover image here</span>
+                <span class="upload-hint">JPG, PNG or WEBP • Max 5MB</span>
+              </div>
+              <div id="cover-preview" style="display:none;margin-top:var(--sp-4);position:relative">
+                <img id="cover-preview-img" style="width:100%;border-radius:var(--radius-lg);aspect-ratio:4/3;object-fit:cover" alt="Cover">
+                <button id="cover-remove-btn" class="upload-preview-remove">✕</button>
+              </div>
+              <div class="form-group" style="margin-top:var(--sp-3)">
+                <label class="form-label" for="cover-url-input">Or paste image URL</label>
+                <input type="url" id="cover-url-input" class="form-input" placeholder="https://...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Gallery -->
+          <div class="form-section" style="margin-bottom:var(--sp-5)">
+            <div class="form-section-header">
+              <h2 class="form-section-title">Gallery</h2>
+            </div>
+            <div class="form-section-body">
+              <div class="upload-zone" id="gallery-upload-zone">
+                <input type="file" id="gallery-input" accept="image/*" multiple aria-label="Upload gallery images">
+                <span class="upload-icon">📸</span>
+                <span class="upload-title">Add gallery images</span>
+                <span class="upload-hint">Up to 12 images</span>
+              </div>
+              <div class="upload-previews" id="gallery-previews"></div>
+            </div>
+          </div>
+
+          <!-- Status -->
+          <div class="form-section">
+            <div class="form-section-header">
+              <h2 class="form-section-title">Status</h2>
+            </div>
+            <div class="form-section-body">
+              <div class="status-toggle" id="status-toggle">
+                <div class="status-option draft selected" data-value="draft">
+                  <div class="status-icon">📝</div>
+                  <div class="status-label">Draft</div>
+                </div>
+                <div class="status-option live" data-value="live">
+                  <div class="status-icon">🟢</div>
+                  <div class="status-label">Live</div>
+                </div>
+              </div>
+              <input type="hidden" id="prop-status" value="draft">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+<script type="module" src="../../js/admin/admin-property-form.js"></script>
+</body>
+</html>
