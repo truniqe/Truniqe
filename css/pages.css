@@ -58,7 +58,7 @@
   position: relative;
   z-index: 1;
   text-align: center;
-  max-width: 1040px;
+  max-width: 1240px;
   width: 100%;
   padding: var(--sp-8) var(--sp-6);
   padding-top: calc(var(--nav-height) + var(--sp-12));
@@ -94,14 +94,14 @@
   font-size: var(--text-lg);
   color: rgba(255, 255, 255, 0.75);
   line-height: 1.65;
-  max-width: 560px;
+  max-width: 620px;
   margin: 0 auto var(--sp-10);
   animation: fadeInUp var(--dur-slow) var(--ease-out) 0.6s both;
 }
 
 .hero-search {
   animation: fadeInUp var(--dur-slow) var(--ease-out) 0.8s both;
-  max-width: 980px;
+  max-width: 1140px;
   width: 100%;
   margin: 0 auto;
 }
