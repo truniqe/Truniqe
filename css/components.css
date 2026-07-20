@@ -681,49 +681,49 @@
    SEARCH BAR (Hero / top-of-page)
    ============================================================ */
 .search-bar {
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-radius: var(--radius-full);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
-  padding: var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  padding: 8px 10px 8px 24px;
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr auto;
+  grid-template-columns: 1.8fr 1.1fr 1.1fr 1fr auto;
   gap: 0;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  transition: box-shadow var(--dur-slow) var(--ease-out),
-              background var(--dur-slow) var(--ease-out),
-              transform var(--dur-slow) var(--ease-out);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  transition: box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              background 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .search-bar:hover,
 .search-bar:focus-within {
   background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(232, 184, 109, 0.4) inset;
+  box-shadow: 0 28px 64px rgba(0, 0, 0, 0.32), 0 0 0 1.5px rgba(232, 184, 109, 0.5) inset;
 }
 
 .search-field {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2px;
-  padding: 8px 16px;
-  border-right: 1px solid rgba(26, 26, 46, 0.08);
+  gap: 3px;
+  padding: 10px 20px;
+  border-right: 1px solid rgba(26, 26, 46, 0.12);
   cursor: pointer;
   border-radius: var(--radius-full);
-  transition: background var(--dur-fast) var(--ease-out),
-              box-shadow var(--dur-fast) var(--ease-out);
+  transition: background 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
 }
 
 .search-field:hover {
-  background: rgba(26, 26, 46, 0.03);
+  background: rgba(26, 26, 46, 0.04);
 }
 
 .search-field:focus-within {
   background: #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12), 0 0 0 1.5px var(--gold-dark);
 }
 
 .search-field:last-of-type {
@@ -740,18 +740,19 @@
 .search-field-icon {
   flex-shrink: 0;
   stroke: var(--gold-dark);
-  opacity: 0.9;
-  transition: transform var(--dur-fast) var(--ease-out);
+  stroke-width: 2.2px;
+  opacity: 0.95;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .search-field:hover .search-field-icon {
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.1);
 }
 
 .search-field-label {
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--navy);
   line-height: 1;
@@ -760,38 +761,41 @@
 .search-input {
   border: none;
   outline: none;
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
   background: transparent;
   width: 100%;
   font-family: var(--font-body);
   padding: 2px 0 0 0;
   cursor: pointer;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .search-input::placeholder {
-  color: var(--text-light);
+  color: var(--text-muted);
   font-weight: 400;
 }
 
 /* Custom Webkit date picker styling */
 .search-input[type="date"] {
-  color: var(--text-primary);
-  font-weight: 500;
+  color: var(--navy);
+  font-weight: 600;
   position: relative;
 }
 
 .search-input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
-  opacity: 0.6;
-  filter: invert(15%) sepia(20%) saturate(1000%) hue-rotate(200deg);
-  transition: opacity var(--dur-fast);
+  opacity: 0.7;
+  filter: invert(12%) sepia(30%) saturate(1200%) hue-rotate(210deg);
+  transition: opacity 200ms ease, transform 200ms ease;
 }
 
 .search-input[type="date"]::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
+  transform: scale(1.1);
 }
 
 /* Select input styling inside search bar */
@@ -801,8 +805,8 @@ select.search-input {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23C9983A'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 2px center;
-  background-size: 14px;
-  padding-right: 18px;
+  background-size: 15px;
+  padding-right: 20px;
 }
 
 /* Search Button */
@@ -811,25 +815,25 @@ select.search-input {
   color: var(--navy);
   border: none;
   border-radius: var(--radius-full);
-  padding: 14px 28px;
+  padding: 16px 36px;
   font-weight: 700;
-  font-size: var(--text-sm);
+  font-size: 15px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--sp-2);
-  transition: all var(--dur-base) var(--ease-out);
-  letter-spacing: 0.04em;
+  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.05em;
   white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(232, 184, 109, 0.4);
-  margin-left: 6px;
+  box-shadow: 0 6px 20px rgba(201, 152, 58, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+  margin-left: 8px;
 }
 
 .search-btn:hover {
   background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
-  transform: translateY(-1px) scale(1.03);
-  box-shadow: 0 8px 24px rgba(232, 184, 109, 0.6);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 28px rgba(201, 152, 58, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
 }
 
 .search-btn:active {
@@ -837,11 +841,11 @@ select.search-input {
 }
 
 .search-btn-icon {
-  transition: transform var(--dur-fast) var(--ease-out);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .search-btn:hover .search-btn-icon {
-  transform: scale(1.15) rotate(-5deg);
+  transform: scale(1.15) rotate(-6deg);
 }
 
 /* Responsive styles */
