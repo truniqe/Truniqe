@@ -3,7 +3,7 @@
 // ============================================================
 
 import { initAuth, updateNav, onAuthChange, showToast } from './auth.js';
-import { fetchProperties } from './supabase.js';
+import { fetchProperties, fetchCollectionRoomTypes } from './supabase.js';
 import { formatCurrency } from './auth.js';
 
 // ---- Init ----
@@ -14,6 +14,7 @@ async function init() {
   setupSearch();
   setupAngleFilters();
   await loadFeaturedProperties();
+  await loadCollections();
   setupScrollBehavior();
   setupCollectionsSlider();
 }
@@ -225,6 +226,50 @@ document.addEventListener('keydown', (e) => {
     window.location.href = `/property.html?id=${e.target.dataset.id}`;
   }
 });
+
+// ---- Collections loaded dynamically from room_types ----
+async function loadCollections() {
+  const grid = document.getElementById('collections-grid');
+  if (!grid) return;
+
+  try {
+    const roomTypes = await fetchCollectionRoomTypes();
+    if (roomTypes && roomTypes.length > 0) {
+      grid.innerHTML = roomTypes.map(renderCollectionCard).join('');
+    }
+  } catch (err) {
+    console.error('Could not load room types for collections:', err);
+  }
+}
+
+function renderCollectionCard(room) {
+  let title = room.description || '';
+  let sub = '';
+
+  if (room.description && room.description.includes(' — ')) {
+    const parts = room.description.split(' — ');
+    title = parts[0];
+    sub = parts.slice(1).join(' — ');
+  } else if (room.description && room.description.includes(' - ')) {
+    const parts = room.description.split(' - ');
+    title = parts[0];
+    sub = parts.slice(1).join(' - ');
+  }
+
+  const photoUrl = (room.photos && room.photos.length > 0) ? room.photos[0] : '';
+  const targetUrl = room.property_id ? `/property.html?id=${room.property_id}` : '/properties.html';
+
+  return `
+    <a href="${targetUrl}" class="collection-card" aria-label="${room.name}">
+      ${photoUrl ? `<img src="${photoUrl}" alt="${room.name}" loading="lazy">` : ''}
+      <div class="collection-card-body">
+        <div class="collection-card-eyebrow">${room.name}</div>
+        <div class="collection-card-title">${title}</div>
+        <div class="collection-card-sub">${sub}</div>
+      </div>
+    </a>
+  `;
+}
 
 // ---- Collections Horizontal Slider Arrows ----
 function setupCollectionsSlider() {
