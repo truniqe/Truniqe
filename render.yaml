@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: truniqe
+    env: static
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /dashboard/admin/*
+        destination: /dashboard/admin/:splat
+      - type: rewrite
+        source: /dashboard/*
+        destination: /dashboard/:splat
+      - type: rewrite
+        source: /*
+        destination: /:splat

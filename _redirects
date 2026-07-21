@@ -1,0 +1,7 @@
+# Truniqe static site routing
+# Serve each HTML file directly — do NOT fallback to index.html
+/auth.html              /auth.html              200
+/setup-admin.html       /setup-admin.html       200
+/dashboard/*            /dashboard/:splat       200
+/property.html          /property.html          200
+/properties.html        /properties.html        200
