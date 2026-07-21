@@ -126,6 +126,18 @@ export async function fetchAllRoomTypes() {
 // ============================================================
 
 /**
+ * Fetch room types for home page collections section
+ */
+export async function fetchCollectionRoomTypes() {
+  const { data, error } = await supabase
+    .from('room_types')
+    .select('id, property_id, name, description, base_price, photos, sort_order')
+    .order('sort_order', { ascending: true });
+  if (error) throw error;
+  return data;
+}
+
+/**
  * Fetch room types for a property
  */
 export async function fetchRoomTypes(propertyId) {
