@@ -1,7 +1,18 @@
-# Truniqe static site routing
-# Serve each HTML file directly — do NOT fallback to index.html
-/auth.html              /auth.html              200
-/setup-admin.html       /setup-admin.html       200
-/dashboard/*            /dashboard/:splat       200
-/property.html          /property.html          200
-/properties.html        /properties.html        200
+/* ==============================================
+   Truniqe — Static Site Routing for Render
+   ============================================== */
+
+/* Serve all real HTML pages directly */
+/auth.html /auth.html 200
+/setup-admin.html /setup-admin.html 200
+/properties.html /properties.html 200
+/property.html /property.html 200
+/dashboard/index.html /dashboard/index.html 200
+/dashboard/admin/index.html /dashboard/admin/index.html 200
+/dashboard/admin/properties.html /dashboard/admin/properties.html 200
+/dashboard/admin/room-types.html /dashboard/admin/room-types.html 200
+/dashboard/admin/profit.html /dashboard/admin/profit.html 200
+/dashboard/admin/property-form.html /dashboard/admin/property-form.html 200
+
+/* Only fall back to index.html for unknown routes */
+/* /index.html 200 */
