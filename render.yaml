@@ -4,6 +4,15 @@ services:
     env: static
     staticPublishPath: .
     routes:
+      # ── Dashboard ────────────────────────────────────────────
+      - type: rewrite
+        source: /dashboard
+        destination: /dashboard/index.html
+      - type: rewrite
+        source: /dashboard/
+        destination: /dashboard/index.html
+
+      # ── Admin Dashboard ───────────────────────────────────────
       - type: rewrite
         source: /dashboard/admin
         destination: /dashboard/admin/index.html
@@ -11,8 +20,33 @@ services:
         source: /dashboard/admin/
         destination: /dashboard/admin/index.html
       - type: rewrite
-        source: /dashboard
-        destination: /dashboard/index.html
+        source: /dashboard/admin/properties
+        destination: /dashboard/admin/properties.html
       - type: rewrite
-        source: /dashboard/
-        destination: /dashboard/index.html
+        source: /dashboard/admin/room-types
+        destination: /dashboard/admin/room-types.html
+      - type: rewrite
+        source: /dashboard/admin/profit
+        destination: /dashboard/admin/profit.html
+      - type: rewrite
+        source: /dashboard/admin/property-form
+        destination: /dashboard/admin/property-form.html
+
+      # ── Auth & Setup ──────────────────────────────────────────
+      - type: rewrite
+        source: /auth
+        destination: /auth.html
+      - type: rewrite
+        source: /setup-admin
+        destination: /setup-admin.html
+
+      # ── Public Pages ──────────────────────────────────────────
+      - type: rewrite
+        source: /properties
+        destination: /properties.html
+      - type: rewrite
+        source: /property
+        destination: /property.html
+      - type: rewrite
+        source: /debug-auth
+        destination: /debug-auth.html
