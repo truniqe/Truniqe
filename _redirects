@@ -1,18 +1,31 @@
 /* ==============================================
-   Truniqe — Static Site Routing for Render
+   Truniqe — Static Site Routing for Netlify / Render / Cloudflare Pages
    ============================================== */
 
-/* Serve all real HTML pages directly */
-/auth.html /auth.html 200
-/setup-admin.html /setup-admin.html 200
-/properties.html /properties.html 200
-/property.html /property.html 200
-/dashboard/index.html /dashboard/index.html 200
-/dashboard/admin/index.html /dashboard/admin/index.html 200
-/dashboard/admin/properties.html /dashboard/admin/properties.html 200
-/dashboard/admin/room-types.html /dashboard/admin/room-types.html 200
-/dashboard/admin/profit.html /dashboard/admin/profit.html 200
-/dashboard/admin/property-form.html /dashboard/admin/property-form.html 200
+/* Dashboard Clean Directory Rewrites */
+/dashboard             /dashboard/index.html 200
+/dashboard/            /dashboard/index.html 200
+/dashboard/index.html  /dashboard/index.html 200
 
-/* Only fall back to index.html for unknown routes */
-/* /index.html 200 */
+/dashboard/admin       /dashboard/admin/index.html 200
+/dashboard/admin/      /dashboard/admin/index.html 200
+/dashboard/admin/index.html /dashboard/admin/index.html 200
+
+/* Serve all real HTML pages directly */
+/auth                  /auth.html 200
+/auth.html             /auth.html 200
+/setup-admin           /setup-admin.html 200
+/setup-admin.html      /setup-admin.html 200
+/properties            /properties.html 200
+/properties.html       /properties.html 200
+/property              /property.html 200
+/property.html         /property.html 200
+
+/dashboard/admin/properties    /dashboard/admin/properties.html 200
+/dashboard/admin/properties.html /dashboard/admin/properties.html 200
+/dashboard/admin/room-types    /dashboard/admin/room-types.html 200
+/dashboard/admin/room-types.html /dashboard/admin/room-types.html 200
+/dashboard/admin/profit        /dashboard/admin/profit.html 200
+/dashboard/admin/profit.html   /dashboard/admin/profit.html 200
+/dashboard/admin/property-form /dashboard/admin/property-form.html 200
+/dashboard/admin/property-form.html /dashboard/admin/property-form.html 200
