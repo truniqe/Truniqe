@@ -2,7 +2,8 @@
 // js/admin/admin-dashboard.js — Admin Bookings + WhatsApp
 // ============================================================
 
-import { initAuth, updateNav, onAuthChange, isAdmin, requireAdmin,
+import { initAuth, updateNav, onAuthChange, isLoggedIn, requireAuth,
+         isAdmin, requireAdmin,
          formatCurrency, formatDate, showToast } from '../auth.js';
 import { fetchAllBookings, updateBooking } from '../supabase.js';
 
