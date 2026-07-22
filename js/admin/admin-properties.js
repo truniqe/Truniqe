@@ -2,7 +2,8 @@
 // js/admin/admin-properties.js — Admin Properties CRUD
 // ============================================================
 
-import { initAuth, onAuthChange, isAdmin, requireAdmin, showToast, formatCurrency } from '../auth.js';
+import { initAuth, onAuthChange, isLoggedIn, requireAuth, isAdmin, requireAdmin,
+         getProfile, showToast, formatCurrency } from '../auth.js';
 import { fetchAllPropertiesAdmin, deleteProperty, updateProperty } from '../supabase.js';
 
 let allProperties = [];
@@ -11,7 +12,17 @@ let pendingDeleteName = null;
 
 async function init() {
   await initAuth();
-  if (!isAdmin()) { requireAdmin(); return; }
+  if (!isLoggedIn()) { requireAuth(); return; }
+  if (!isAdmin()) {
+    console.warn('[Truniqe] Not admin. Profile:', JSON.stringify(getProfile?.()));
+    const tbody = document.getElementById('properties-tbody');
+    if (tbody) tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:48px">
+      <strong>⚠️ Admin Access Required</strong><br>
+      Your account does not have admin permissions.<br>
+      <a href="/setup-admin.html" style="color:var(--gold-dark);font-weight:600;margin-top:8px;display:inline-block">Setup admin →</a>
+    </td></tr>`;
+    return;
+  }
   onAuthChange(updateAdminNav);
   setupSidebarToggle();
   setupDeleteModal();
