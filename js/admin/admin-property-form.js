@@ -21,7 +21,7 @@ let saving            = false;
 
 async function init() {
   await initAuth();
-  // if (!isAdmin()) { requireAdmin(); return; }
+  if (!isAdmin()) { requireAdmin(); return; }
   setupSidebarToggle();
 
   renderTagSelector();
