@@ -8,7 +8,23 @@ import { fetchAllBookings, updateBooking } from '../supabase.js';
 
 async function init() {
   await initAuth();
-  // if (!isAdmin()) { requireAdmin(); return; }
+  if (!isLoggedIn()) {
+    requireAuth();
+    return;
+  }
+  if (!isAdmin()) {
+    showToast('Admin Access Required', 'Your user account does not have admin permissions.', 'warning');
+    const tbody = document.getElementById('bookings-tbody');
+    if (tbody) {
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:48px;color:var(--text-secondary)">
+        <strong>⚠️ Admin Access Required</strong><br>
+        Your account role is not set to admin in Supabase.<br>
+        <a href="/setup-admin.html" style="color:var(--gold-dark);font-weight:600;margin-top:8px;display:inline-block">Click here to setup admin privileges →</a>
+      </td></tr>`;
+    }
+    return;
+  }
+
   onAuthChange(updateAdminNav);
   setupSidebarToggle();
   await loadStats();
