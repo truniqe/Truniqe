@@ -53,10 +53,12 @@ export async function initAuth() {
     }
 
     if (event === 'SIGNED_OUT') {
-      // If on a protected page, redirect to home
       const protectedPaths = ['/dashboard', '/booking'];
       const isProtected = protectedPaths.some(p => window.location.pathname.includes(p));
-      if (isProtected) window.location.href = '/';
+      if (isProtected) {
+        const returnUrl = encodeURIComponent(window.location.href);
+        window.location.href = `/auth.html?return=${returnUrl}`;
+      }
     }
   });
 }
