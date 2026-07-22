@@ -2,7 +2,7 @@
 // js/admin/admin-property-form.js — Add/Edit Property Form
 // ============================================================
 
-import { initAuth, isAdmin, requireAdmin, showToast } from '../auth.js';
+import { initAuth, isLoggedIn, requireAuth, isAdmin, requireAdmin, getProfile, showToast } from '../auth.js';
 import {
   fetchPropertyById, createProperty, updateProperty,
   fetchRoomTypes, createRoomType, updateRoomType, deleteRoomType,
@@ -21,7 +21,11 @@ let saving            = false;
 
 async function init() {
   await initAuth();
-  if (!isAdmin()) { requireAdmin(); return; }
+  if (!isLoggedIn()) { requireAuth(); return; }
+  if (!isAdmin()) {
+    console.warn('[Truniqe] Not admin. Profile:', JSON.stringify(getProfile?.()));
+    return;
+  }
   setupSidebarToggle();
 
   renderTagSelector();
