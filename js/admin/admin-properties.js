@@ -11,7 +11,7 @@ let pendingDeleteName = null;
 
 async function init() {
   await initAuth();
-  // if (!isAdmin()) { requireAdmin(); return; }
+  if (!isAdmin()) { requireAdmin(); return; }
   onAuthChange(updateAdminNav);
   setupSidebarToggle();
   setupDeleteModal();
