@@ -5,8 +5,20 @@ services:
     staticPublishPath: .
     routes:
       - type: rewrite
+        source: /dashboard/admin
+        destination: /dashboard/admin/index.html
+      - type: rewrite
+        source: /dashboard/admin/
+        destination: /dashboard/admin/index.html
+      - type: rewrite
         source: /dashboard/admin/*
         destination: /dashboard/admin/:splat
+      - type: rewrite
+        source: /dashboard
+        destination: /dashboard/index.html
+      - type: rewrite
+        source: /dashboard/
+        destination: /dashboard/index.html
       - type: rewrite
         source: /dashboard/*
         destination: /dashboard/:splat
