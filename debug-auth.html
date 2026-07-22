@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auth Debug — Truniqe</title>
+  <style>
+    body { font-family: monospace; padding: 2rem; background: #0f0f0f; color: #e0e0e0; }
+    h1 { color: #f0c040; margin-bottom: 1.5rem; }
+    .card { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; }
+    .label { color: #888; font-size: 12px; text-transform: uppercase; margin-bottom: 4px; }
+    .value { font-size: 15px; word-break: break-all; }
+    .ok   { color: #4ade80; }
+    .warn { color: #f59e0b; }
+    .err  { color: #f87171; }
+    pre { background: #111; padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; }
+    button { margin-top: 1rem; padding: 0.5rem 1.5rem; background: #f0c040; color: #000;
+             border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Auth Debug Panel</h1>
+  <div id="output"><p style="color:#888">Loading auth state...</p></div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    import { SUPABASE_URL, SUPABASE_ANON_KEY } from '/js/config.js';
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const out = document.getElementById('output');
+
+    function row(label, value, cls = '') {
+      return `<div class="card">
+        <div class="label">${label}</div>
+        <div class="value ${cls}">${value}</div>
+      </div>`;
+    }
+
+    async function run() {
+      let html = '';
+
+      // 1. Session
+      const { data: { session }, error: sessErr } = await supabase.auth.getSession();
+      if (sessErr) {
+        html += row('Session Error', sessErr.message, 'err');
+      } else if (!session) {
+        html += row('Session', '❌ No session — you are NOT logged in on this domain', 'err');
+        html += `<p class="warn" style="color:#f59e0b">
+          👉 You need to <a href="/auth.html" style="color:#f0c040">sign in here on the live site</a>
+             — your localhost session does not carry over.
+        </p>`;
+        out.innerHTML = html;
+        return;
+      } else {
+        html += row('Session', '✅ Logged in', 'ok');
+        html += row('User ID', session.user.id);
+        html += row('Email', session.user.email);
+        html += row('Provider', session.user.app_metadata?.provider || 'email');
+      }
+
+      // 2. Profile
+      const { data: profile, error: profErr } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', session.user.id)
+        .single();
+
+      if (profErr) {
+        html += row('Profile Fetch Error', `${profErr.code}: ${profErr.message}`, 'err');
+        if (profErr.code === 'PGRST116') {
+          html += `<p class="err">❌ No profile row found for this user ID in the profiles table.</p>`;
+        } else if (profErr.code === '42501' || profErr.message.includes('policy')) {
+          html += `<p class="err">❌ RLS policy is blocking the profile read. You need to add a SELECT policy.</p>`;
+        }
+      } else if (!profile) {
+        html += row('Profile', '❌ null — profile row missing in DB', 'err');
+      } else {
+        html += row('Profile Found', '✅ Yes', 'ok');
+        html += row('Profile Role', profile.role || '❌ null — role not set!',
+                    profile.role === 'admin' ? 'ok' : 'err');
+        html += `<div class="card"><div class="label">Full Profile Data</div><pre>${JSON.stringify(profile, null, 2)}</pre></div>`;
+      }
+
+      // 3. isAdmin check
+      const isAdmin = profile?.role === 'admin';
+      html += row('isAdmin()', isAdmin ? '✅ true — you SHOULD have access' : '❌ false — this is why you are being redirected',
+                  isAdmin ? 'ok' : 'err');
+
+      // 4. Fix button
+      if (!isAdmin && session) {
+        html += `<button onclick="fixRole('${session.user.id}')">⚡ Set My Role to Admin</button>`;
+      }
+
+      out.innerHTML = html;
+    }
+
+    window.fixRole = async function(userId) {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ role: 'admin' })
+        .eq('id', userId);
+      if (error) {
+        alert('Error: ' + error.message + '\n\nYou must set this manually in Supabase SQL Editor:\nUPDATE profiles SET role = \'admin\' WHERE id = \'' + userId + '\';');
+      } else {
+        alert('✅ Role set to admin! Redirecting to admin dashboard...');
+        window.location.href = '/dashboard/admin/';
+      }
+    };
+
+    run();
+  </script>
+</body>
+</html>
