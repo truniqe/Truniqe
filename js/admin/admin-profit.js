@@ -16,7 +16,7 @@ let currentRevenue = 0;
 
 async function init() {
   await initAuth();
-  // if (!isAdmin()) { requireAdmin(); return; }
+  if (!isAdmin()) { requireAdmin(); return; }
   onAuthChange(updateAdminNav);
   setupSidebarToggle();
 
