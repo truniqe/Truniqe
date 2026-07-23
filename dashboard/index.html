@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings | Truniqe</title>
+  <meta name="description" content="View and manage your upcoming and past bookings on Truniqe.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛</text></svg>">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+
+<body>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <nav class="nav nav-solid" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" id="nav-logo">Trun<span>iqe</span></a>
+
+      <div class="nav-links">
+        <a href="/properties.html" class="nav-link">Stays</a>
+        <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link">Collections</a>
+        <span id="nav-admin-link" style="display:none">
+          <a href="/dashboard/admin/index.html" class="nav-link">Admin</a>
+        </span>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Logged-out state -->
+        <a href="/auth.html" class="btn btn-secondary btn-sm" id="nav-auth-btn">Sign In</a>
+
+        <!-- Logged-in state -->
+        <div id="nav-user-menu" style="display:none;position:relative;align-items:center;gap:var(--sp-3)">
+          <a href="/dashboard/index.html" class="nav-link active" style="color:var(--gold-dark);font-weight:600">My Bookings</a>
+          <div class="nav-avatar-placeholder" id="nav-user-avatar"
+            onclick="document.getElementById('nav-user-dropdown').classList.toggle('open')">
+            <span id="nav-user-initial">U</span>
+          </div>
+          <div id="nav-user-dropdown"
+            style="display:none;position:absolute;top:100%;right:0;margin-top:8px;background:white;border-radius:12px;box-shadow:var(--shadow-lg);min-width:180px;overflow:hidden;z-index:200">
+            <div style="padding:12px 16px;border-bottom:1px solid var(--surface-dark)">
+              <div id="nav-user-name" style="font-weight:600;font-size:14px;color:var(--navy)"></div>
+            </div>
+            <a href="/dashboard/index.html"
+              style="display:block;padding:10px 16px;font-size:14px;color:var(--text-secondary);transition:background 0.15s"
+              onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background=''">My Bookings</a>
+            <button onclick="import('/js/auth.js').then(m=>m.signOut())"
+              style="width:100%;text-align:left;padding:10px 16px;font-size:14px;color:var(--error);background:none;border:none;cursor:pointer"
+              onmouseover="this.style.background='var(--error-light)'" onmouseout="this.style.background=''">Sign Out</button>
+          </div>
+        </div>
+
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile" id="nav-mobile" role="dialog" aria-label="Mobile navigation">
+    <a href="/properties.html" class="nav-link">Stays</a>
+    <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link">Collections</a>
+    <a href="/dashboard/index.html" class="nav-link">My Bookings</a>
+  </div>
+
+  <!-- ===================== MAIN HEADER ===================== -->
+  <main class="dashboard-page">
+    <header class="dashboard-header">
+      <div style="max-width:var(--container-max);margin:0 auto;padding:0 var(--sp-6)">
+        <h1 class="dashboard-title">My Bookings</h1>
+        <p class="dashboard-sub">View and manage your stay reservations with Truniqe</p>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <!-- Tabs -->
+      <div style="display:flex;gap:var(--sp-2);margin-bottom:var(--sp-8);border-bottom:1px solid var(--surface-dark);padding-bottom:var(--sp-4);overflow-x:auto">
+        <button class="booking-tab active btn btn-ghost btn-sm" data-filter="all" style="border-radius:var(--radius-full)">All Bookings</button>
+        <button class="booking-tab btn btn-ghost btn-sm" data-filter="confirmed" style="border-radius:var(--radius-full)">Confirmed</button>
+        <button class="booking-tab btn btn-ghost btn-sm" data-filter="pending" style="border-radius:var(--radius-full)">Pending</button>
+        <button class="booking-tab btn btn-ghost btn-sm" data-filter="cancelled" style="border-radius:var(--radius-full)">Cancelled</button>
+      </div>
+
+      <!-- Loading State -->
+      <div id="bookings-loading" style="text-align:center;padding:64px 0">
+        <div class="spinner" style="margin:0 auto var(--sp-4)"></div>
+        <p style="color:var(--text-muted)">Loading your reservations...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div id="bookings-empty" class="empty-state" style="display:none">
+        <div class="empty-state-icon">🏛</div>
+        <h3 class="empty-state-title">No bookings found</h3>
+        <p class="empty-state-sub" style="margin-bottom:var(--sp-6)">You haven't made any reservations yet. Explore our hand-picked collection of stays.</p>
+        <a href="/properties.html" class="btn btn-primary">Explore Stays →</a>
+      </div>
+
+      <!-- Bookings List -->
+      <div id="bookings-list" class="booking-list"></div>
+    </div>
+  </main>
+
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+  <script type="module" src="../js/dashboard.js"></script>
+</body>
+
+</html>
