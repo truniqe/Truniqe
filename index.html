@@ -1,174 +1,351 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Truniqe — Curated Stays in India</title>
+    <meta
+      name="description"
+      content="Truniqe is India's most curated collection of boutique hotels, heritage havelis, offbeat homestays and experience-driven retreats. Hand-picked. Editorially told."
+    />
+    <meta
+      name="keywords"
+      content="boutique hotels India, heritage stays, offbeat travel India, curated hotels, luxury travel India"
+    />
+    <meta property="og:title" content="Truniqe — Curated Stays in India" />
+    <meta
+      property="og:description"
+      content="Hand-picked boutique hotels, heritage havelis and experience-driven retreats across India."
+    />
+    <meta property="og:type" content="website" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛</text></svg>"
+    />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Truniqe — Curated Stays in India</title>
-  <meta name="description"
-    content="Truniqe is India's most curated collection of boutique hotels, heritage havelis, offbeat homestays and experience-driven retreats. Hand-picked. Editorially told.">
-  <meta name="keywords"
-    content="boutique hotels India, heritage stays, offbeat travel India, curated hotels, luxury travel India">
-  <meta property="og:title" content="Truniqe — Curated Stays in India">
-  <meta property="og:description"
-    content="Hand-picked boutique hotels, heritage havelis and experience-driven retreats across India.">
-  <meta property="og:type" content="website">
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛</text></svg>">
-  <link rel="stylesheet" href="/css/base.css">
-  <link rel="stylesheet" href="/css/components.css">
-  <link rel="stylesheet" href="/css/pages.css">
-</head>
+  <body>
+    <!-- ===================== NAVIGATION ===================== -->
+    <nav
+      class="nav nav-transparent"
+      id="main-nav"
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo" id="nav-logo"
+          >Trun<span>iqe</span></a
+        >
 
-<body>
-
-  <!-- ===================== NAVIGATION ===================== -->
-  <nav class="nav nav-transparent" id="main-nav" role="navigation" aria-label="Main navigation">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo" id="nav-logo">Trun<span>iqe</span></a>
-
-      <div class="nav-links">
-        <a href="/properties.html" class="nav-link">Stays</a>
-        <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link">Collections</a>
-        <a href="/our-story.html" class="nav-link">Our Story</a>
-        <span id="nav-admin-link" style="display:none">
-        <a href="/dashboard/admin/index.html" class="nav-link">Admin</a>
-        </span> 
-      </div>
-
-      <div class="nav-actions">
-        <!-- Logged-out state -->
-        <a href="/auth.html" class="btn btn-secondary btn-sm" id="nav-auth-btn">Sign In</a>
-
-        <!-- Logged-in state -->
-        <div id="nav-user-menu" style="display:none;position:relative;align-items:center;gap:var(--sp-3)">
-          <a href="/dashboard/index.html" class="nav-link" style="color:rgba(255,255,255,0.8)">My Bookings</a>
-          <div class="nav-avatar-placeholder" id="nav-user-avatar"
-            onclick="document.getElementById('nav-user-dropdown').classList.toggle('open')">
-            <span id="nav-user-initial">U</span>
-          </div>
-          <div id="nav-user-dropdown"
-            style="display:none;position:absolute;top:100%;right:0;margin-top:8px;background:white;border-radius:12px;box-shadow:var(--shadow-lg);min-width:180px;overflow:hidden;z-index:200">
-            <div style="padding:12px 16px;border-bottom:1px solid var(--surface-dark)">
-              <div id="nav-user-name" style="font-weight:600;font-size:14px;color:var(--navy)"></div>
-            </div>
-            <a href="/dashboard/index.html"
-              style="display:block;padding:10px 16px;font-size:14px;color:var(--text-secondary);transition:background 0.15s"
-              onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background=''">My Bookings</a>
-            <button onclick="import('/js/auth.js').then(m=>m.signOut())"
-              style="width:100%;text-align:left;padding:10px 16px;font-size:14px;color:var(--error);background:none;border:none;cursor:pointer"
-              onmouseover="this.style.background='var(--error-light)'" onmouseout="this.style.background=''">Sign
-              Out</button>
-          </div>
+        <div class="nav-links">
+          <a href="/properties.html" class="nav-link">Stays</a>
+          <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link"
+            >Collections</a
+          >
+          <a href="/our-story.html" class="nav-link">Our Story</a>
+          <span id="nav-admin-link" style="display: none">
+            <a href="/dashboard/admin/index.html" class="nav-link">Admin</a>
+          </span>
         </div>
 
-        <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </nav>
+        <div class="nav-actions">
+          <!-- Logged-out state -->
+          <a
+            href="/auth.html"
+            class="btn btn-secondary btn-sm"
+            id="nav-auth-btn"
+            >Sign In</a
+          >
 
-  <!-- Mobile menu -->
-  <div class="nav-mobile" id="nav-mobile" role="dialog" aria-label="Mobile navigation">
-    <a href="/properties.html" class="nav-link">Stays</a>
-    <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link">Collections</a>
-    <a href="#why" class="nav-link">About</a>
-    <a href="/auth.html" class="btn btn-primary btn-sm" id="mobile-auth-btn" style="margin-top:8px">Sign In</a>
-  </div>
+          <!-- Logged-in state -->
+          <div
+            id="nav-user-menu"
+            style="
+              display: none;
+              position: relative;
+              align-items: center;
+              gap: var(--sp-3);
+            "
+          >
+            <a
+              href="/dashboard/index.html"
+              class="nav-link"
+              style="color: rgba(255, 255, 255, 0.8)"
+              >My Bookings</a
+            >
+            <div
+              class="nav-avatar-placeholder"
+              id="nav-user-avatar"
+              onclick="
+                document
+                  .getElementById('nav-user-dropdown')
+                  .classList.toggle('open')
+              "
+            >
+              <span id="nav-user-initial">U</span>
+            </div>
+            <div
+              id="nav-user-dropdown"
+              style="
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                margin-top: 8px;
+                background: white;
+                border-radius: 12px;
+                box-shadow: var(--shadow-lg);
+                min-width: 180px;
+                overflow: hidden;
+                z-index: 200;
+              "
+            >
+              <div
+                style="
+                  padding: 12px 16px;
+                  border-bottom: 1px solid var(--surface-dark);
+                "
+              >
+                <div
+                  id="nav-user-name"
+                  style="font-weight: 600; font-size: 14px; color: var(--navy)"
+                ></div>
+              </div>
+              <a
+                href="/dashboard/index.html"
+                style="
+                  display: block;
+                  padding: 10px 16px;
+                  font-size: 14px;
+                  color: var(--text-secondary);
+                  transition: background 0.15s;
+                "
+                onmouseover="this.style.background = 'var(--surface)'"
+                onmouseout="this.style.background = ''"
+                >My Bookings</a
+              >
+              <button
+                onclick="import('/js/auth.js').then((m) => m.signOut())"
+                style="
+                  width: 100%;
+                  text-align: left;
+                  padding: 10px 16px;
+                  font-size: 14px;
+                  color: var(--error);
+                  background: none;
+                  border: none;
+                  cursor: pointer;
+                "
+                onmouseover="this.style.background = 'var(--error-light)'"
+                onmouseout="this.style.background = ''"
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
 
-  <!-- ===================== HERO ===================== -->
-  <section class="hero" role="banner">
-    <div class="hero-bg" aria-hidden="true">
-      <img
-        src="https://images.unsplash.com/photo-1783124758982-b4ca4d3def22?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="Truniqe hero — Indian palace at sunset" fetchpriority="high">
-    </div>
-
-    <div class="hero-content">
-      <p class="hero-eyebrow">India's curated travel edit</p>
-      <h1 class="hero-title">Stay Somewhere<br><em>Worth Remembering</em></h1>
-      <p class="hero-subtitle">We don't list every hotel in India. We list the <strong>right ones</strong> — boutique
-        havelis, mountain hideaways and experience-driven retreats that hotel aggregators overlook.</p>
-
-      <!-- Search form -->
-      <form id="search-form" class="hero-search" role="search" aria-label="Search stays">
-        <div class="search-bar">
-          <div class="search-field">
-            <div class="search-field-header">
-              <svg class="search-field-icon" viewBox="0 0 24 24" width="14" height="14" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              <span class="search-field-label">Where</span>
-            </div>
-            <input type="text" id="search-destination" class="search-input" placeholder="Rajasthan, Spiti, Goa…"
-              autocomplete="off" aria-label="Destination">
-          </div>
-          <div class="search-field">
-            <div class="search-field-header">
-              <svg class="search-field-icon" viewBox="0 0 24 24" width="14" height="14" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              <span class="search-field-label">Check In</span>
-            </div>
-            <input type="date" id="search-checkin" class="search-input" aria-label="Check-in date">
-          </div>
-          <div class="search-field">
-            <div class="search-field-header">
-              <svg class="search-field-icon" viewBox="0 0 24 24" width="14" height="14" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              <span class="search-field-label">Check Out</span>
-            </div>
-            <input type="date" id="search-checkout" class="search-input" aria-label="Check-out date">
-          </div>
-          <div class="search-field">
-            <div class="search-field-header">
-              <svg class="search-field-icon" viewBox="0 0 24 24" width="14" height="14" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg>
-              <span class="search-field-label">Guests</span>
-            </div>
-            <select id="search-guests" class="search-input" aria-label="Number of guests">
-              <option value="1">1 guest</option>
-              <option value="2" selected>2 guests</option>
-              <option value="3">3 guests</option>
-              <option value="4">4 guests</option>
-              <option value="5">5+ guests</option>
-            </select>
-          </div>
-          <button type="submit" class="search-btn" aria-label="Search stays">
-            <svg class="search-btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
-              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <span>Search</span>
+          <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
           </button>
         </div>
-      </form>
+      </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div
+      class="nav-mobile"
+      id="nav-mobile"
+      role="dialog"
+      aria-label="Mobile navigation"
+    >
+      <a href="/properties.html" class="nav-link">Stays</a>
+      <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link"
+        >Collections</a
+      >
+      <a href="#why" class="nav-link">About</a>
+      <a
+        href="/auth.html"
+        class="btn btn-primary btn-sm"
+        id="mobile-auth-btn"
+        style="margin-top: 8px"
+        >Sign In</a
+      >
     </div>
 
-    <div class="hero-scroll" aria-hidden="true">
-      <span>Scroll</span>
-      <div class="hero-scroll-line"></div>
-    </div>
-  </section>
-  <!--
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" role="banner">
+      <div class="hero-bg" aria-hidden="true">
+        <img
+          src="https://images.unsplash.com/photo-1783124758982-b4ca4d3def22?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Truniqe hero — Indian palace at sunset"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow">India's curated travel edit</p>
+        <h1 class="hero-title">
+          Stay Somewhere<br /><em>Worth Remembering</em>
+        </h1>
+        <p class="hero-subtitle">
+          We don't list every hotel in India. We list the
+          <strong>right ones</strong> — boutique havelis, mountain hideaways and
+          experience-driven retreats that hotel aggregators overlook.
+        </p>
+
+        <!-- Search form -->
+        <form
+          id="search-form"
+          class="hero-search"
+          role="search"
+          aria-label="Search stays"
+        >
+          <div class="search-bar">
+            <div class="search-field">
+              <div class="search-field-header">
+                <svg
+                  class="search-field-icon"
+                  viewBox="0 0 24 24"
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                  ></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span class="search-field-label">Where</span>
+              </div>
+              <input
+                type="text"
+                id="search-destination"
+                class="search-input"
+                placeholder="Rajasthan, Spiti, Goa…"
+                autocomplete="off"
+                aria-label="Destination"
+              />
+            </div>
+            <div class="search-field">
+              <div class="search-field-header">
+                <svg
+                  class="search-field-icon"
+                  viewBox="0 0 24 24"
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span class="search-field-label">Check In</span>
+              </div>
+              <input
+                type="date"
+                id="search-checkin"
+                class="search-input"
+                aria-label="Check-in date"
+              />
+            </div>
+            <div class="search-field">
+              <div class="search-field-header">
+                <svg
+                  class="search-field-icon"
+                  viewBox="0 0 24 24"
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span class="search-field-label">Check Out</span>
+              </div>
+              <input
+                type="date"
+                id="search-checkout"
+                class="search-input"
+                aria-label="Check-out date"
+              />
+            </div>
+            <div class="search-field">
+              <div class="search-field-header">
+                <svg
+                  class="search-field-icon"
+                  viewBox="0 0 24 24"
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span class="search-field-label">Guests</span>
+              </div>
+              <select
+                id="search-guests"
+                class="search-input"
+                aria-label="Number of guests"
+              >
+                <option value="1">1 guest</option>
+                <option value="2" selected>2 guests</option>
+                <option value="3">3 guests</option>
+                <option value="4">4 guests</option>
+                <option value="5">5+ guests</option>
+              </select>
+            </div>
+            <button type="submit" class="search-btn" aria-label="Search stays">
+              <svg
+                class="search-btn-icon"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <span>Search</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="hero-scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="hero-scroll-line"></div>
+      </div>
+    </section>
+    <!--
    ===================== ANGLE FILTER STRIP ===================== 
   <section class="angle-filter-section" id="filter-strip" aria-label="Filter by experience type">
     <div class="container">
@@ -191,233 +368,373 @@
   </section> 
 -->
 
-  <!-- ===================== FEATURED STAYS ===================== -->
-  <section class="section" aria-labelledby="featured-heading">
-    <div class="container">
-      <div class="section-header observe-scroll">
-        <p class="eyebrow">Curated Collection</p>
-        <h2 class="section-title" id="featured-heading">Stays Worth the Journey</h2>
-        <p class="section-subtitle">Each property on Truniqe passes an editorial test, not just a star rating.</p>
+    <!-- ===================== FEATURED STAYS ===================== -->
+    <section class="section" aria-labelledby="featured-heading">
+      <div class="container">
+        <div class="section-header observe-scroll">
+          <p class="eyebrow">Curated Collection</p>
+          <h2 class="section-title" id="featured-heading">
+            Stays Worth the Journey
+          </h2>
+          <p class="section-subtitle">
+            Each property on Truniqe passes an editorial test, not just a star
+            rating.
+          </p>
+        </div>
+
+        <div
+          class="horizontal-properties-grid stagger-children"
+          id="featured-grid"
+          role="list"
+          aria-label="Featured properties"
+        >
+          <!-- Loaded dynamically by home.js -->
+        </div>
+
+        <div style="text-align: center; margin-top: var(--sp-12)">
+          <a href="/properties.html" class="btn btn-outline">
+            View all curated stays →
+          </a>
+        </div>
       </div>
+    </section>
 
-      <div class="horizontal-properties-grid stagger-children" id="featured-grid" role="list"
-        aria-label="Featured properties">
-        <!-- Loaded dynamically by home.js -->
-      </div>
+    <!-- ===================== COLLECTIONS ===================== -->
+    <section class="section bg-white" aria-labelledby="collections-heading">
+      <div class="container">
+        <div class="section-header center observe-scroll">
+          <p class="eyebrow">Editorial Collections</p>
+          <h2 class="section-title" id="collections-heading">
+            Curated for the Season
+          </h2>
+        </div>
 
-      <div style="text-align:center;margin-top:var(--sp-12)">
-        <a href="/properties.html" class="btn btn-outline">
-          View all curated stays →
-        </a>
-      </div>
-    </div>
-  </section>
+        <div class="collections-slider-wrapper">
+          <button
+            class="slider-arrow slider-arrow-left"
+            aria-label="Scroll left"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              stroke="currentColor"
+              stroke-width="2.5"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
 
-  <!-- ===================== COLLECTIONS ===================== -->
-  <section class="section bg-white" aria-labelledby="collections-heading">
-    <div class="container">
-      <div class="section-header center observe-scroll">
-        <p class="eyebrow">Editorial Collections</p>
-        <h2 class="section-title" id="collections-heading">Curated for the Season</h2>
-      </div>
-
-      <div class="collections-slider-wrapper">
-        <button class="slider-arrow slider-arrow-left" aria-label="Scroll left">
-          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-
-        <div class="collections-grid stagger-children" id="collections-grid">
-
-          <a href="/properties.html?tag=Design+%26+Heritage" class="collection-card"
-            aria-label="Heritage Trails of Rajasthan">
-            <img
-              src="https://plus.unsplash.com/premium_photo-1697729422411-a2553ae5bd0d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="Rajasthan heritage architecture" loading="lazy">
-            <div class="collection-card-body">
-              <div class="collection-card-eyebrow">Heritage</div>
-              <div class="collection-card-title">Heritage Trails of India</div>
-              <div class="collection-card-sub">Frescoed havelis, carved lattice windows and stories painted on every
-                wall
+          <div class="collections-grid stagger-children" id="collections-grid">
+            <a
+              href="/properties.html?tag=Design+%26+Heritage"
+              class="collection-card"
+              aria-label="Heritage Trails of Rajasthan"
+            >
+              <img
+                src="https://plus.unsplash.com/premium_photo-1697729422411-a2553ae5bd0d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Rajasthan heritage architecture"
+                loading="lazy"
+              />
+              <div class="collection-card-body">
+                <div class="collection-card-eyebrow">Heritage</div>
+                <div class="collection-card-title">
+                  Heritage Trails of India
+                </div>
+                <div class="collection-card-sub">
+                  Frescoed havelis, carved lattice windows and stories painted
+                  on every wall
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
 
-          <a href="/properties.html?tag=Offbeat+Location" class="collection-card" aria-label="The High Altitude Edit">
-            <img
-              src="https://images.unsplash.com/photo-1575403071235-5dcd06cbf169?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="Mountain pass Spiti Valley" loading="lazy">
-            <div class="collection-card-body">
-              <div class="collection-card-eyebrow">Offbeat Location & Hidden Gems</div>
-              <div class="collection-card-title">Far from the crowd</div>
-              <div class="collection-card-sub">Where roads end, silence begins and the stars are embarrassingly close
+            <a
+              href="/properties.html?tag=Offbeat+Location"
+              class="collection-card"
+              aria-label="The High Altitude Edit"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1575403071235-5dcd06cbf169?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Mountain pass Spiti Valley"
+                loading="lazy"
+              />
+              <div class="collection-card-body">
+                <div class="collection-card-eyebrow">
+                  Offbeat Location & Hidden Gems
+                </div>
+                <div class="collection-card-title">Far from the crowd</div>
+                <div class="collection-card-sub">
+                  Where roads end, silence begins and the stars are
+                  embarrassingly close
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
 
-          <a href="/properties.html?tag=Offbeat+Location" class="collection-card" aria-label="The High Altitude Edit">
-            <img
-              src="https://images.unsplash.com/photo-1776758107949-1dff0ab3ad66?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="Mountain pass Spiti Valley" loading="lazy">
-            <div class="collection-card-body">
-              <div class="collection-card-eyebrow">Farmstay</div>
-              <div class="collection-card-title">Wake Up to the Rhythm of the Countryside</div>
-              <div class="collection-card-sub">Stories grow where the land breathes, find calm in the cradle of nature.
+            <a
+              href="/properties.html?tag=Offbeat+Location"
+              class="collection-card"
+              aria-label="The High Altitude Edit"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1776758107949-1dff0ab3ad66?q=80&w=1631&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Mountain pass Spiti Valley"
+                loading="lazy"
+              />
+              <div class="collection-card-body">
+                <div class="collection-card-eyebrow">Farmstay</div>
+                <div class="collection-card-title">
+                  Wake Up to the Rhythm of the Countryside
+                </div>
+                <div class="collection-card-sub">
+                  Stories grow where the land breathes, find calm in the cradle
+                  of nature.
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
 
+            <a
+              href="/properties.html?tag=Experience-Driven"
+              class="collection-card"
+              aria-label="Wellness & Slow Living"
+            >
+              <img
+                src="https://plus.unsplash.com/premium_photo-1683888724549-73a380c5ed68?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Yoga retreat garden"
+                loading="lazy"
+              />
+              <div class="collection-card-body">
+                <div class="collection-card-eyebrow">Boutique Resort</div>
+                <div class="collection-card-title">
+                  Spaces that breathe calm into your soul
+                </div>
+                <div class="collection-card-sub">
+                  Retreats that repair the damage cities quietly inflict
+                </div>
+              </div>
+            </a>
 
-          <a href="/properties.html?tag=Experience-Driven" class="collection-card" aria-label="Wellness & Slow Living">
-            <img
-              src="https://plus.unsplash.com/premium_photo-1683888724549-73a380c5ed68?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="Yoga retreat garden" loading="lazy">
-            <div class="collection-card-body">
-              <div class="collection-card-eyebrow">Boutique Resort</div>
-              <div class="collection-card-title">Spaces that breathe calm into your soul</div>
-              <div class="collection-card-sub">Retreats that repair the damage cities quietly inflict</div>
-            </div>
-          </a>
+            <a
+              href="/properties.html?tag=Experience-Driven"
+              class="collection-card"
+              aria-label="Wellness & Slow Living"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Yoga retreat garden"
+                loading="lazy"
+              />
+              <div class="collection-card-body">
+                <div class="collection-card-eyebrow">Villa / Cottage</div>
+                <div class="collection-card-title">
+                  Your Private Escape Awaits
+                </div>
+                <div class="collection-card-sub">
+                  Where design whispers and comfort listens
+                </div>
+              </div>
+            </a>
 
-          <a href="/properties.html?tag=Experience-Driven" class="collection-card" aria-label="Wellness & Slow Living">
-            <img
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="Yoga retreat garden" loading="lazy">
-            <div class="collection-card-body">
-              <div class="collection-card-eyebrow">Villa / Cottage</div>
-              <div class="collection-card-title">Your Private Escape Awaits</div>
-              <div class="collection-card-sub">Where design whispers and comfort listens</div>
-            </div>
-          </a>
+            <a
+              href="/properties.html?tag=Experience-Driven"
+              class="collection-card"
+              aria-label="Wellness & Slow Living"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1631635589499-afd87d52bf64?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Camping"
+                loading="lazy"
+              />
+              <div class="collection-card-body">
+                <div class="collection-card-eyebrow">
+                  Riverside Camp / Glamping
+                </div>
+                <div class="collection-card-title">
+                  Stories born under open skies
+                </div>
+                <div class="collection-card-sub">
+                  Where mountains meet the melody of flowing water
+                </div>
+              </div>
+            </a>
 
-          <a href="/properties.html?tag=Experience-Driven" class="collection-card" aria-label="Wellness & Slow Living">
-            <img
-              src="https://images.unsplash.com/photo-1631635589499-afd87d52bf64?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="Camping" loading="lazy">
-            <div class="collection-card-body">
-              <div class="collection-card-eyebrow">Riverside Camp / Glamping </div>
-              <div class="collection-card-title">Stories born under open skies</div>
-              <div class="collection-card-sub">Where mountains meet the melody of flowing water</div>
-            </div>
-          </a>
+            <a
+              href="/properties.html?tag=Experience-Driven"
+              class="collection-card"
+              aria-label="Wellness & Slow Living"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1766904413697-199c6f7e2176?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Camping"
+                loading="lazy"
+              />
+              <div class="collection-card-body">
+                <div class="collection-card-eyebrow">HomeStays</div>
+                <div class="collection-card-title">Your Second Home Awaits</div>
+                <div class="collection-card-sub">
+                  Authentic stays wrapped in local love
+                </div>
+              </div>
+            </a>
+          </div>
 
-          <a href="/properties.html?tag=Experience-Driven" class="collection-card" aria-label="Wellness & Slow Living">
-            <img
-              src="https://images.unsplash.com/photo-1766904413697-199c6f7e2176?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="Camping" loading="lazy">
-            <div class="collection-card-body">
-              <div class="collection-card-eyebrow">HomeStays </div>
-              <div class="collection-card-title">Your Second Home Awaits</div>
-              <div class="collection-card-sub">Authentic stays wrapped in local love</div>
-            </div>
-          </a>
-
+          <button
+            class="slider-arrow slider-arrow-right"
+            aria-label="Scroll right"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              stroke="currentColor"
+              stroke-width="2.5"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
         </div>
-
-        <button class="slider-arrow slider-arrow-right" aria-label="Scroll right">
-          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===================== WHY TRUNIQE ===================== -->
-  <section class="why-strip section" id="why" aria-labelledby="why-heading">
-    <div class="container">
-      <div class="section-header center observe-scroll"
-        style="align-items:center;text-align:center;margin-bottom:var(--sp-16)">
-        <p class="eyebrow" style="color:var(--gold)">The Truniqe Difference</p>
-        <h2 class="section-title" id="why-heading" style="color:var(--white)">We Don't List Everything.<br>We List the
-          <em>Right</em> Things.
-        </h2>
-      </div>
+    <!-- ===================== WHY TRUNIQE ===================== -->
+    <section class="why-strip section" id="why" aria-labelledby="why-heading">
+      <div class="container">
+        <div
+          class="section-header center observe-scroll"
+          style="
+            align-items: center;
+            text-align: center;
+            margin-bottom: var(--sp-16);
+          "
+        >
+          <p class="eyebrow" style="color: var(--gold)">
+            The Truniqe Difference
+          </p>
+          <h2
+            class="section-title"
+            id="why-heading"
+            style="color: var(--white)"
+          >
+            We Don't List Everything.<br />We List the <em>Right</em> Things.
+          </h2>
+        </div>
 
-      <div class="why-grid stagger-children">
-        <div class="why-item">
-          <div class="why-icon">✍</div>
-          <h3 class="why-title">Curator's Eye</h3>
-          <p class="why-desc">Every property on Truniqe is visited, vetted and written about by a real person with an
-            opinion. No algorithm. No bulk listings. No filler.</p>
-        </div>
-        <div class="why-item">
-          <div class="why-icon">🏛</div>
-          <h3 class="why-title">Genuine Distinctiveness</h3>
-          <p class="why-desc">We only list properties with a clear angle — heritage architecture, remote locations or
-            transformative experiences. If it's ordinary, it doesn't make the cut.</p>
-        </div>
-        <div class="why-item">
-          <div class="why-icon">🛡</div>
-          <h3 class="why-title">Reliable Booking</h3>
-          <p class="why-desc">Real-time availability, secure Razorpay payments and instant confirmation. No
-            back-and-forth with property owners, no manual calls required.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-logo">Trun<span>iqe</span></div>
-          <p class="footer-tagline">India's most curated collection of boutique hotels, heritage havelis and
-            experience-driven retreats. We list fewer stays so each one is worth your time.</p>
-        </div>
-        <div>
-          <div class="footer-col-title">Explore</div>
-          <div class="footer-links">
-            <a href="/properties.html" class="footer-link">All Stays</a>
-            <a href="/properties.html?tag=Design+%26+Heritage" class="footer-link">Heritage</a>
-            <a href="/properties.html?tag=Offbeat+Location" class="footer-link">Offbeat</a>
-            <a href="/properties.html?tag=Experience-Driven" class="footer-link">Wellness</a>
+        <div class="why-grid stagger-children">
+          <div class="why-item">
+            <div class="why-icon">✍</div>
+            <h3 class="why-title">Curator's Eye</h3>
+            <p class="why-desc">
+              Every property on Truniqe is visited, vetted and written about by
+              a real person with an opinion. No algorithm. No bulk listings. No
+              filler.
+            </p>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">🏛</div>
+            <h3 class="why-title">Genuine Distinctiveness</h3>
+            <p class="why-desc">
+              We only list properties with a clear angle — heritage
+              architecture, remote locations or transformative experiences. If
+              it's ordinary, it doesn't make the cut.
+            </p>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">🛡</div>
+            <h3 class="why-title">Reliable Booking</h3>
+            <p class="why-desc">
+              Real-time availability, secure Razorpay payments and instant
+              confirmation. No back-and-forth with property owners, no manual
+              calls required.
+            </p>
           </div>
         </div>
-        <div>
-          <div class="footer-col-title">Account</div>
-          <div class="footer-links">
-            <a href="/auth.html" class="footer-link">Sign In</a>
-            <a href="/auth.html#signup" class="footer-link">Create Account</a>
-            <a href="/dashboard/index.html" class="footer-link">My Bookings</a>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer" role="contentinfo">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">Trun<span>iqe</span></div>
+            <p class="footer-tagline">
+              India's most curated collection of boutique hotels, heritage
+              havelis and experience-driven retreats. We list fewer stays so
+              each one is worth your time.
+            </p>
+          </div>
+          <div>
+            <div class="footer-col-title">Explore</div>
+            <div class="footer-links">
+              <a href="/properties.html" class="footer-link">All Stays</a>
+              <a
+                href="/properties.html?tag=Design+%26+Heritage"
+                class="footer-link"
+                >Heritage</a
+              >
+              <a
+                href="/properties.html?tag=Offbeat+Location"
+                class="footer-link"
+                >Offbeat</a
+              >
+              <a
+                href="/properties.html?tag=Experience-Driven"
+                class="footer-link"
+                >Wellness</a
+              >
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-title">Account</div>
+            <div class="footer-links">
+              <a href="/auth.html" class="footer-link">Sign In</a>
+              <a href="/auth.html#signup" class="footer-link">Create Account</a>
+              <a href="/dashboard/index.html" class="footer-link"
+                >My Bookings</a
+              >
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-title">Legal</div>
+            <div class="footer-links">
+              <a href="#" class="footer-link">Privacy Policy</a>
+              <a href="#" class="footer-link">Terms of Service</a>
+              <a href="#" class="footer-link">Cancellation Policy</a>
+              <a href="#" class="footer-link">Contact</a>
+            </div>
           </div>
         </div>
-        <div>
-          <div class="footer-col-title">Legal</div>
-          <div class="footer-links">
-            <a href="#" class="footer-link">Privacy Policy</a>
-            <a href="#" class="footer-link">Terms of Service</a>
-            <a href="#" class="footer-link">Cancellation Policy</a>
-            <a href="#" class="footer-link">Contact</a>
-          </div>
+        <div class="footer-bottom">
+          <span>© 2025 Truniqe. All rights reserved.</span>
+          <span>Made with care for the curious traveller.</span>
         </div>
       </div>
-      <div class="footer-bottom">
-        <span>© 2025 Truniqe. All rights reserved.</span>
-        <span>Made with care for the curious traveller.</span>
-      </div>
-    </div>
-  </footer>
+    </footer>
 
-  <!-- Toast container -->
-  <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+    <!-- Toast container -->
+    <div
+      id="toast-container"
+      class="toast-container"
+      role="status"
+      aria-live="polite"
+    ></div>
 
-  <script type="module" src="/js/home.js"></script>
+    <script type="module" src="/js/home.js"></script>
 
-  <!-- Fix dropdown visibility -->
-  <style>
-    #nav-user-dropdown {
-      display: none;
-    }
+    <!-- Fix dropdown visibility -->
+    <style>
+      #nav-user-dropdown {
+        display: none;
+      }
 
-    #nav-user-dropdown.open {
-      display: block !important;
-    }
-  </style>
-</body>
-
+      #nav-user-dropdown.open {
+        display: block !important;
+      }
+    </style>
+  </body>
 </html>
