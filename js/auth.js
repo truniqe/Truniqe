@@ -111,8 +111,8 @@ export async function initAuth() {
 export function getSession() { return _session; }
 export function getUser() { return _session?.user ?? null; }
 export function getProfile() { return _profile; }
-export function isLoggedIn() { return true; /* TEMPORARY BYPASS */ }
-export function isAdmin() { return true; /* TEMPORARY BYPASS */ }
+export function isLoggedIn() { return !!_session?.user; }
+export function isAdmin() { return _profile?.role === 'admin'; }
 
 // ---- Auth actions ----
 export async function signUp({ email, password, name }) {
