@@ -87,10 +87,10 @@
   </header>
 
   <main>
-    <section class="section bg-white journey-section">
+    <section class="section bg-white challenge-section">
       <div class="container">
         <div class="section-header observe-scroll">
-          <p class="eyebrow">The Journey</p>
+          <p class="eyebrow">The Challenge</p>
           <h2 class="section-title">Travel has become unnecessarily complicated.</h2>
           <p class="section-subtitle">Instead of refreshing us, planning a trip often becomes a second full-time job — juggling reviews, apps, transport, restaurants, and support.</p>
         </div>
@@ -100,10 +100,18 @@
           <p>As we spoke with more travelers, we realized the frustrations kept appearing—unreliable bookings, poor customer support, hidden charges, confusing reviews, and the constant need to switch between multiple platforms just to plan a single trip.</p>
           <p>Most platforms are designed to complete transactions, while travelers care about something much more important <strong>experience itself.</strong></p>
           <p><em>They don't remember bookings. They remember experiences, and this became the foundation of <strong>Truniqe.</strong></em></p>
+        </div> 
         </div>
-
+    </section>
+ <section class="section bg-white journey-section">
+      <div class="container">
+        <div class="section-header observe-scroll">
+          <p class="eyebrow">The Journey</p>
+          <h2 class="section-title">That realization sparked simple questions.</h2>
+          <p class="section-subtitle">Why become travel experts to enjoy a weekend getaway?</p>
+        </div>
         <div class="story-content observe-scroll">
-          <p>That realization sparked simple questions.</p>
+          <p></p>
           <p>Why should someone spend hours researching when technology can do the heavy lifting? Why are travelers forced to jump between multiple apps for stays, activities, transport, restaurants, events, and local recommendations?</p>
           <p>Instead of building another booking platform, we decided to build something different. A platform designed around the entire travel experience. Not just where you stay. But what you do. Where you eat. How you get around. What locals recommend. And the experiences you'll remember long after you return home.</p>
           <p>That's how Truniqe was born.</p>
@@ -211,7 +219,7 @@
          TEAM SECTION — Faces Behind Truniqe
          Dark editorial luxury (Navy + Gold)
 ============================================================ -->
-    <section class="team-section" aria-labelledby="team-heading">
+<section class="team-section" aria-labelledby="team-heading">
       <div class="team-container">
 
         <!-- Section Header -->
@@ -221,89 +229,103 @@
 <p class="section-subtitle">A small team with a big mission — curating India's most memorable stays.</p>
         </div>
 
-        <!-- Team Grid -->
-        <div class="team-grid">
+        <!-- Carousel wrapper with nav -->
+        <div class="team-carousel-wrapper">
+          <button class="team-carousel-btn team-carousel-prev" id="team-carousel-prev" aria-label="Previous member">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4L6 10L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
 
-          <!-- Team Member 1 -->
-          <div class="team-card" data-delay="0">
-            <div class="team-image-wrapper">
-              <img
-                src="images/team/mohit.png"
-                alt="MOHIT NAGAR"
-                class="team-image"
-                loading="lazy"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-              >
-              <div class="team-avatar-fallback" style="display:none">MN</div>
+          <!-- Team Grid -->
+          <div class="team-grid" id="team-grid">
+
+            <!-- Team Member 1 -->
+            <div class="team-card" data-index="0" data-delay="0">
+              <div class="team-image-wrapper">
+                <img
+                  src="images/team/mohit.png"
+                  alt="MOHIT NAGAR"
+                  class="team-image"
+                  loading="lazy"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                >
+                <div class="team-avatar-fallback" style="display:none">MN</div>
+              </div>
+              <h3 class="team-name">MOHIT NAGAR</h3>
+              <p class="team-role">Operations</p>
             </div>
-            <h3 class="team-name">MOHIT NAGAR</h3>
-            <p class="team-role">Operations</p>
+
+            <!-- Team Member 2 -->
+            <div class="team-card" data-index="1" data-delay="1">
+              <div class="team-image-wrapper">
+                <img
+                  src="images/team/anant.png"
+                  alt="ANANT MANRAL"
+                  class="team-image"
+                  loading="lazy"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                >
+                <div class="team-avatar-fallback" style="display:none">AM</div>
+              </div>
+              <h3 class="team-name">ANANT MANRAL</h3>
+              <p class="team-role">Full Stack Developer</p>
+            </div>
+
+            <!-- Team Member 3 — Featured (Center) -->
+            <div class="team-card team-card--featured" data-index="2" data-delay="2">
+              <div class="team-image-wrapper">
+                <img
+                  src="images/team/akash.png"
+                  alt="AKASH CHANDILA"
+                  class="team-image"
+                  loading="lazy"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                >
+                <div class="team-avatar-fallback" style="display:none">AC</div>
+              </div>
+              <h3 class="team-name">AKASH CHANDILA</h3>
+              <p class="team-role">Founder</p>
+            </div>
+
+            <!-- Team Member 4 -->
+            <div class="team-card" data-index="3" data-delay="3">
+              <div class="team-image-wrapper">
+                <img
+                  src="images/team/drishti.png"
+                  alt="DRISHTI KAUSHIK"
+                  class="team-image"
+                  loading="lazy"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+                >
+                <div class="team-avatar-fallback" style="display:none">DK</div>
+              </div>
+              <h3 class="team-name">DRISHTI KAUSHIK</h3>
+              <p class="team-role">Full Stack Developer</p>
+            </div>
+
+            <!-- Team Member 5 -->
+            <div class="team-card" data-index="4" data-delay="4">
+              <div class="team-image-wrapper">
+                <img
+                  src="images/team/daksh.jpeg"
+                  alt="DAKSH BHATT"
+                  class="team-image"
+                  loading="lazy"
+                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="team-avatar-fallback" style="display:none">DB</div>
+              </div>
+              <h3 class="team-name">DAKSH BHATT</h3>
+              <p class="team-role">Full Stack Developer</p>
+            </div>
+
           </div>
 
-          <!-- Team Member 2 -->
-          <div class="team-card" data-delay="1">
-            <div class="team-image-wrapper">
-              <img
-                src="images/team/anant.png"
-                alt="ANANT MANRAL"
-                class="team-image"
-                loading="lazy"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-              >
-              <div class="team-avatar-fallback" style="display:none">AM</div>
-            </div>
-            <h3 class="team-name">ANANT MANRAL</h3>
-            <p class="team-role">Full Stack Developer</p>
-          </div>
-
-          <!-- Team Member 3 — Featured (Center) -->
-          <div class="team-card team-card--featured" data-delay="2">
-            <div class="team-image-wrapper">
-              <img
-                src="images/team/akash.png"
-                alt="AKASH CHANDILA"
-                class="team-image"
-                loading="lazy"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-              >
-              <div class="team-avatar-fallback" style="display:none">AC</div>
-            </div>
-            <h3 class="team-name">AKASH CHANDILA</h3>
-            <p class="team-role">Founder</p>
-          </div>
-
-          <!-- Team Member 4 -->
-          <div class="team-card" data-delay="3">
-            <div class="team-image-wrapper">
-              <img
-                src="images/team/drishti.png"
-                alt="DRISHTI KAUSHIK"
-                class="team-image"
-                loading="lazy"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-              >
-              <div class="team-avatar-fallback" style="display:none">DK</div>
-            </div>
-            <h3 class="team-name">DRISHTI KAUSHIK</h3>
-            <p class="team-role">Full Stack Developer</p>
-          </div>
-
-          <!-- Team Member 5 -->
-          <div class="team-card" data-delay="4">
-            <div class="team-image-wrapper">
-              <img
-                src="images/team/daksh.jpeg"
-                alt="DAKSH BHATT"
-                class="team-image"
-                loading="lazy"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="team-avatar-fallback" style="display:none">DB</div>
-            </div>
-            <h3 class="team-name">DAKSH BHATT</h3>
-            <p class="team-role">Full Stack Developer</p>
-          </div>
-
+          <button class="team-carousel-btn team-carousel-next" id="team-carousel-next" aria-label="Next member">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L14 10L8 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
+
+        <!-- Dots indicator (mobile only) -->
+        <div class="team-carousel-dots" id="team-carousel-dots"></div>
       </div>
     </section>
 
