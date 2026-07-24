@@ -347,8 +347,7 @@ export async function fetchAllBookings({ status = null } = {}) {
       room_types(
         name,
         properties(name, location, owner_name, owner_phone)
-      ),
-      profiles(name, phone)
+      )
     `)
     .order('created_at', { ascending: false });
 
