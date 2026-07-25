@@ -17,6 +17,90 @@ let calendarDate = new Date();
 const params = new URLSearchParams(window.location.search);
 const propertyId = params.get('id');
 
+const MOCK_GOA_PROPERTIES_DETAILS = {
+  'goa-mock-1': {
+    property: {
+      id: 'goa-mock-1',
+      name: 'Ginger Goa, Candolim',
+      location: 'Candolim, Goa',
+      state: 'Goa',
+      story: 'Long before Candolim became a bustling beach hub, Ginger Goa established its place as a reliable sanctuary. Known for its curated stays, the hotel merges modern comforts with intuitive warm hospitality. Excellent location, walking distance from the beachfront and main market lanes.',
+      angle_tags: ['Design & Heritage'],
+      amenities: ['Rooftop terrace', 'Swimming pool', 'Ayurvedic spa', 'Heritage tours', 'Air conditioning', 'WiFi', 'Airport transfers'],
+      cover_image_url: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1400&q=80',
+      gallery_urls: [
+        'https://images.unsplash.com/photo-1600011689032-8b628b8a8747?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=80'
+      ],
+      status: 'live'
+    },
+    roomTypes: [
+      { id: 'goa-mock-1-r1', name: 'Standard Room', description: 'Cozy and well-appointed double bed room, city facing.', base_price: 3899, max_guests: 2, photos: ['https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80'] },
+      { id: 'goa-mock-1-r2', name: 'Executive Suite Room', description: 'Large spacious suite with living area and pool facing balcony.', base_price: 5200, max_guests: 3, photos: ['https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80'] }
+    ]
+  },
+  'goa-mock-2': {
+    property: {
+      id: 'goa-mock-2',
+      name: 'Fairfield by Marriott Goa Benaulim',
+      location: 'Benaulim, Goa',
+      state: 'Goa',
+      story: 'Enjoy a premium, peaceful holiday at Fairfield by Marriott. Just a short walk from Benaulim beach, this property is designed for absolute comfort and relaxation. Indulge in the spa, splash in the outdoor pool, or enjoy locally inspired dining.',
+      angle_tags: ['Design & Heritage'],
+      amenities: ['Swimming pool', 'Gym', 'Spa', 'Bar', 'WiFi', 'Air conditioning'],
+      cover_image_url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80',
+      gallery_urls: [
+        'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1200&q=80'
+      ],
+      status: 'live'
+    },
+    roomTypes: [
+      { id: 'goa-mock-2-r1', name: 'Deluxe King Room', description: 'Luxury King bed with garden views and premium linens.', base_price: 8500, max_guests: 2, photos: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80'] },
+      { id: 'goa-mock-2-r2', name: 'Premium Suite Room', description: 'Large master suite with balcony, living area, and private bath tub.', base_price: 11000, max_guests: 3, photos: ['https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80'] }
+    ]
+  },
+  'goa-mock-3': {
+    property: {
+      id: 'goa-mock-3',
+      name: 'Estrela Do Mar Beach Resort - A Beach Property',
+      location: 'Calangute, Goa',
+      state: 'Goa',
+      story: 'Right on Calangute Beach, Estrela Do Mar is an iconic beach resort offering cozy wooden cottages and direct private beach access. Complete with live music, multiple swimming pools, and a lively bar.',
+      angle_tags: ['Experience-Driven'],
+      amenities: ['Private beach access', 'Swimming pool', 'Live music', 'Bar', 'WiFi', 'Air conditioning'],
+      cover_image_url: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1400&q=80',
+      gallery_urls: [
+        'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1200&q=80'
+      ],
+      status: 'live'
+    },
+    roomTypes: [
+      { id: 'goa-mock-3-r1', name: 'Standard Wooden Cottage', description: 'Cozy rustic wooden cottage built on the beach dunes.', base_price: 3436, max_guests: 2, photos: ['https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=800&q=80'] },
+      { id: 'goa-mock-3-r2', name: 'Luxury Beach Bungalow', description: 'Premium beach-front bungalow with private deck looking at the sea.', base_price: 5100, max_guests: 3, photos: ['https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=800&q=80'] }
+    ]
+  },
+  'goa-mock-4': {
+    property: {
+      id: 'goa-mock-4',
+      name: 'Summit Calangute Resort & Spa',
+      location: 'Calangute, Goa',
+      state: 'Goa',
+      story: 'Quiet, peaceful and yet close to the beach, Summit Calangute is the perfect choice for wellness and relaxation. Treat yourself to the Ayurvedic spa treatments or take a refreshing dip in our pool.',
+      angle_tags: ['Experience-Driven'],
+      amenities: ['Swimming pool', 'Ayurvedic spa', 'Bar', 'Restaurant', 'WiFi', 'Air conditioning'],
+      cover_image_url: 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1400&q=80',
+      gallery_urls: [
+        'https://images.unsplash.com/photo-1499363536502-87642509e31b?auto=format&fit=crop&w=1200&q=80'
+      ],
+      status: 'live'
+    },
+    roomTypes: [
+      { id: 'goa-mock-4-r1', name: 'Standard Room', description: 'Comfortable double bed room with basic amenities.', base_price: 2135, max_guests: 2, photos: ['https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=800&q=80'] },
+      { id: 'goa-mock-4-r2', name: 'Family Suite Room', description: 'Large spacious double bed suite for 4 guests.', base_price: 3600, max_guests: 4, photos: ['https://images.unsplash.com/photo-1499363536502-87642509e31b?auto=format&fit=crop&w=800&q=80'] }
+    ]
+  }
+};
+
 async function init() {
   if (!propertyId) { window.location.href = '/properties.html'; return; }
 
@@ -25,10 +109,21 @@ async function init() {
   setupNav();
 
   try {
-    [property, roomTypes] = await Promise.all([
-      fetchPropertyById(propertyId),
-      fetchRoomTypes(propertyId),
-    ]);
+    if (propertyId.startsWith('goa-mock-')) {
+      const mock = MOCK_GOA_PROPERTIES_DETAILS[propertyId];
+      if (!mock) {
+        document.getElementById('property-loading').style.display = 'none';
+        document.getElementById('property-error').style.display = 'block';
+        return;
+      }
+      property = mock.property;
+      roomTypes = mock.roomTypes;
+    } else {
+      [property, roomTypes] = await Promise.all([
+        fetchPropertyById(propertyId),
+        fetchRoomTypes(propertyId),
+      ]);
+    }
 
     if (!property || property.status !== 'live') {
       document.getElementById('property-loading').style.display = 'none';
@@ -241,12 +336,15 @@ async function loadCalendarMonth(date) {
   document.getElementById('cal-month-title').textContent =
     date.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
 
-  if (selectedRoom) {
+  if (selectedRoom && !selectedRoom.id.startsWith('goa-mock-')) {
     try {
       availabilityMap = await fetchAvailability(selectedRoom.id, startStr, endStr);
     } catch (e) {
       availabilityMap = new Map();
     }
+  } else {
+    // For mock properties, all dates are available
+    availabilityMap = new Map();
   }
 
   renderCalendarGrid(year, month);
