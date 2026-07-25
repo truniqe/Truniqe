@@ -1897,20 +1897,19 @@ select.search-input {
 }
 
 .search-bar.rectangular-bar .search-btn {
-  background: #0073ff !important;
+  background: #1a1a2e !important;
   color: #FFFFFF !important;
   border-radius: 8px !important;
-  padding: 16px 36px !important;
-  font-weight: 700;
-  font-size: 15px;
-  box-shadow: 0 6px 18px rgba(0, 115, 255, 0.3) !important;
-  border: none;
+  border: none !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  transition: all 200ms ease !important;
   margin-left: 12px;
 }
 
 .search-bar.rectangular-bar .search-btn:hover {
-  background: #0060d6 !important;
-  box-shadow: 0 8px 24px rgba(0, 115, 255, 0.45) !important;
+  background: #c5a880 !important;
+  box-shadow: 0 8px 24px rgba(26, 26, 46, 0.18) !important;
   transform: translateY(-1px) scale(1.01);
 }
 
@@ -2616,7 +2615,7 @@ select.search-input {
   color: #FFFFFF !important;
   padding: 12px 20px 12px 16px;
   border-radius: 30px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -2626,6 +2625,13 @@ select.search-input {
   text-decoration: none;
   transition: transform 0.2s, background 0.2s;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  animation: pulseShadow 2s infinite;
+}
+
+@keyframes pulseShadow {
+  0% { box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4); }
+  50% { box-shadow: 0 4px 28px rgba(37, 211, 102, 0.7); }
+  100% { box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4); }
 }
 
 .whatsapp-widget-floating:hover {
