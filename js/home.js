@@ -100,6 +100,7 @@ function setupSearch() {
   const roomsInput = document.getElementById('search-rooms');
   const adultsInput = document.getElementById('search-adults');
   const childrenInput = document.getElementById('search-children');
+  const infantsInput = document.getElementById('search-infants');
   const petsInput = document.getElementById('search-pets');
 
   // Trigger Fields
@@ -121,6 +122,7 @@ function setupSearch() {
   let rooms = parseInt(roomsInput?.value || '1', 10);
   let adults = parseInt(adultsInput?.value || '2', 10);
   let children = parseInt(childrenInput?.value || '0', 10);
+  let infants = parseInt(infantsInput?.value || '0', 10);
   let pets = petsInput?.value === 'true';
 
   // Set initial display
@@ -317,6 +319,10 @@ function setupSearch() {
   const btnChildrenInc = document.getElementById('btn-children-inc');
   const valChildren = document.getElementById('val-children');
 
+  const btnInfantsDec = document.getElementById('btn-infants-dec');
+  const btnInfantsInc = document.getElementById('btn-infants-inc');
+  const valInfants = document.getElementById('val-infants');
+
   const chkPets = document.getElementById('chk-pets');
   const btnGuestsApply = document.getElementById('btn-guests-apply');
 
@@ -329,6 +335,9 @@ function setupSearch() {
   btnChildrenDec?.addEventListener('click', (e) => { e.stopPropagation(); if (children > 0) { children--; syncGuestsUI(); } });
   btnChildrenInc?.addEventListener('click', (e) => { e.stopPropagation(); if (children < 10) { children++; syncGuestsUI(); } });
 
+  btnInfantsDec?.addEventListener('click', (e) => { e.stopPropagation(); if (infants > 0) { infants--; syncGuestsUI(); } });
+  btnInfantsInc?.addEventListener('click', (e) => { e.stopPropagation(); if (infants < 10) { infants++; syncGuestsUI(); } });
+
   btnGuestsApply?.addEventListener('click', (e) => {
     e.stopPropagation();
     pets = chkPets ? chkPets.checked : false;
@@ -337,6 +346,7 @@ function setupSearch() {
     if (roomsInput) roomsInput.value = rooms;
     if (adultsInput) adultsInput.value = adults;
     if (childrenInput) childrenInput.value = children;
+    if (infantsInput) infantsInput.value = infants;
     if (petsInput) petsInput.value = pets;
 
     updateGuestsDisplay();
@@ -347,6 +357,7 @@ function setupSearch() {
     if (valRooms) valRooms.textContent = rooms;
     if (valAdults) valAdults.textContent = adults;
     if (valChildren) valChildren.textContent = children;
+    if (valInfants) valInfants.textContent = infants;
     if (chkPets) chkPets.checked = pets;
 
     // Disabled styles
@@ -356,11 +367,13 @@ function setupSearch() {
     btnAdultsInc?.classList.toggle('disabled', adults >= 20);
     btnChildrenDec?.classList.toggle('disabled', children <= 0);
     btnChildrenInc?.classList.toggle('disabled', children >= 10);
+    btnInfantsDec?.classList.toggle('disabled', infants <= 0);
+    btnInfantsInc?.classList.toggle('disabled', infants >= 10);
   }
 
   function updateGuestsDisplay() {
     if (!displayGuests) return;
-    const totalGuests = adults + children;
+    const totalGuests = adults + children + infants;
     const roomStr = `${rooms} Room${rooms > 1 ? 's' : ''}`;
     const guestStr = `${totalGuests} Guest${totalGuests > 1 ? 's' : ''}`;
     const petsStr = pets ? ', 🐾' : '';
@@ -377,11 +390,12 @@ function setupSearch() {
     if (selectedCheckOut) params.set('checkout', selectedCheckOut);
     
     // totalGuests for compat with existing search params parser
-    const totalGuests = adults + children;
+    const totalGuests = adults + children + infants;
     params.set('guests', totalGuests);
     params.set('rooms', rooms);
     params.set('adults', adults);
     params.set('children', children);
+    params.set('infants', infants);
     params.set('pets', pets ? 'true' : 'false');
 
     window.location.href = `/properties.html?${params}`;
