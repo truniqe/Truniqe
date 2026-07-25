@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stay Details — Truniqe</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛</text></svg>"
+    />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages.css" />
+    <style>
+      .property-detail-layout {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: calc(var(--nav-height) + var(--sp-8)) var(--sp-6) var(--sp-16);
+      }
+
+      .detail-header {
+        margin-bottom: 24px;
+      }
+
+      .detail-breadcrumb {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+      }
+
+      .detail-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .detail-title {
+        font-family: var(--font-heading);
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: var(--navy);
+        margin: 0 0 4px 0;
+      }
+
+      .detail-location {
+        font-size: 14px;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .detail-main-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: var(--sp-10);
+        margin-top: 32px;
+      }
+
+      .detail-content-section {
+        display: flex;
+        flex-direction: column;
+        gap: 36px;
+      }
+
+      .curator-note-box {
+        background: #f8f6f0;
+        border-radius: var(--radius-xl);
+        padding: 32px;
+        border: 1px solid rgba(26, 26, 46, 0.05);
+        position: relative;
+      }
+
+      .curator-quote-mark {
+        font-family: var(--font-heading);
+        font-size: 4rem;
+        color: var(--gold-light);
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        line-height: 1;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      .curator-note-title {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        color: var(--navy);
+        margin-bottom: 12px;
+        font-style: italic;
+      }
+
+      .curator-note-text {
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--text-secondary);
+      }
+
+      .amenities-section h3,
+      .rooms-section h3,
+      .calendar-section h3 {
+        font-family: var(--font-heading);
+        font-size: 1.8rem;
+        color: var(--navy);
+        margin-bottom: 20px;
+      }
+
+      .amenities-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 16px;
+      }
+
+      .amenity-chip {
+        padding: 10px 16px;
+        background: #ffffff;
+        border: 1px solid rgba(26, 26, 46, 0.08);
+        border-radius: 8px;
+        font-size: 13px;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Sidebar Booking CTA */
+      .booking-sidebar-card {
+        background: #ffffff;
+        border: 1px solid rgba(26, 26, 46, 0.08);
+        border-radius: var(--radius-xl);
+        padding: 28px;
+        box-shadow: var(--shadow-md);
+        position: sticky;
+        top: calc(var(--nav-height) + 24px);
+      }
+
+      .cta-price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(26, 26, 46, 0.06);
+      }
+
+      .starting-label {
+        font-size: 12px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .starting-price {
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--navy);
+      }
+
+      .cta-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .cta-field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .cta-field-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--navy);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .cta-input-display {
+        padding: 12px;
+        background: var(--surface);
+        border-radius: 8px;
+        font-size: 14px;
+        color: var(--text-secondary);
+        font-weight: 500;
+        border: 1px solid rgba(26, 26, 46, 0.05);
+      }
+
+      .cta-price-breakdown {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 24px;
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+
+      .breakdown-row {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .breakdown-total {
+        font-weight: 700;
+        color: var(--navy);
+        font-size: 16px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(26, 26, 46, 0.06);
+      }
+
+      /* Room Selection Card list */
+      .rooms-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .room-card {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        background: #ffffff;
+        border-radius: 12px;
+        border: 1.5px solid rgba(26, 26, 46, 0.08);
+        overflow: hidden;
+        transition: all 200ms;
+      }
+
+      .room-card.selected {
+        border-color: #0073ff;
+        box-shadow: 0 4px 16px rgba(0, 115, 255, 0.1);
+      }
+
+      .room-card-image {
+        height: 100%;
+        min-height: 150px;
+        background: var(--surface-dark);
+      }
+
+      .room-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .room-card-body {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .room-card-name {
+        font-size: 1.25rem;
+        font-family: var(--font-heading);
+        font-weight: 600;
+        color: var(--navy);
+        margin: 0 0 6px 0;
+      }
+
+      .room-card-desc {
+        font-size: 13px;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+
+      .room-card-meta {
+        font-size: 12px;
+        color: var(--text-muted);
+        font-weight: 500;
+        margin-bottom: 12px;
+      }
+
+      .room-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .room-price {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--navy);
+        font-family: var(--font-heading);
+      }
+
+      .room-price small {
+        font-size: 11px;
+        color: var(--text-muted);
+        font-weight: normal;
+      }
+
+      /* Lightbox styles */
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.95);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 250ms;
+      }
+
+      .lightbox.open {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .lightbox-img {
+        max-width: 90vw;
+        max-height: 85vh;
+        object-fit: contain;
+      }
+
+      /* Loading and Error states */
+      .loading-state,
+      .error-state {
+        text-align: center;
+        padding: 100px 24px;
+      }
+
+      @media (max-width: 768px) {
+        .detail-main-grid {
+          grid-template-columns: 1fr;
+        }
+        .room-card {
+          grid-template-columns: 1fr;
+        }
+        .room-card-image {
+          height: 160px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ===================== NAVIGATION ===================== -->
+    <nav class="nav nav-light" id="main-nav" role="navigation" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">Trun<span>iqe</span></a>
+        <div class="nav-links">
+          <a href="/properties.html" class="nav-link active">Stays</a>
+          <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link">Collections</a>
+          <a href="/our-story.html" class="nav-link">Our Story</a>
+        </div>
+        <div class="nav-actions">
+          <a href="/auth.html" class="btn btn-secondary btn-sm" id="nav-auth-btn">Sign In</a>
+          <div id="nav-user-menu" style="display: none; position: relative; align-items: center; gap: var(--sp-3);">
+            <a href="/dashboard/index.html" class="nav-link" style="color: var(--text-secondary)">My Bookings</a>
+            <div class="nav-avatar-placeholder" id="nav-user-avatar">
+              <span id="nav-user-initial">U</span>
+            </div>
+            <div id="nav-user-dropdown" style="display: none; position: absolute; top: 100%; right: 0; margin-top: 8px; background: white; border-radius: 12px; box-shadow: var(--shadow-lg); min-width: 180px; overflow: hidden; z-index: 200;">
+              <div style="padding: 12px 16px; border-bottom: 1px solid var(--surface-dark);">
+                <div id="nav-user-name" style="font-weight: 600; font-size: 14px; color: var(--navy)"></div>
+              </div>
+              <a href="/dashboard/index.html" style="display: block; padding: 10px 16px; font-size: 14px; color: var(--text-secondary);">My Bookings</a>
+              <button id="nav-signout-btn" style="width: 100%; text-align: left; padding: 10px 16px; font-size: 14px; color: var(--error); background: none; border: none; cursor: pointer;">Sign Out</button>
+            </div>
+          </div>
+          <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div class="nav-mobile" id="nav-mobile" role="dialog" aria-label="Mobile navigation">
+      <a href="/properties.html" class="nav-link">Stays</a>
+      <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link">Collections</a>
+      <a href="/our-story.html" class="nav-link">Our Story</a>
+    </div>
+
+    <!-- ===================== LOADING STATE ===================== -->
+    <div class="loading-state" id="property-loading">
+      <div class="spinner"></div>
+      <p style="color: var(--text-muted); margin-top: 16px;">Curating stay details...</p>
+    </div>
+
+    <!-- ===================== ERROR STATE ===================== -->
+    <div class="error-state" id="property-error" style="display: none;">
+      <div style="font-size: 48px; margin-bottom: 16px;">🗺️</div>
+      <h2 style="font-family: var(--font-heading); font-size: 2rem; color: var(--navy); margin-bottom: 8px;">Stay Not Found</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px;">The property you are looking for is either unavailable or has been archived.</p>
+      <a href="/properties.html" class="btn btn-primary">Browse All Stays</a>
+    </div>
+
+    <!-- ===================== MAIN DETAIL CONTENT ===================== -->
+    <div class="property-detail-layout" id="property-content" style="display: none;">
+      <!-- Header -->
+      <header class="detail-header">
+        <div class="detail-breadcrumb">
+          Stays &gt; <span id="property-breadcrumb">Samode Haveli</span>
+        </div>
+        <div class="detail-title-row">
+          <div>
+            <h1 class="detail-title" id="property-title">Samode Haveli</h1>
+            <div class="detail-location">
+              <span>📍</span> <span id="property-location">Jaipur, Rajasthan</span>
+            </div>
+          </div>
+          <div id="property-tags" style="display: flex; gap: 8px;">
+            <!-- tag chips populate here -->
+          </div>
+        </div>
+      </header>
+
+      <!-- Gallery Grid -->
+      <div id="property-gallery" style="margin-top: 24px;">
+        <!-- dynamic gallery grids render here -->
+      </div>
+
+      <!-- Main Columns Grid -->
+      <div class="detail-main-grid">
+        <!-- Left: Info, Rooms, Calendar -->
+        <div class="detail-content-section">
+          <!-- Curator's Note -->
+          <section class="curator-note-box">
+            <span class="curator-quote-mark">“</span>
+            <h3 class="curator-note-title">Curator's Note</h3>
+            <p class="curator-note-text" id="property-curators-note">
+              Long before Instagram discovered Jaipur...
+            </p>
+          </section>
+
+          <!-- Amenities -->
+          <section class="amenities-section">
+            <h3>Highlights & Amenities</h3>
+            <div class="amenities-grid" id="property-amenities">
+              <!-- amenity chips populate here -->
+            </div>
+          </section>
+
+          <!-- Rooms -->
+          <section class="rooms-section" id="rooms-section">
+            <h3>Choose Your Room</h3>
+            <div class="rooms-list" id="rooms-container">
+              <!-- room type selection cards render here -->
+            </div>
+          </section>
+
+          <!-- Calendar -->
+          <section class="calendar-section">
+            <h3>Select Booking Dates</h3>
+            <div class="calendar" style="max-width: 480px; margin-top: 16px;">
+              <div class="calendar-header">
+                <button type="button" class="calendar-nav-btn" id="cal-prev">←</button>
+                <span class="calendar-title" id="cal-month-title">July 2026</span>
+                <button type="button" class="calendar-nav-btn" id="cal-next">→</button>
+              </div>
+              <div class="calendar-weekdays">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+              </div>
+              <div class="calendar-grid" id="cal-grid"></div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Right: Floating Booking CTA -->
+        <aside class="booking-sidebar-column">
+          <div class="booking-sidebar-card" id="booking-cta">
+            <div class="cta-price-row">
+              <span class="starting-label">Starting From</span>
+              <span class="starting-price" id="cta-starting-price">₹ 9,500</span>
+            </div>
+
+            <div class="cta-fields">
+              <div class="cta-field-group">
+                <span class="cta-field-label">Selected Room</span>
+                <div class="cta-input-display" id="cta-room-name" style="font-weight: 700;">Select a Room Above</div>
+              </div>
+              <div class="cta-field-group">
+                <span class="cta-field-label">Check-In</span>
+                <div class="cta-input-display" id="cta-checkin-display">Select on Calendar</div>
+                <input type="hidden" id="cta-checkin">
+              </div>
+              <div class="cta-field-group">
+                <span class="cta-field-label">Check-Out</span>
+                <div class="cta-input-display" id="cta-checkout-display">Select on Calendar</div>
+                <input type="hidden" id="cta-checkout">
+              </div>
+            </div>
+
+            <div class="cta-price-breakdown">
+              <div class="breakdown-row">
+                <span>Nights</span>
+                <span id="cta-nights">—</span>
+              </div>
+              <div class="breakdown-row breakdown-total">
+                <span>Total (excl. taxes)</span>
+                <span id="cta-total">—</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-full btn-lg" id="book-now-btn" disabled>
+              Book Now
+            </button>
+            <button class="btn btn-ghost btn-full" id="scroll-to-rooms-btn" style="margin-top: 8px; font-size: 13px;">
+              View all room options ↓
+            </button>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- ===================== GALLERY LIGHTBOX ===================== -->
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+      <button class="lightbox-nav prev" onclick="lightboxPrev()">‹</button>
+      <img src="" class="lightbox-img" id="lightbox-img" alt="Lightbox Preview" />
+      <button class="lightbox-nav next" onclick="lightboxNext()">›</button>
+      <div class="lightbox-counter" id="lightbox-counter">1 / 1</div>
+    </div>
+
+    <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+    <script type="module" src="/js/property.js"></script>
+  </body>
+</html>
