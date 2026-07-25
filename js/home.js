@@ -65,36 +65,325 @@ function setupScrollBehavior() {
 }
 
 // ---- Search ----
+const HOLIDAYS_2026 = {
+  '2026-07-16': 'Rath...',
+  '2026-07-26': 'Milad...',
+  '2026-07-28': 'Raks...',
+  '2026-08-15': 'Indep...',
+  '2026-08-26': 'Milad...',
+  '2026-08-27': 'Raks...',
+  '2026-08-28': 'Raks...',
+  '2026-08-29': 'Raks...',
+  '2026-08-30': 'Milad...'
+};
+
+function formatDisplayDate(dateStr) {
+  if (!dateStr) return 'Select Date';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${weekdays[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
 function setupSearch() {
   const form = document.getElementById('search-form');
   const destInput = document.getElementById('search-destination');
+  
+  // Hidden inputs & Display elements
   const checkinInput = document.getElementById('search-checkin');
   const checkoutInput = document.getElementById('search-checkout');
-  const guestsInput = document.getElementById('search-guests');
+  const displayCheckin = document.getElementById('display-checkin');
+  const displayCheckout = document.getElementById('display-checkout');
 
-  // Set min dates
-  const today = new Date().toISOString().split('T')[0];
-  if (checkinInput) checkinInput.min = today;
-  if (checkoutInput) checkoutInput.min = today;
+  const displayGuests = document.getElementById('display-guests');
+  const roomsInput = document.getElementById('search-rooms');
+  const adultsInput = document.getElementById('search-adults');
+  const childrenInput = document.getElementById('search-children');
+  const petsInput = document.getElementById('search-pets');
 
-  checkinInput?.addEventListener('change', () => {
-    if (checkoutInput) {
-      const nextDay = new Date(checkinInput.value);
-      nextDay.setDate(nextDay.getDate() + 1);
-      checkoutInput.min = nextDay.toISOString().split('T')[0];
-      if (checkoutInput.value && checkoutInput.value <= checkinInput.value) {
-        checkoutInput.value = nextDay.toISOString().split('T')[0];
-      }
+  // Trigger Fields
+  const fieldCheckin = document.getElementById('field-checkin');
+  const fieldCheckout = document.getElementById('field-checkout');
+  const fieldGuests = document.getElementById('field-guests');
+
+  // Popups
+  const calendarPopup = document.getElementById('calendar-popup');
+  const guestsPopup = document.getElementById('guests-popup');
+
+  // Calendar State
+  let calendarBaseDate = new Date(2026, 6, 1); // Start in July 2026 as in mockup
+  let selectedCheckIn = checkinInput?.value || '2026-07-26';
+  let selectedCheckOut = checkoutInput?.value || '2026-07-27';
+  let isSelectingStart = true;
+
+  // Guest State
+  let rooms = parseInt(roomsInput?.value || '1', 10);
+  let adults = parseInt(adultsInput?.value || '2', 10);
+  let children = parseInt(childrenInput?.value || '0', 10);
+  let pets = petsInput?.value === 'true';
+
+  // Set initial display
+  if (displayCheckin && selectedCheckIn) displayCheckin.textContent = formatDisplayDate(selectedCheckIn);
+  if (displayCheckout && selectedCheckOut) displayCheckout.textContent = formatDisplayDate(selectedCheckOut);
+  updateGuestsDisplay();
+
+  // ---- Popup Toggles ----
+  fieldCheckin?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleCalendar(true);
+    toggleGuests(false);
+  });
+
+  fieldCheckout?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleCalendar(true);
+    toggleGuests(false);
+  });
+
+  fieldGuests?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleGuests(true);
+    toggleCalendar(false);
+  });
+
+  // Close popups on click outside
+  document.addEventListener('click', (e) => {
+    if (!calendarPopup?.contains(e.target) && !fieldCheckin?.contains(e.target) && !fieldCheckout?.contains(e.target)) {
+      toggleCalendar(false);
+    }
+    if (!guestsPopup?.contains(e.target) && !fieldGuests?.contains(e.target)) {
+      toggleGuests(false);
     }
   });
 
+  function toggleCalendar(show) {
+    if (!calendarPopup) return;
+    if (show) {
+      calendarPopup.style.display = 'block';
+      fieldCheckin?.classList.add('active');
+      fieldCheckout?.classList.add('active');
+      renderDoubleCalendar();
+    } else {
+      calendarPopup.style.display = 'none';
+      fieldCheckin?.classList.remove('active');
+      fieldCheckout?.classList.remove('active');
+    }
+  }
+
+  function toggleGuests(show) {
+    if (!guestsPopup) return;
+    if (show) {
+      guestsPopup.style.display = 'block';
+      fieldGuests?.classList.add('active');
+      syncGuestsUI();
+    } else {
+      guestsPopup.style.display = 'none';
+      fieldGuests?.classList.remove('active');
+    }
+  }
+
+  // ---- Double Calendar Render & Click Handlers ----
+  const btnPrevMonth = document.getElementById('btn-prev-month');
+  const btnNextMonth = document.getElementById('btn-next-month');
+
+  btnPrevMonth?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    calendarBaseDate.setMonth(calendarBaseDate.getMonth() - 1);
+    renderDoubleCalendar();
+  });
+
+  btnNextMonth?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    calendarBaseDate.setMonth(calendarBaseDate.getMonth() + 1);
+    renderDoubleCalendar();
+  });
+
+  function renderDoubleCalendar() {
+    const leftMonthTitle = document.getElementById('title-left-month');
+    const rightMonthTitle = document.getElementById('title-right-month');
+    const leftGrid = document.getElementById('days-left-month');
+    const rightGrid = document.getElementById('days-right-month');
+
+    if (!leftGrid || !rightGrid) return;
+
+    // Calculate months
+    const leftMonthDate = new Date(calendarBaseDate.getFullYear(), calendarBaseDate.getMonth(), 1);
+    const rightMonthDate = new Date(calendarBaseDate.getFullYear(), calendarBaseDate.getMonth() + 1, 1);
+
+    if (leftMonthTitle) leftMonthTitle.textContent = leftMonthDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    if (rightMonthTitle) rightMonthTitle.textContent = rightMonthDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+    renderMonthGrid(leftMonthDate, leftGrid);
+    renderMonthGrid(rightMonthDate, rightGrid);
+  }
+
+  function renderMonthGrid(monthDate, gridElement) {
+    gridElement.innerHTML = '';
+    const year = monthDate.getFullYear();
+    const month = monthDate.getMonth();
+
+    const firstDayIndex = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    // Empty cells before the 1st
+    for (let i = 0; i < firstDayIndex; i++) {
+      const emptyCell = document.createElement('div');
+      emptyCell.className = 'day-cell muted';
+      gridElement.appendChild(emptyCell);
+    }
+
+    const todayStr = new Date().toISOString().split('T')[0];
+
+    // Day cells
+    for (let day = 1; day <= totalDays; day++) {
+      const cell = document.createElement('div');
+      cell.className = 'day-cell';
+      
+      const dayDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      
+      cell.innerHTML = `<span class="day-number">${day}</span>`;
+      
+      // Holiday label
+      if (HOLIDAYS_2026[dayDateStr]) {
+        const holLabel = document.createElement('span');
+        holLabel.className = 'day-holiday-label';
+        holLabel.textContent = HOLIDAYS_2026[dayDateStr];
+        cell.appendChild(holLabel);
+      }
+
+      // Range Highlight & Selection States
+      if (dayDateStr === selectedCheckIn) {
+        cell.classList.add('selected-start');
+      } else if (dayDateStr === selectedCheckOut) {
+        cell.classList.add('selected-end');
+      } else if (selectedCheckIn && selectedCheckOut && dayDateStr > selectedCheckIn && dayDateStr < selectedCheckOut) {
+        cell.classList.add('in-range');
+      }
+
+      // Disable past dates
+      if (dayDateStr < todayStr) {
+        cell.classList.add('disabled');
+      } else {
+        cell.addEventListener('click', (e) => {
+          e.stopPropagation();
+          handleDateSelection(dayDateStr);
+        });
+      }
+
+      gridElement.appendChild(cell);
+    }
+  }
+
+  function handleDateSelection(dateStr) {
+    if (isSelectingStart) {
+      selectedCheckIn = dateStr;
+      selectedCheckOut = '';
+      isSelectingStart = false;
+      renderDoubleCalendar();
+    } else {
+      if (dateStr <= selectedCheckIn) {
+        selectedCheckIn = dateStr;
+        selectedCheckOut = '';
+        isSelectingStart = false;
+      } else {
+        selectedCheckOut = dateStr;
+        isSelectingStart = true;
+        
+        // Save values
+        if (checkinInput) checkinInput.value = selectedCheckIn;
+        if (checkoutInput) checkoutInput.value = selectedCheckOut;
+        
+        // Update display text
+        if (displayCheckin) displayCheckin.textContent = formatDisplayDate(selectedCheckIn);
+        if (displayCheckout) displayCheckout.textContent = formatDisplayDate(selectedCheckOut);
+        
+        toggleCalendar(false);
+      }
+      renderDoubleCalendar();
+    }
+  }
+
+  // ---- Guests Counter Increments / Decrements ----
+  const btnRoomsDec = document.getElementById('btn-rooms-dec');
+  const btnRoomsInc = document.getElementById('btn-rooms-inc');
+  const valRooms = document.getElementById('val-rooms');
+
+  const btnAdultsDec = document.getElementById('btn-adults-dec');
+  const btnAdultsInc = document.getElementById('btn-adults-inc');
+  const valAdults = document.getElementById('val-adults');
+
+  const btnChildrenDec = document.getElementById('btn-children-dec');
+  const btnChildrenInc = document.getElementById('btn-children-inc');
+  const valChildren = document.getElementById('val-children');
+
+  const chkPets = document.getElementById('chk-pets');
+  const btnGuestsApply = document.getElementById('btn-guests-apply');
+
+  btnRoomsDec?.addEventListener('click', (e) => { e.stopPropagation(); if (rooms > 1) { rooms--; syncGuestsUI(); } });
+  btnRoomsInc?.addEventListener('click', (e) => { e.stopPropagation(); if (rooms < 8) { rooms++; syncGuestsUI(); } });
+
+  btnAdultsDec?.addEventListener('click', (e) => { e.stopPropagation(); if (adults > 1) { adults--; syncGuestsUI(); } });
+  btnAdultsInc?.addEventListener('click', (e) => { e.stopPropagation(); if (adults < 20) { adults++; syncGuestsUI(); } });
+
+  btnChildrenDec?.addEventListener('click', (e) => { e.stopPropagation(); if (children > 0) { children--; syncGuestsUI(); } });
+  btnChildrenInc?.addEventListener('click', (e) => { e.stopPropagation(); if (children < 10) { children++; syncGuestsUI(); } });
+
+  btnGuestsApply?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    pets = chkPets ? chkPets.checked : false;
+
+    // Save states to inputs
+    if (roomsInput) roomsInput.value = rooms;
+    if (adultsInput) adultsInput.value = adults;
+    if (childrenInput) childrenInput.value = children;
+    if (petsInput) petsInput.value = pets;
+
+    updateGuestsDisplay();
+    toggleGuests(false);
+  });
+
+  function syncGuestsUI() {
+    if (valRooms) valRooms.textContent = rooms;
+    if (valAdults) valAdults.textContent = adults;
+    if (valChildren) valChildren.textContent = children;
+    if (chkPets) chkPets.checked = pets;
+
+    // Disabled styles
+    btnRoomsDec?.classList.toggle('disabled', rooms <= 1);
+    btnRoomsInc?.classList.toggle('disabled', rooms >= 8);
+    btnAdultsDec?.classList.toggle('disabled', adults <= 1);
+    btnAdultsInc?.classList.toggle('disabled', adults >= 20);
+    btnChildrenDec?.classList.toggle('disabled', children <= 0);
+    btnChildrenInc?.classList.toggle('disabled', children >= 10);
+  }
+
+  function updateGuestsDisplay() {
+    if (!displayGuests) return;
+    const totalGuests = adults + children;
+    const roomStr = `${rooms} Room${rooms > 1 ? 's' : ''}`;
+    const guestStr = `${totalGuests} Guest${totalGuests > 1 ? 's' : ''}`;
+    const petsStr = pets ? ', 🐾' : '';
+    displayGuests.textContent = `${roomStr}, ${guestStr}${petsStr}`;
+  }
+
+  // ---- Form Submission ----
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
     const params = new URLSearchParams();
-    if (destInput?.value)    params.set('destination', destInput.value);
-    if (checkinInput?.value) params.set('checkin', checkinInput.value);
-    if (checkoutInput?.value) params.set('checkout', checkoutInput.value);
-    if (guestsInput?.value)  params.set('guests', guestsInput.value);
+    
+    if (destInput?.value) params.set('destination', destInput.value);
+    if (selectedCheckIn) params.set('checkin', selectedCheckIn);
+    if (selectedCheckOut) params.set('checkout', selectedCheckOut);
+    
+    // totalGuests for compat with existing search params parser
+    const totalGuests = adults + children;
+    params.set('guests', totalGuests);
+    params.set('rooms', rooms);
+    params.set('adults', adults);
+    params.set('children', children);
+    params.set('pets', pets ? 'true' : 'false');
+
     window.location.href = `/properties.html?${params}`;
   });
 }
