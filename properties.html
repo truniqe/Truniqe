@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="/css/components.css" />
     <link rel="stylesheet" href="/css/pages.css" />
     <style>
+      body {
+        background-color: #f7f4ef;
+      }
       /* Layout split for Search Stays Page */
       .properties-layout {
         max-width: var(--container-max);
@@ -449,6 +452,7 @@
               <input type="hidden" id="search-rooms" value="1">
               <input type="hidden" id="search-adults" value="2">
               <input type="hidden" id="search-children" value="0">
+              <input type="hidden" id="search-infants" value="0">
               <input type="hidden" id="search-pets" value="false">
             </div>
 
@@ -527,12 +531,23 @@
               <div class="guests-row">
                 <div class="guests-label-box">
                   <span class="guests-title">Children</span>
-                  <span class="guests-subtitle">0 - 17 Years Old</span>
+                  <span class="guests-subtitle">5 - 17 Years Old</span>
                 </div>
                 <div class="counter-controls">
                   <button type="button" class="counter-btn" id="btn-children-dec">-</button>
                   <span class="counter-val" id="val-children">0</span>
                   <button type="button" class="counter-btn" id="btn-children-inc">+</button>
+                </div>
+              </div>
+              <div class="guests-row">
+                <div class="guests-label-box">
+                  <span class="guests-title">Infants</span>
+                  <span class="guests-subtitle">0 - 5 Years Old</span>
+                </div>
+                <div class="counter-controls">
+                  <button type="button" class="counter-btn" id="btn-infants-dec">-</button>
+                  <span class="counter-val" id="val-infants">0</span>
+                  <button type="button" class="counter-btn" id="btn-infants-inc">+</button>
                 </div>
               </div>
               <p class="guests-popup-info-text">Please provide right number of children along with their right age for best options and prices.</p>
@@ -585,26 +600,17 @@
           <h4 class="filter-title">Suggested For You</h4>
           <div class="filter-list">
             <label class="filter-checkbox-label">
-              <input type="checkbox" name="suggested" value="rush-deal">
-              <span>Rush Deal</span>
+              <input type="checkbox" name="suggested" value="resort">
+              <span>Resorts</span>
             </label>
             <label class="filter-checkbox-label">
-              <input type="checkbox" name="suggested" value="last-minute">
-              <span>Last Minute Deals</span>
+              <input type="checkbox" name="suggested" value="couples">
+              <span>Unmarried Couples Allowed</span>
             </label>
             <label class="filter-checkbox-label">
-              <input type="checkbox" name="suggested" value="5-star">
-              <span>5 Star</span>
+              <input type="checkbox" name="suggested" value="cancellation">
+              <span>Free Cancellation</span>
             </label>
-            <label class="filter-checkbox-label">
-              <input type="checkbox" name="suggested" value="beachfront">
-              <span>Beachfront Properties</span>
-            </label>
-            <label class="filter-checkbox-label">
-              <input type="checkbox" name="suggested" value="north-goa">
-              <span>North Goa</span>
-            </label>
-            <span class="filter-more-link">Show 10 more</span>
           </div>
         </div>
 
@@ -766,9 +772,6 @@
           
           <div class="stays-heading-row">
             <h1 class="stays-title-heading" id="result-count"><strong>...</strong> curated stays</h1>
-            <button class="stays-tips-badge" onclick="window.open('/our-story.html')">
-              💡 <span>Explore Travel Tips</span> →
-            </button>
           </div>
 
           <!-- Sort Bar -->
@@ -778,15 +781,6 @@
             <span class="sort-chip" data-sort="price_desc">Price (High to Low)</span>
             <span class="sort-chip" data-sort="rating_desc">User Rating (Highest)</span>
             <span class="sort-chip" data-sort="best_rated">Lowest Price & Best Rated</span>
-          </div>
-
-          <!-- OneCircle Promo Banner -->
-          <div class="promo-banner">
-            <div class="promo-icon">⭕</div>
-            <div class="promo-text">
-              <strong>OneCircle Rewards</strong>
-              Earn & redeem points on eligible properties for additional savings! <span class="promo-link" onclick="alert('Welcome to OneCircle Rewards! Sign in or create an account to start earning points.')">Learn More</span>
-            </div>
           </div>
         </div>
 
