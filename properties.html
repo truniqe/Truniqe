@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stays in Goa — Truniqe</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛</text></svg>"
+    />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages.css" />
+    <style>
+      /* Layout split for Search Stays Page */
+      .properties-layout {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: calc(var(--nav-height) + 120px) var(--sp-6) var(--sp-16);
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: var(--sp-8);
+        align-items: start;
+      }
+
+      .top-search-strip {
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        background: #f7f4ef;
+        padding: 16px 0;
+        z-index: 100;
+        border-bottom: 1px solid rgba(26, 26, 46, 0.08);
+      }
+
+      .top-search-inner {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: 0 var(--sp-6);
+      }
+
+      /* Filter Sidebar Styles */
+      .filter-sidebar {
+        background: #ffffff;
+        border-radius: 12px;
+        border: 1px solid rgba(26, 26, 46, 0.08);
+        box-shadow: var(--shadow-sm);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .map-card {
+        background: linear-gradient(rgba(26, 26, 46, 0.1), rgba(26, 26, 46, 0.45)), url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=400&q=80');
+        background-size: cover;
+        background-position: center;
+        border-radius: var(--radius-md);
+        height: 110px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .map-card-btn {
+        background: #ffffff;
+        color: var(--navy);
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        box-shadow: var(--shadow-md);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        pointer-events: none;
+      }
+
+      .filter-search-box {
+        position: relative;
+      }
+
+      .filter-search-input {
+        width: 100%;
+        padding: 10px 36px;
+        border-radius: 8px;
+        border: 1px solid rgba(26, 26, 46, 0.12);
+        font-size: 13px;
+        outline: none;
+      }
+
+      .filter-search-input:focus {
+        border-color: #0073ff;
+      }
+
+      .filter-search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 14px;
+      }
+
+      .filter-mic-icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .filter-block {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .filter-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--navy);
+        letter-spacing: -0.01em;
+        margin: 0;
+      }
+
+      .filter-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .filter-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 13px;
+        color: var(--text-secondary);
+        cursor: pointer;
+      }
+
+      .filter-checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .filter-checkbox-label input {
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+      }
+
+      .filter-count {
+        font-size: 11px;
+        color: var(--text-light);
+      }
+
+      .filter-more-link {
+        font-size: 12px;
+        color: #0073ff;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .filter-more-link:hover {
+        text-decoration: underline;
+      }
+
+      /* Budget Inputs */
+      .budget-inputs-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .budget-input-field {
+        width: 100%;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid rgba(26, 26, 46, 0.12);
+        font-size: 13px;
+        color: var(--navy);
+        outline: none;
+      }
+
+      .budget-go-btn {
+        background: #0073ff;
+        color: #ffffff;
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+      /* Dropdown lists inside sidebar */
+      .filter-dropdown-trigger {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .filter-dropdown-icon {
+        font-size: 10px;
+        color: var(--text-muted);
+        transition: transform 0.2s;
+      }
+
+      .filter-dropdown-icon.open {
+        transform: rotate(180deg);
+      }
+
+      .filter-dropdown-content {
+        padding-top: 10px;
+        padding-left: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      /* Stays listing header */
+      .stays-list-header {
+        margin-bottom: 20px;
+      }
+
+      .stays-breadcrumb {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+      }
+
+      .stays-heading-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .stays-title-heading {
+        font-family: var(--font-heading);
+        font-size: 1.85rem;
+        font-weight: 600;
+        color: var(--navy);
+        margin: 0;
+      }
+
+      .stays-tips-badge {
+        background: #e3f2fd;
+        color: #1e88e5;
+        border: 1px solid rgba(30, 136, 229, 0.2);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* Horizontal sort bar */
+      .stays-sort-bar {
+        display: flex;
+        align-items: center;
+        background: #ffffff;
+        border-radius: 8px;
+        border: 1px solid rgba(26, 26, 46, 0.08);
+        padding: 4px;
+        overflow-x: auto;
+        white-space: nowrap;
+        gap: 4px;
+        margin-bottom: 20px;
+      }
+
+      .sort-chip {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 150ms;
+      }
+
+      .sort-chip:hover {
+        background: rgba(26, 26, 46, 0.03);
+        color: var(--navy);
+      }
+
+      .sort-chip.active {
+        background: #e3f2fd;
+        color: #0073ff;
+      }
+
+      /* OneCircle promo banner */
+      .promo-banner {
+        background: #e0f2f1;
+        border-radius: 12px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+        border: 1px solid rgba(0, 150, 136, 0.15);
+      }
+
+      .promo-icon {
+        font-size: 28px;
+        color: #009688;
+      }
+
+      .promo-text {
+        font-size: 13px;
+        color: var(--navy);
+      }
+
+      .promo-text strong {
+        font-size: 14px;
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      .promo-link {
+        color: #009688;
+        font-weight: 700;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      @media (max-width: 992px) {
+        .properties-layout {
+          grid-template-columns: 1fr;
+          padding-top: calc(var(--nav-height) + 180px);
+        }
+        .filter-sidebar {
+          display: none; /* simple toggle via JS on mobile */
+        }
+        .filter-sidebar.mobile-open {
+          display: flex;
+          position: fixed;
+          inset: 0;
+          top: var(--nav-height);
+          z-index: 150;
+          border-radius: 0;
+          overflow-y: auto;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ===================== NAVIGATION ===================== -->
+    <nav class="nav nav-solid" id="main-nav" role="navigation" aria-label="Main navigation">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">Trun<span>iqe</span></a>
+        <div class="nav-links">
+          <a href="/properties.html" class="nav-link active">Stays</a>
+          <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link">Collections</a>
+          <a href="/our-story.html" class="nav-link">Our Story</a>
+        </div>
+        <div class="nav-actions">
+          <a href="/auth.html" class="btn btn-secondary btn-sm" id="nav-auth-btn">Sign In</a>
+          <div id="nav-user-menu" style="display: none; position: relative; align-items: center; gap: var(--sp-3);">
+            <a href="/dashboard/index.html" class="nav-link" style="color: rgba(255, 255, 255, 0.8)">My Bookings</a>
+            <div class="nav-avatar-placeholder" id="nav-user-avatar">
+              <span id="nav-user-initial">U</span>
+            </div>
+            <div id="nav-user-dropdown" style="display: none; position: absolute; top: 100%; right: 0; margin-top: 8px; background: white; border-radius: 12px; box-shadow: var(--shadow-lg); min-width: 180px; overflow: hidden; z-index: 200;">
+              <div style="padding: 12px 16px; border-bottom: 1px solid var(--surface-dark);">
+                <div id="nav-user-name" style="font-weight: 600; font-size: 14px; color: var(--navy)"></div>
+              </div>
+              <a href="/dashboard/index.html" style="display: block; padding: 10px 16px; font-size: 14px; color: var(--text-secondary);">My Bookings</a>
+              <button id="nav-signout-btn" style="width: 100%; text-align: left; padding: 10px 16px; font-size: 14px; color: var(--error); background: none; border: none; cursor: pointer;">Sign Out</button>
+            </div>
+          </div>
+          <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div class="nav-mobile" id="nav-mobile" role="dialog" aria-label="Mobile navigation">
+      <a href="/properties.html" class="nav-link">Stays</a>
+      <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link">Collections</a>
+      <a href="/our-story.html" class="nav-link">Our Story</a>
+    </div>
+
+    <!-- ===================== SEARCH STRIP ===================== -->
+    <div class="top-search-strip">
+      <div class="top-search-inner">
+        <form id="search-form" style="position: relative;">
+          <div class="search-bar rectangular-bar">
+            <!-- Location Block -->
+            <div class="search-field" id="field-destination">
+              <span class="search-field-label">City, Property Name Or Location</span>
+              <input
+                type="text"
+                id="search-destination"
+                class="search-input"
+                placeholder="Rajasthan, Spiti, Goa…"
+                autocomplete="off"
+                aria-label="Destination"
+                value="Goa, India"
+              />
+              <span class="search-field-sub" id="sub-destination">India</span>
+            </div>
+
+            <!-- Check In Block -->
+            <div class="search-field dropdown-trigger" id="field-checkin" role="button" tabindex="0">
+              <span class="search-field-label">Check-In</span>
+              <span class="search-value-display" id="display-checkin">Sun, 26 Jul 2026</span>
+              <input type="hidden" id="search-checkin" value="2026-07-26">
+            </div>
+
+            <!-- Check Out Block -->
+            <div class="search-field dropdown-trigger" id="field-checkout" role="button" tabindex="0">
+              <span class="search-field-label">Check-Out</span>
+              <span class="search-value-display" id="display-checkout">Mon, 27 Jul 2026</span>
+              <input type="hidden" id="search-checkout" value="2026-07-27">
+            </div>
+
+            <!-- Rooms & Guests Block -->
+            <div class="search-field dropdown-trigger" id="field-guests" role="button" tabindex="0">
+              <span class="search-field-label">Rooms & Guests</span>
+              <span class="search-value-display" id="display-guests">1 Room, 2 Adults</span>
+              <input type="hidden" id="search-rooms" value="1">
+              <input type="hidden" id="search-adults" value="2">
+              <input type="hidden" id="search-children" value="0">
+              <input type="hidden" id="search-pets" value="false">
+            </div>
+
+            <!-- Search Button -->
+            <button type="submit" class="search-btn">
+              <span>SEARCH</span>
+            </button>
+
+            <!-- Popups inside the strip -->
+            <!-- Double Calendar Popup -->
+            <div class="calendar-popup-container" id="calendar-popup" style="display: none;">
+              <div class="calendar-double-wrapper">
+                <div class="calendar-month-col" id="calendar-left-month">
+                  <div class="calendar-month-header">
+                    <button type="button" class="calendar-month-nav-btn" id="btn-prev-month">←</button>
+                    <span class="calendar-month-title" id="title-left-month">July 2026</span>
+                    <span></span>
+                  </div>
+                  <div class="calendar-weekdays-grid">
+                    <div class="calendar-weekday">Su</div>
+                    <div class="calendar-weekday">Mo</div>
+                    <div class="calendar-weekday">Tu</div>
+                    <div class="calendar-weekday">We</div>
+                    <div class="calendar-weekday">Th</div>
+                    <div class="calendar-weekday">Fr</div>
+                    <div class="calendar-weekday">Sa</div>
+                  </div>
+                  <div class="calendar-days-grid" id="days-left-month"></div>
+                </div>
+                <div class="calendar-month-col" id="calendar-right-month">
+                  <div class="calendar-month-header">
+                    <span></span>
+                    <span class="calendar-month-title" id="title-right-month">August 2026</span>
+                    <button type="button" class="calendar-month-nav-btn" id="btn-next-month">→</button>
+                  </div>
+                  <div class="calendar-weekdays-grid">
+                    <div class="calendar-weekday">Su</div>
+                    <div class="calendar-weekday">Mo</div>
+                    <div class="calendar-weekday">Tu</div>
+                    <div class="calendar-weekday">We</div>
+                    <div class="calendar-weekday">Th</div>
+                    <div class="calendar-weekday">Fr</div>
+                    <div class="calendar-weekday">Sa</div>
+                  </div>
+                  <div class="calendar-days-grid" id="days-right-month"></div>
+                </div>
+              </div>
+              <div class="calendar-legend-bar">
+                <span class="calendar-legend-item">Holidays & Local Events</span>
+                <span id="calendar-legend-detail" style="font-style: italic;">15 Aug - Independence Day</span>
+              </div>
+            </div>
+
+            <!-- Guests Popup -->
+            <div class="guests-popup-container" id="guests-popup" style="display: none;">
+              <div class="guests-row">
+                <div class="guests-label-box">
+                  <span class="guests-title">Room</span>
+                </div>
+                <div class="counter-controls">
+                  <button type="button" class="counter-btn" id="btn-rooms-dec">-</button>
+                  <span class="counter-val" id="val-rooms">1</span>
+                  <button type="button" class="counter-btn" id="btn-rooms-inc">+</button>
+                </div>
+              </div>
+              <div class="guests-row">
+                <div class="guests-label-box">
+                  <span class="guests-title">Adults</span>
+                </div>
+                <div class="counter-controls">
+                  <button type="button" class="counter-btn" id="btn-adults-dec">-</button>
+                  <span class="counter-val" id="val-adults">2</span>
+                  <button type="button" class="counter-btn" id="btn-adults-inc">+</button>
+                </div>
+              </div>
+              <div class="guests-row">
+                <div class="guests-label-box">
+                  <span class="guests-title">Children</span>
+                  <span class="guests-subtitle">0 - 17 Years Old</span>
+                </div>
+                <div class="counter-controls">
+                  <button type="button" class="counter-btn" id="btn-children-dec">-</button>
+                  <span class="counter-val" id="val-children">0</span>
+                  <button type="button" class="counter-btn" id="btn-children-inc">+</button>
+                </div>
+              </div>
+              <p class="guests-popup-info-text">Please provide right number of children along with their right age for best options and prices.</p>
+              <div class="pets-checkbox-container">
+                <label class="pets-checkbox-label">
+                  <input type="checkbox" id="chk-pets">
+                  <div class="pets-checkbox-text">
+                    <span class="pets-title">Are you travelling with pets?</span>
+                    <span class="pets-desc">Selecting this option will show only pet-friendly properties. Please review the pet policies & applicable fees, if any.</span>
+                  </div>
+                </label>
+                <div class="pets-paw-icon">🐾</div>
+              </div>
+              <div class="guests-apply-row">
+                <button type="button" class="guests-apply-btn" id="btn-guests-apply">APPLY</button>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===================== MAIN LAYOUT ===================== -->
+    <div class="properties-layout">
+      <!-- 1. LEFT SIDEBAR FILTERS -->
+      <aside class="filter-sidebar" id="filter-sidebar">
+        <!-- Close button on mobile -->
+        <div style="display: flex; justify-content: space-between; align-items: center; display: none;" id="sidebar-header-mobile">
+          <h3 class="filter-title">Filters</h3>
+          <button type="button" id="sidebar-close" style="font-size: 24px; cursor: pointer;">✕</button>
+        </div>
+
+        <!-- Map Banner Card -->
+        <div class="map-card" onclick="window.open('https://maps.google.com/?q=Goa', '_blank')">
+          <div class="map-card-btn">
+            <span>📍 Explore On Map</span>
+          </div>
+        </div>
+
+        <!-- Locality Search Input -->
+        <div class="filter-search-box">
+          <span class="filter-search-icon">🔍</span>
+          <input type="text" class="filter-search-input" id="filter-locality-search" placeholder="Search for locality / hotel">
+          <span class="filter-mic-icon">🎙️</span>
+        </div>
+
+        <!-- Suggested For You -->
+        <div class="filter-block">
+          <h4 class="filter-title">Suggested For You</h4>
+          <div class="filter-list">
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="suggested" value="rush-deal">
+              <span>Rush Deal</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="suggested" value="last-minute">
+              <span>Last Minute Deals</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="suggested" value="5-star">
+              <span>5 Star</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="suggested" value="beachfront">
+              <span>Beachfront Properties</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="suggested" value="north-goa">
+              <span>North Goa</span>
+            </label>
+            <span class="filter-more-link">Show 10 more</span>
+          </div>
+        </div>
+
+        <!-- Price Per Night -->
+        <div class="filter-block">
+          <h4 class="filter-title">Price Per Night</h4>
+          <div class="filter-list">
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="price-range" value="0-1500">
+              <span>₹ 0 - ₹ 1500</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="price-range" value="1500-3000">
+              <span>₹ 1500 - ₹ 3000</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="price-range" value="3000-5500">
+              <span>₹ 3000 - ₹ 5500</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="price-range" value="5500-10000">
+              <span>₹ 5500 - ₹ 10000</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="price-range" value="10000-18000">
+              <span>₹ 10000 - ₹ 18000</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="price-range" value="18000+">
+              <span>₹ 18000+</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Your Budget -->
+        <div class="filter-block">
+          <h4 class="filter-title">Your Budget</h4>
+          <div class="budget-inputs-row">
+            <input type="number" class="budget-input-field" id="budget-min" placeholder="Min" min="0">
+            <span style="font-size: 12px; color: var(--text-light)">to</span>
+            <input type="number" class="budget-input-field" id="budget-max" placeholder="Max" min="0">
+            <button type="button" class="budget-go-btn" id="btn-budget-go">→</button>
+          </div>
+        </div>
+
+        <!-- Star Category -->
+        <div class="filter-block">
+          <h4 class="filter-title">Star Category</h4>
+          <div class="filter-list">
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="stars" value="3">
+              <span>3 Star</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="stars" value="4">
+              <span>4 Star</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="stars" value="5">
+              <span>5 Star</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- User Rating -->
+        <div class="filter-block">
+          <h4 class="filter-title">User Rating</h4>
+          <div class="filter-list">
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="rating" value="4.2">
+              <span>Excellent: 4.2+</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="rating" value="3.5">
+              <span>Very Good: 3.5+</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="rating" value="3">
+              <span>Good: 3+</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Property Type Dropdown / Accordion -->
+        <div class="filter-block">
+          <div class="filter-dropdown-trigger" id="property-type-trigger">
+            <h4 class="filter-title">Property Type</h4>
+            <span class="filter-dropdown-icon" id="property-type-icon">▼</span>
+          </div>
+          <div class="filter-dropdown-content" id="property-type-content">
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="property-type" value="Hotel">
+              <span>Hotel</span>
+            </label>
+            <div class="filter-dropdown-trigger" style="margin-left: 8px; margin-top: 4px;" id="villas-dropdown-trigger">
+              <span style="font-size: 13px; font-weight: 500; color: var(--navy)">Villas & Homestays</span>
+              <span class="filter-dropdown-icon" id="villas-dropdown-icon">▼</span>
+            </div>
+            <div class="filter-dropdown-content" id="villas-dropdown-content" style="padding-left: 20px;">
+              <label class="filter-checkbox-label">
+                <input type="checkbox" name="property-type" value="Apartment">
+                <span>Apartment</span>
+              </label>
+              <label class="filter-checkbox-label">
+                <input type="checkbox" name="property-type" value="Villa">
+                <span>Villa</span>
+              </label>
+              <label class="filter-checkbox-label">
+                <input type="checkbox" name="property-type" value="Homestay">
+                <span>Homestay</span>
+              </label>
+              <label class="filter-checkbox-label">
+                <input type="checkbox" name="property-type" value="Cottage">
+                <span>Cottage</span>
+              </label>
+              <label class="filter-checkbox-label">
+                <input type="checkbox" name="property-type" value="Farm House">
+                <span>Farm House</span>
+              </label>
+              <label class="filter-checkbox-label">
+                <input type="checkbox" name="property-type" value="Camp">
+                <span>Camp</span>
+              </label>
+              <label class="filter-checkbox-label">
+                <input type="checkbox" name="property-type" value="Tree house">
+                <span>Tree house</span>
+              </label>
+              <label class="filter-checkbox-label">
+                <input type="checkbox" name="property-type" value="Houseboat">
+                <span>Houseboat</span>
+              </label>
+            </div>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="property-type" value="Resort">
+              <span>Resort</span>
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" name="property-type" value="Hostel">
+              <span>Hostel</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Hidden default filters inputs for compatibility with properties.js -->
+        <div style="display: none;">
+          <input type="text" id="filter-destination">
+          <input type="date" id="filter-checkin">
+          <input type="date" id="filter-checkout">
+          <select id="filter-guests"><option value="1">1</option></select>
+          <select id="filter-sort"><option value="newest">newest</option></select>
+          <button id="reset-filters">Reset</button>
+        </div>
+      </aside>
+
+      <!-- 2. RIGHT SIDE RESULTS -->
+      <main class="stays-results-column">
+        <div class="stays-list-header">
+          <div class="stays-breadcrumb" id="stays-breadcrumb">Home > Hotels and more in Goa</div>
+          
+          <div class="stays-heading-row">
+            <h1 class="stays-title-heading" id="result-count"><strong>...</strong> curated stays</h1>
+            <button class="stays-tips-badge" onclick="window.open('/our-story.html')">
+              💡 <span>Explore Travel Tips</span> →
+            </button>
+          </div>
+
+          <!-- Sort Bar -->
+          <div class="stays-sort-bar" id="stays-sort-bar-container">
+            <span class="sort-chip active" data-sort="newest">Popularity</span>
+            <span class="sort-chip" data-sort="price_asc">Price (Low to High)</span>
+            <span class="sort-chip" data-sort="price_desc">Price (High to Low)</span>
+            <span class="sort-chip" data-sort="rating_desc">User Rating (Highest)</span>
+            <span class="sort-chip" data-sort="best_rated">Lowest Price & Best Rated</span>
+          </div>
+
+          <!-- OneCircle Promo Banner -->
+          <div class="promo-banner">
+            <div class="promo-icon">⭕</div>
+            <div class="promo-text">
+              <strong>OneCircle Rewards</strong>
+              Earn & redeem points on eligible properties for additional savings! <span class="promo-link" onclick="alert('Welcome to OneCircle Rewards! Sign in or create an account to start earning points.')">Learn More</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stays list container -->
+        <div class="stays-list-grid" id="properties-grid">
+          <!-- Loaded dynamically by properties.js -->
+        </div>
+
+        <div style="text-align: center; margin-top: 36px; display: none;" id="load-more-container">
+          <button class="btn btn-outline" id="load-more" style="min-width: 200px;">Load More Stays</button>
+        </div>
+      </main>
+    </div>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer" role="contentinfo">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">Trun<span>iqe</span></div>
+            <p class="footer-tagline">
+              India's most curated collection of boutique hotels, heritage
+              havelis and experience-driven retreats. We list fewer stays so
+              each one is worth your time.
+            </p>
+          </div>
+          <div>
+            <div class="footer-col-title">Explore</div>
+            <div class="footer-links">
+              <a href="/properties.html" class="footer-link">All Stays</a>
+              <a href="/properties.html?tag=Design+%26+Heritage" class="footer-link">Heritage</a>
+              <a href="/properties.html?tag=Offbeat+Location" class="footer-link">Offbeat</a>
+              <a href="/properties.html?tag=Experience-Driven" class="footer-link">Wellness</a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-title">Account</div>
+            <div class="footer-links">
+              <a href="/auth.html" class="footer-link">Sign In</a>
+              <a href="/auth.html#signup" class="footer-link">Create Account</a>
+              <a href="/dashboard/index.html" class="footer-link">My Bookings</a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-title">Legal</div>
+            <div class="footer-links">
+              <a href="#" class="footer-link">Privacy Policy</a>
+              <a href="#" class="footer-link">Terms of Service</a>
+              <a href="#" class="footer-link">Cancellation Policy</a>
+              <a href="#" class="footer-link">Contact</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2025 Truniqe. All rights reserved.</span>
+          <span>Made with care for the curious traveller.</span>
+        </div>
+      </div>
+    </footer>
+
+    <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+    <script type="module" src="/js/properties.js"></script>
+  </body>
+</html>
