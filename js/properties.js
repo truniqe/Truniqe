@@ -135,6 +135,7 @@ let activeFilters = {
   rooms: 1,
   adults: 2,
   children: 0,
+  infants: 0,
   pets: false,
   localitySearch: '',
   suggested: [],
@@ -218,6 +219,11 @@ function parseURLParams() {
     const el = document.getElementById('search-children');
     if (el) el.value = activeFilters.children;
   }
+  if (params.get('infants')) {
+    activeFilters.infants = parseInt(params.get('infants'), 10);
+    const el = document.getElementById('search-infants');
+    if (el) el.value = activeFilters.infants;
+  }
   if (params.get('pets')) {
     activeFilters.pets = params.get('pets') === 'true';
     const el = document.getElementById('search-pets');
@@ -242,7 +248,7 @@ function parseURLParams() {
   if (displayCheckout && activeFilters.checkout) displayCheckout.textContent = formatDateLabel(activeFilters.checkout);
   
   if (displayGuests) {
-    const totalG = activeFilters.adults + activeFilters.children;
+    const totalG = activeFilters.adults + activeFilters.children + (activeFilters.infants || 0);
     displayGuests.textContent = `${activeFilters.rooms} Room${activeFilters.rooms > 1 ? 's' : ''}, ${totalG} Guest${totalG > 1 ? 's' : ''}${activeFilters.pets ? ', 🐾' : ''}`;
   }
 
@@ -287,6 +293,7 @@ function setupTopSearchPanel() {
   let rooms = activeFilters.rooms;
   let adults = activeFilters.adults;
   let children = activeFilters.children;
+  let infants = activeFilters.infants || 0;
   let pets = activeFilters.pets;
 
   const HOLIDAYS_2026 = {
@@ -449,6 +456,10 @@ function setupTopSearchPanel() {
   const btnChildrenDec = document.getElementById('btn-children-dec');
   const btnChildrenInc = document.getElementById('btn-children-inc');
   const valChildren = document.getElementById('val-children');
+  const btnInfantsDec = document.getElementById('btn-infants-dec');
+  const btnInfantsInc = document.getElementById('btn-infants-inc');
+  const valInfants = document.getElementById('val-infants');
+  const infantsInput = document.getElementById('search-infants');
   const chkPets = document.getElementById('chk-pets');
   const btnGuestsApply = document.getElementById('btn-guests-apply');
 
@@ -458,6 +469,8 @@ function setupTopSearchPanel() {
   btnAdultsInc?.addEventListener('click', (e) => { e.stopPropagation(); if (adults < 20) { adults++; syncGuestsUI(); } });
   btnChildrenDec?.addEventListener('click', (e) => { e.stopPropagation(); if (children > 0) { children--; syncGuestsUI(); } });
   btnChildrenInc?.addEventListener('click', (e) => { e.stopPropagation(); if (children < 10) { children++; syncGuestsUI(); } });
+  btnInfantsDec?.addEventListener('click', (e) => { e.stopPropagation(); if (infants > 0) { infants--; syncGuestsUI(); } });
+  btnInfantsInc?.addEventListener('click', (e) => { e.stopPropagation(); if (infants < 10) { infants++; syncGuestsUI(); } });
 
   btnGuestsApply?.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -465,11 +478,13 @@ function setupTopSearchPanel() {
     if (roomsInput) roomsInput.value = rooms;
     if (adultsInput) adultsInput.value = adults;
     if (childrenInput) childrenInput.value = children;
+    if (infantsInput) infantsInput.value = infants;
     if (petsInput) petsInput.value = pets;
     
     activeFilters.rooms = rooms;
     activeFilters.adults = adults;
     activeFilters.children = children;
+    activeFilters.infants = infants;
     activeFilters.pets = pets;
 
     updateGuestsDisplay();
@@ -480,6 +495,7 @@ function setupTopSearchPanel() {
     if (valRooms) valRooms.textContent = rooms;
     if (valAdults) valAdults.textContent = adults;
     if (valChildren) valChildren.textContent = children;
+    if (valInfants) valInfants.textContent = infants;
     if (chkPets) chkPets.checked = pets;
 
     btnRoomsDec?.classList.toggle('disabled', rooms <= 1);
@@ -488,11 +504,13 @@ function setupTopSearchPanel() {
     btnAdultsInc?.classList.toggle('disabled', adults >= 20);
     btnChildrenDec?.classList.toggle('disabled', children <= 0);
     btnChildrenInc?.classList.toggle('disabled', children >= 10);
+    btnInfantsDec?.classList.toggle('disabled', infants <= 0);
+    btnInfantsInc?.classList.toggle('disabled', infants >= 10);
   }
 
   function updateGuestsDisplay() {
     if (!displayGuests) return;
-    const totalG = adults + children;
+    const totalG = adults + children + infants;
     displayGuests.textContent = `${rooms} Room${rooms > 1 ? 's' : ''}, ${totalG} Guest${totalG > 1 ? 's' : ''}${pets ? ', 🐾' : ''}`;
   }
 
@@ -700,13 +718,11 @@ function applyStaysFilters() {
 
     // 2. Suggested filter
     if (activeFilters.suggested.length > 0) {
-      // rush-deal, last-minute, 5-star, beachfront, north-goa
+      // resort, couples, cancellation
       const matchSuggested = activeFilters.suggested.every(tag => {
-        if (tag === 'rush-deal') return s.min_price < 4000;
-        if (tag === 'last-minute') return s.features?.some(f => f.toLowerCase().includes('last minute') || f.toLowerCase().includes('cancel') || f.toLowerCase().includes('complimentary'));
-        if (tag === '5-star') return s.stars === 5;
-        if (tag === 'beachfront') return s.location.toLowerCase().includes('beach') || s.landmark?.toLowerCase().includes('beach');
-        if (tag === 'north-goa') return s.location.toLowerCase().includes('candolim') || s.location.toLowerCase().includes('calangute');
+        if (tag === 'resort') return s.propertyType === 'Resort';
+        if (tag === 'couples') return s.coupleFriendly === true;
+        if (tag === 'cancellation') return s.features?.some(f => f.toLowerCase().includes('cancel'));
         return true;
       });
       if (!matchSuggested) return false;
