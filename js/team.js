@@ -66,78 +66,133 @@
   const prevBtn = document.getElementById('team-carousel-prev');
   const nextBtn = document.getElementById('team-carousel-next');
   const cards = track ? Array.from(track.querySelectorAll('.team-card')) : [];
+  const desktopBreakpoint = 1100;
+  const activeClass = 'team-card--active';
+  let currentIndex = 2;
+  let cardCenters = [];
+  let resizeTimer = null;
+  let scrollTick = false;
+  let initialized = false;
 
-  if (viewport && track && prevBtn && nextBtn && cards.length) {
-    let currentIndex = 2;
-    const minIndex = 0;
-    const maxIndex = cards.length - 1;
+  const clampIndex = (index) => Math.min(cards.length - 1, Math.max(0, index));
 
-    const clampIndex = (index) => Math.min(maxIndex, Math.max(minIndex, index));
+  const updateCardCenters = () => {
+    cardCenters = cards.map((card) => card.offsetLeft + card.offsetWidth / 2);
+  };
 
-    const scrollToCard = (index, instant = false) => {
-      const target = cards[clampIndex(index)];
-      if (!target) return;
-      const offset = Math.max(0, Math.round(target.offsetLeft + target.offsetWidth / 2 - viewport.clientWidth / 2));
-      if (instant) {
-        viewport.scrollLeft = offset;
-      } else {
-        viewport.scrollTo({ left: offset, behavior: 'smooth' });
-      }
-      currentIndex = clampIndex(index);
-      updateArrows();
-    };
-
-    const updateArrows = () => {
-      const maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
-      prevBtn.disabled = viewport.scrollLeft <= 4;
-      nextBtn.disabled = viewport.scrollLeft >= maxScrollLeft - 4;
-    };
-
-    const getNearestIndex = () => {
-      const centerLine = viewport.scrollLeft + viewport.clientWidth / 2;
-      let nearest = 0;
-      let smallest = Infinity;
-      cards.forEach((card, index) => {
-        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-        const distance = Math.abs(cardCenter - centerLine);
-        if (distance < smallest) {
-          smallest = distance;
-          nearest = index;
-        }
-      });
-      return nearest;
-    };
-
-    const onScroll = () => {
-      currentIndex = getNearestIndex();
-      updateArrows();
-    };
-
-    prevBtn.addEventListener('click', () => scrollToCard(currentIndex - 1));
-    nextBtn.addEventListener('click', () => scrollToCard(currentIndex + 1));
-
-    viewport.addEventListener('scroll', onScroll, { passive: true });
-
-    const resizeObserver = new ResizeObserver(() => {
-      scrollToCard(currentIndex);
+  const setActiveCard = (index) => {
+    const activeIndex = clampIndex(index);
+    currentIndex = activeIndex;
+    cards.forEach((card, i) => {
+      card.classList.toggle(activeClass, i === activeIndex);
     });
-    resizeObserver.observe(viewport);
+  };
 
-    const initSlider = () => {
-      if (!viewport || !track) return;
-      const init = () => {
-        scrollToCard(2, true);
-        updateArrows();
-      };
-      requestAnimationFrame(init);
-      setTimeout(init, 80);
-    };
+  const updateButtonState = () => {
+    if (!viewport || !prevBtn || !nextBtn) return;
+    const maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
+    prevBtn.disabled = viewport.scrollLeft <= 4;
+    nextBtn.disabled = viewport.scrollLeft >= maxScrollLeft - 4;
+  };
 
-    if (document.readyState === 'loading') {
-      window.addEventListener('DOMContentLoaded', initSlider);
-      window.addEventListener('load', initSlider);
+  const getCenteredIndex = () => {
+    if (!viewport || cardCenters.length !== cards.length) return currentIndex;
+    const centerLine = viewport.scrollLeft + viewport.clientWidth / 2;
+    let nearest = 0;
+    let smallestDistance = Infinity;
+    cardCenters.forEach((cardCenter, index) => {
+      const distance = Math.abs(cardCenter - centerLine);
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        nearest = index;
+      }
+    });
+    return nearest;
+  };
+
+  const scrollToIndex = (index, instant = false) => {
+    if (!viewport) return;
+    const targetIndex = clampIndex(index);
+    const target = cards[targetIndex];
+    if (!target) return;
+    const offset = Math.max(0, Math.round(target.offsetLeft + target.offsetWidth / 2 - viewport.clientWidth / 2));
+    if (instant) {
+      viewport.scrollLeft = offset;
     } else {
-      initSlider();
+      viewport.scrollTo({ left: offset, behavior: 'smooth' });
     }
+    setActiveCard(targetIndex);
+    updateButtonState();
+  };
+
+  const handleScroll = () => {
+    if (window.innerWidth >= desktopBreakpoint || scrollTick || !viewport) return;
+    scrollTick = true;
+    window.requestAnimationFrame(() => {
+      const centered = getCenteredIndex();
+      if (centered !== currentIndex) {
+        setActiveCard(centered);
+      }
+      updateButtonState();
+      scrollTick = false;
+    });
+  };
+
+  const updateControls = () => {
+    const showControls = window.innerWidth < desktopBreakpoint;
+    if (prevBtn && nextBtn) {
+      prevBtn.style.display = showControls ? 'flex' : 'none';
+      nextBtn.style.display = showControls ? 'flex' : 'none';
+    }
+    if (viewport) {
+      viewport.style.overflowX = showControls ? 'auto' : 'hidden';
+    }
+  };
+
+  const handleResize = () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(() => {
+      updateControls();
+      updateCardCenters();
+      if (window.innerWidth < desktopBreakpoint) {
+        scrollToIndex(currentIndex, true);
+      } else {
+        setActiveCard(2);
+      }
+    }, 120);
+  };
+
+  const initSlider = () => {
+    if (initialized || !viewport || !track || !prevBtn || !nextBtn || !cards.length) return;
+    initialized = true;
+
+    updateControls();
+    updateCardCenters();
+    setActiveCard(2);
+    if (window.innerWidth < desktopBreakpoint) {
+      scrollToIndex(2, true);
+    }
+
+    prevBtn.addEventListener('click', () => scrollToIndex(currentIndex - 1));
+    nextBtn.addEventListener('click', () => scrollToIndex(currentIndex + 1));
+    viewport.addEventListener('scroll', handleScroll, { passive: true });
+    viewport.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        scrollToIndex(currentIndex - 1);
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        scrollToIndex(currentIndex + 1);
+      }
+    });
+    window.addEventListener('resize', handleResize);
+    updateButtonState();
+  };
+
+  if (document.readyState === 'loading') {
+    window.addEventListener('load', initSlider, { once: true });
+  } else {
+    initSlider();
   }
 })();
