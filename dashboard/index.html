@@ -176,6 +176,93 @@
       </header>
 
       <div class="dashboard-content">
+
+        <!-- ===== BROWSE BY MOOD — quick links ===== -->
+        <div style="
+          background: var(--navy-mid);
+          border-radius: 16px;
+          padding: 24px 28px;
+          margin-bottom: var(--sp-8);
+        ">
+          <p style="
+            font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--gold-light);
+            margin-bottom: 6px;
+          ">Plan Your Next Stay</p>
+          <h3 style="
+            font-family: var(--font-heading); font-size: 1.4rem;
+            color: var(--white); margin-bottom: 18px; font-weight: 400;
+          ">Browse by Mood</h3>
+
+          <div style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+          " id="dashboard-mood-grid">
+            <a href="/properties.html?mood=romantic" style="
+              display:flex; align-items:center; gap:8px;
+              background: var(--navy-light); color: var(--white);
+              padding: 10px 14px; border-radius: 10px;
+              font-size: 13px; font-weight: 600; text-decoration: none;
+              transition: background 0.2s, transform 0.2s;
+            " onmouseover="this.style.background='#2e2e6a';this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.background='var(--navy-light)';this.style.transform=''">
+              <span>♥</span> Romantic
+            </a>
+            <a href="/properties.html?mood=family" style="
+              display:flex; align-items:center; gap:8px;
+              background: var(--navy-light); color: var(--white);
+              padding: 10px 14px; border-radius: 10px;
+              font-size: 13px; font-weight: 600; text-decoration: none;
+              transition: background 0.2s, transform 0.2s;
+            " onmouseover="this.style.background='#2e2e6a';this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.background='var(--navy-light)';this.style.transform=''">
+              <span>😊</span> Family
+            </a>
+            <a href="/properties.html?mood=celebration" style="
+              display:flex; align-items:center; gap:8px;
+              background: var(--navy-light); color: var(--white);
+              padding: 10px 14px; border-radius: 10px;
+              font-size: 13px; font-weight: 600; text-decoration: none;
+              transition: background 0.2s, transform 0.2s;
+            " onmouseover="this.style.background='#2e2e6a';this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.background='var(--navy-light)';this.style.transform=''">
+              <span>✦</span> Celebration
+            </a>
+            <a href="/properties.html?mood=party" style="
+              display:flex; align-items:center; gap:8px;
+              background: var(--navy-light); color: var(--white);
+              padding: 10px 14px; border-radius: 10px;
+              font-size: 13px; font-weight: 600; text-decoration: none;
+              transition: background 0.2s, transform 0.2s;
+            " onmouseover="this.style.background='#2e2e6a';this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.background='var(--navy-light)';this.style.transform=''">
+              <span>♫</span> Party
+            </a>
+            <a href="/properties.html?mood=detox" style="
+              display:flex; align-items:center; gap:8px;
+              background: var(--navy-light); color: var(--white);
+              padding: 10px 14px; border-radius: 10px;
+              font-size: 13px; font-weight: 600; text-decoration: none;
+              transition: background 0.2s, transform 0.2s;
+            " onmouseover="this.style.background='#2e2e6a';this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.background='var(--navy-light)';this.style.transform=''">
+              <span>🌙</span> Digital Detox
+            </a>
+            <a href="/properties.html?mood=group" style="
+              display:flex; align-items:center; gap:8px;
+              background: var(--navy-light); color: var(--white);
+              padding: 10px 14px; border-radius: 10px;
+              font-size: 13px; font-weight: 600; text-decoration: none;
+              transition: background 0.2s, transform 0.2s;
+            " onmouseover="this.style.background='#2e2e6a';this.style.transform='translateY(-2px)'"
+               onmouseout="this.style.background='var(--navy-light)';this.style.transform=''">
+              <span>⊙</span> Group Reunion
+            </a>
+          </div>
+        </div>
+        <!-- ===== END BROWSE BY MOOD ===== -->
+
         <!-- Tabs -->
         <div
           style="
