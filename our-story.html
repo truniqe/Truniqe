@@ -152,10 +152,13 @@
               The group chat has 200 unread messages. And still, the question
               nobody wants to answer — “So… who's driving?”
             </p>
-            <p>
-              47 hotel tabs “are these photos real?” cab app group chat: 200 unread
-              surprise bill at check-in.
-            </p>
+            <div class="story-tags">
+              <span class="story-tag">47 hotel tabs</span>
+              <span class="story-tag">“are these photos real?”</span>
+              <span class="story-tag">cab app</span>
+              <span class="story-tag">group chat: 200 unread</span>
+              <span class="story-tag">surprise bill at check-in</span>
+            </div>
             <p>
               Every travel app answers this the same way — more. More listings.
               More filters. More choices to scroll through at midnight.
@@ -177,12 +180,8 @@
             </p>
           </div>
 
-         <!-- <div class="section-flag observe-scroll" data-animation="scale-in">
-            <span>TRUNIQE 01</span>
-            <p>We curate better journeys. Not just more options.</p>
-          </div>
         </div>
-      </section> -->
+      </section>
 
       <section class="section difference-section">
         <div class="container">
@@ -439,11 +438,10 @@
 
           <!-- Team Slider -->
           <div class="team-slider-wrapper">
-            <button id="team-carousel-prev" class="team-arrow team-arrow--prev" type="button" aria-label="Previous team member">‹</button>
-            <div id="team-viewport" class="team-viewport">
+            <div id="team-viewport" class="team-viewport" tabindex="0" aria-label="Team members carousel">
               <div class="team-track">
                 <!-- Team Member 1 -->
-                <div class="team-card" data-index="0">
+                <article class="team-card" data-index="0">
                   <div class="team-image-wrapper">
                     <img
                       src="images/team/mohit.png"
@@ -459,10 +457,10 @@
                   </div>
                   <h3 class="team-name">MOHIT NAGAR</h3>
                   <p class="team-role">Operations</p>
-                </div>
+                </article>
 
                 <!-- Team Member 2 -->
-                <div class="team-card" data-index="1">
+                <article class="team-card" data-index="1">
                   <div class="team-image-wrapper">
                     <img
                       src="images/team/anant.png"
@@ -478,10 +476,10 @@
                   </div>
                   <h3 class="team-name">ANANT MANRAL</h3>
                   <p class="team-role">Full Stack Developer</p>
-                </div>
+                </article>
 
                 <!-- Team Member 3 — Featured (Center) -->
-                <div class="team-card team-card--featured" data-index="2">
+                <article class="team-card team-card--featured" data-index="2">
                   <div class="team-image-wrapper">
                     <img
                       src="images/team/akash.png"
@@ -497,10 +495,10 @@
                   </div>
                   <h3 class="team-name">AKASH CHANDILA</h3>
                   <p class="team-role">Founder</p>
-                </div>
+                </article>
 
                 <!-- Team Member 4 -->
-                <div class="team-card" data-index="3">
+                <article class="team-card" data-index="3">
                   <div class="team-image-wrapper">
                     <img
                       src="images/team/drishti.png"
@@ -516,10 +514,10 @@
                   </div>
                   <h3 class="team-name">DRISHTI KAUSHIK</h3>
                   <p class="team-role">Full Stack Developer</p>
-                </div>
+                </article>
 
                 <!-- Team Member 5 -->
-                <div class="team-card" data-index="4">
+                <article class="team-card" data-index="4">
                   <div class="team-image-wrapper">
                     <img
                       src="images/team/daksh.jpeg"
@@ -535,10 +533,13 @@
                   </div>
                   <h3 class="team-name">DAKSH BHATT</h3>
                   <p class="team-role">Full Stack Developer</p>
-                </div>
+                </article>
               </div>
             </div>
-            <button id="team-carousel-next" class="team-arrow team-arrow--next" type="button" aria-label="Next team member">›</button>
+            <div class="team-controls">
+              <button id="team-carousel-prev" class="team-arrow team-arrow--prev" type="button" aria-label="Previous team member">‹</button>
+              <button id="team-carousel-next" class="team-arrow team-arrow--next" type="button" aria-label="Next team member">›</button>
+            </div>
           </div>
         </div>
       </section>
