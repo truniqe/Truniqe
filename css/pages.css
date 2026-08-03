@@ -2764,7 +2764,7 @@
    ============================================================ */
 
 .mood-section {
-  background-color: #1a3328;
+  background-color: var(--navy-mid);
   padding: var(--sp-20) 0;
 }
 
@@ -2777,7 +2777,7 @@
 }
 
 .mood-eyebrow {
-  color: #7daa8e;
+  color: var(--gold-light);
   font-size: var(--text-xs);
   font-family: var(--font-body);
   font-weight: 600;
@@ -2817,7 +2817,7 @@
 
 .mood-card {
   display: block;
-  background-color: #21402f;
+  background-color: var(--navy-light);
   border-radius: var(--radius-lg);
   padding: var(--sp-8) var(--sp-6) var(--sp-8);
   text-decoration: none;
@@ -2830,9 +2830,9 @@
 }
 
 .mood-card:hover {
-  background-color: #284e38;
+  background-color: #2e2e6a;
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 
 .mood-card-icon {
