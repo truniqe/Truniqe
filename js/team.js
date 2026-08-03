@@ -58,94 +58,86 @@
   }
 
   // ==========================================================
-  // 3. MOBILE CAROUSEL — Show one card at a time with nav
+  // 3. TEAM SLIDER — consistent scroll-snap and Akash-centered layout
   // ==========================================================
 
-  const grid = document.getElementById('team-grid');
+  const viewport = document.getElementById('team-viewport');
+  const track = document.querySelector('.team-track');
   const prevBtn = document.getElementById('team-carousel-prev');
   const nextBtn = document.getElementById('team-carousel-next');
-  const dotsContainer = document.getElementById('team-carousel-dots');
-  if (!grid || !prevBtn || !nextBtn || !dotsContainer) return;
+  const cards = track ? Array.from(track.querySelectorAll('.team-card')) : [];
 
-  const cards = Array.from(grid.querySelectorAll('.team-card'));
-  if (!cards.length) return;
+  if (viewport && track && prevBtn && nextBtn && cards.length) {
+    let currentIndex = 2;
+    const minIndex = 0;
+    const maxIndex = cards.length - 1;
 
-  // Start with featured card (index 2 = Akash)
-  let currentIndex = 2;
-  const totalCards = cards.length;
+    const clampIndex = (index) => Math.min(maxIndex, Math.max(minIndex, index));
 
-  // Generate dots
-  cards.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'team-carousel-dot' + (i === currentIndex ? ' active' : '');
-    dot.setAttribute('aria-label', `Go to team member ${i + 1}`);
-    dot.dataset.index = i;
-    dotsContainer.appendChild(dot);
-  });
-
-  const dots = Array.from(dotsContainer.querySelectorAll('.team-carousel-dot'));
-
-  function isMobile() {
-    return window.matchMedia('(max-width: 680px)').matches;
-  }
-
-  function updateCarousel(index) {
-    // Clamp index
-    if (index < 0) index = totalCards - 1;
-    if (index >= totalCards) index = 0;
-    currentIndex = index;
-
-    cards.forEach((card, i) => {
-      if (isMobile()) {
-        card.classList.toggle('active', i === currentIndex);
+    const scrollToCard = (index, instant = false) => {
+      const target = cards[clampIndex(index)];
+      if (!target) return;
+      const offset = Math.max(0, Math.round(target.offsetLeft + target.offsetWidth / 2 - viewport.clientWidth / 2));
+      if (instant) {
+        viewport.scrollLeft = offset;
       } else {
-        // On desktop, show all cards by removing active filtering
-        card.classList.remove('active');
+        viewport.scrollTo({ left: offset, behavior: 'smooth' });
       }
+      currentIndex = clampIndex(index);
+      updateArrows();
+    };
+
+    const updateArrows = () => {
+      const maxScrollLeft = viewport.scrollWidth - viewport.clientWidth;
+      prevBtn.disabled = viewport.scrollLeft <= 4;
+      nextBtn.disabled = viewport.scrollLeft >= maxScrollLeft - 4;
+    };
+
+    const getNearestIndex = () => {
+      const centerLine = viewport.scrollLeft + viewport.clientWidth / 2;
+      let nearest = 0;
+      let smallest = Infinity;
+      cards.forEach((card, index) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const distance = Math.abs(cardCenter - centerLine);
+        if (distance < smallest) {
+          smallest = distance;
+          nearest = index;
+        }
+      });
+      return nearest;
+    };
+
+    const onScroll = () => {
+      currentIndex = getNearestIndex();
+      updateArrows();
+    };
+
+    prevBtn.addEventListener('click', () => scrollToCard(currentIndex - 1));
+    nextBtn.addEventListener('click', () => scrollToCard(currentIndex + 1));
+
+    viewport.addEventListener('scroll', onScroll, { passive: true });
+
+    const resizeObserver = new ResizeObserver(() => {
+      scrollToCard(currentIndex);
     });
+    resizeObserver.observe(viewport);
 
-    // Update dots
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentIndex);
-    });
-  }
+    const initSlider = () => {
+      if (!viewport || !track) return;
+      const init = () => {
+        scrollToCard(2, true);
+        updateArrows();
+      };
+      requestAnimationFrame(init);
+      setTimeout(init, 80);
+    };
 
-  // Event listeners for buttons
-  prevBtn.addEventListener('click', () => {
-    updateCarousel(currentIndex - 1);
-  });
-
-  nextBtn.addEventListener('click', () => {
-    updateCarousel(currentIndex + 1);
-  });
-
-  // Dot clicks
-  dots.forEach((dot) => {
-    dot.addEventListener('click', () => {
-      updateCarousel(parseInt(dot.dataset.index, 10));
-    });
-  });
-
-  // Keyboard navigation
-  grid.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      updateCarousel(currentIndex - 1);
-    } else if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      updateCarousel(currentIndex + 1);
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initSlider);
+      window.addEventListener('load', initSlider);
+    } else {
+      initSlider();
     }
-  });
-
-  // Re-evaluate on resize (e.g., rotate phone)
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      updateCarousel(currentIndex);
-    }, 200);
-  });
-
-  // Initialise — show only active on mobile
-  updateCarousel(currentIndex);
+  }
 })();
