@@ -127,6 +127,16 @@ let allStays = []; // Fetched stays combined with mocks
 let filteredStays = []; // Stays after left sidebar filters
 let isLoading = false;
 
+// Mood → filter mapping used by Browse-by-Mood section on the homepage
+const MOOD_CONFIG = {
+  romantic:    { label: '♥ Romantic Getaway',    tags: ['Experience-Driven'], couple: true  },
+  family:      { label: '😊 Family Outing',        tags: ['Experience-Driven', 'Design & Heritage'], couple: false },
+  celebration: { label: '✦ Celebration Special',  tags: ['Experience-Driven'], couple: false },
+  party:       { label: '♫ Party Place',           tags: ['Experience-Driven'], couple: false },
+  detox:       { label: '🌙 Digital Detox',        tags: ['Offbeat Location'],  couple: false },
+  group:       { label: '⊙ Group Reunion',         tags: ['Experience-Driven', 'Offbeat Location'], couple: false }
+};
+
 // Filter configuration state
 let activeFilters = {
   destination: 'Goa, India',
@@ -145,7 +155,8 @@ let activeFilters = {
   stars: [],
   ratings: [],
   propertyTypes: [],
-  sortBy: 'newest'
+  sortBy: 'newest',
+  mood: null   // set when arriving from Browse-by-Mood
 };
 
 async function init() {
@@ -259,6 +270,30 @@ function parseURLParams() {
       activeFilters.suggested.push('heritage');
       const cb = document.querySelector('input[name="suggested"][value="5-star"]'); // fallback highlight
       if (cb) cb.checked = true;
+    }
+  }
+
+  // ---- Browse-by-Mood param (?mood=romantic|family|celebration|party|detox|group) ----
+  const mood = params.get('mood');
+  if (mood && MOOD_CONFIG[mood]) {
+    activeFilters.mood = mood;
+    // Inject a dismissable mood banner pill below the breadcrumb
+    const breadcrumb = document.getElementById('stays-breadcrumb');
+    if (breadcrumb) {
+      const pill = document.createElement('div');
+      pill.id = 'mood-banner-pill';
+      pill.style.cssText = [
+        'display:inline-flex', 'align-items:center', 'gap:8px',
+        'background:var(--navy)', 'color:#fff',
+        'font-size:12px', 'font-weight:600', 'letter-spacing:0.04em',
+        'padding:6px 14px', 'border-radius:999px',
+        'margin-top:10px', 'cursor:default'
+      ].join(';');
+      pill.innerHTML = `${MOOD_CONFIG[mood].label}
+        <button onclick="document.getElementById('mood-banner-pill').remove();activeFilters.mood=null;applyStaysFilters?.();"
+          style="background:none;border:none;color:rgba(255,255,255,0.7);font-size:14px;cursor:pointer;line-height:1;padding:0 0 1px 4px"
+          aria-label="Clear mood filter">&times;</button>`;
+      breadcrumb.insertAdjacentElement('afterend', pill);
     }
   }
 }
@@ -709,6 +744,15 @@ async function loadStaysData() {
 // ---- Client-side Filter & Sort Stays ----
 function applyStaysFilters() {
   filteredStays = allStays.filter(s => {
+    // 0. Browse-by-Mood filter (from homepage mood section)
+    if (activeFilters.mood && MOOD_CONFIG[activeFilters.mood]) {
+      const cfg = MOOD_CONFIG[activeFilters.mood];
+      const stayTags = s.angle_tags || [];
+      const tagMatch = cfg.tags.some(t => stayTags.includes(t));
+      if (!tagMatch) return false;
+      if (cfg.couple && !s.coupleFriendly) return false;
+    }
+
     // 1. Locality Search filter
     if (activeFilters.localitySearch) {
       const matchName = s.name.toLowerCase().includes(activeFilters.localitySearch);
