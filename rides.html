@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rides — Outstation Fleet & Travel | Truniqe</title>
+    <meta
+      name="description"
+      content="Pre-booked outstation travel from Delhi NCR in our own verified fleet. All-inclusive pricing, zero hidden charges, confirmed within 3 hours."
+    />
+    <meta property="og:title" content="Rides — Outstation Fleet & Travel | Truniqe" />
+    <meta
+      property="og:description"
+      content="From couples' weekend getaways to 55-seater corporate offsites — pre-booked outstation travel in our own fleet."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚘</text></svg>"
+    />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages.css" />
+  </head>
+
+  <body>
+    <!-- ===================== NAVIGATION ===================== -->
+    <nav
+      class="nav nav-transparent"
+      id="main-nav"
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo" id="nav-logo"
+          >Trun<span>iqe</span></a
+        >
+
+        <div class="nav-links">
+          <a href="/properties.html" class="nav-link">Stays</a>
+          <a href="/rides.html" class="nav-link active">Rides</a>
+          <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link"
+            >Collections</a
+          >
+          <a href="/our-story.html" class="nav-link">Our Story</a>
+          <span id="nav-admin-link" style="display: none">
+            <a href="/dashboard/admin/index.html" class="nav-link">Admin</a>
+          </span>
+        </div>
+
+        <div class="nav-actions">
+          <a
+            href="/auth.html"
+            class="btn btn-secondary btn-sm"
+            id="nav-auth-btn"
+            >Sign In</a
+          >
+
+          <div
+            id="nav-user-menu"
+            style="
+              display: none;
+              position: relative;
+              align-items: center;
+              gap: var(--sp-3);
+            "
+          >
+            <a
+              href="/dashboard/index.html"
+              class="nav-link"
+              style="color: rgba(255, 255, 255, 0.8)"
+              >My Bookings</a
+            >
+            <div
+              class="nav-avatar-placeholder"
+              id="nav-user-avatar"
+              onclick="
+                document
+                  .getElementById('nav-user-dropdown')
+                  .classList.toggle('open')
+              "
+            >
+              <span id="nav-user-initial">U</span>
+            </div>
+            <div
+              id="nav-user-dropdown"
+              style="
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                margin-top: 8px;
+                background: white;
+                border-radius: 12px;
+                box-shadow: var(--shadow-lg);
+                padding: 8px 0;
+                min-width: 160px;
+                z-index: 100;
+              "
+            >
+              <a
+                href="/dashboard/index.html"
+                style="
+                  display: block;
+                  padding: 8px 16px;
+                  color: var(--navy);
+                  text-decoration: none;
+                  font-size: 14px;
+                "
+                >My Dashboard</a
+              >
+              <a
+                href="#"
+                id="nav-logout-btn"
+                style="
+                  display: block;
+                  padding: 8px 16px;
+                  color: var(--error);
+                  text-decoration: none;
+                  font-size: 14px;
+                "
+                >Sign Out</a
+              >
+            </div>
+          </div>
+
+          <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div
+      class="nav-mobile"
+      id="nav-mobile"
+      role="dialog"
+      aria-label="Mobile navigation"
+    >
+      <a href="/properties.html" class="nav-link">Stays</a>
+      <a href="/rides.html" class="nav-link active">Rides</a>
+      <a href="/properties.html?tag=Design+%26+Heritage" class="nav-link"
+        >Collections</a
+      >
+      <a href="/our-story.html" class="nav-link">Our Story</a>
+      <a
+        href="/auth.html"
+        class="btn btn-primary btn-sm"
+        id="mobile-auth-btn"
+        style="margin-top: 8px"
+        >Sign In</a
+      >
+    </div>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section class="rides-hero">
+      <div class="rides-hero-inner">
+        <span class="rides-eyebrow">RIDES · OUTSTATION TRAVEL FROM DELHI NCR</span>
+        <h1 class="rides-hero-title">
+          Meet our fleet.
+          <em>Nobody has to drive.</em>
+        </h1>
+        <p class="rides-hero-desc">
+          From a couple's drive to a 55-seater company offsite — pre-booked outstation travel in our own fleet, at one all-inclusive price confirmed before you travel.
+        </p>
+
+        <!-- Search / Quote Card -->
+        <div class="rides-search-card">
+          <form id="rides-quote-form" onsubmit="handleRidesQuote(event)">
+            <div class="rides-search-grid">
+              <div class="rides-input-group">
+                <label class="rides-input-label" for="pickup-from">Pickup From</label>
+                <input
+                  type="text"
+                  id="pickup-from"
+                  class="rides-input"
+                  placeholder="Faridabad, Ballabgarh, Gurugram…"
+                  required
+                />
+              </div>
+
+              <div class="rides-input-group">
+                <label class="rides-input-label" for="going-to">Going To</label>
+                <input
+                  type="text"
+                  id="going-to"
+                  class="rides-input"
+                  placeholder="Rishikesh, Kasauli, Airport…"
+                  required
+                />
+              </div>
+
+              <div class="rides-input-group">
+                <label class="rides-input-label" for="vehicle-type">Vehicle</label>
+                <select id="vehicle-type" class="rides-select" required>
+                  <option value="Car / SUV (04–07 Seater)">Car / SUV · 04–07</option>
+                  <option value="Luxury Car / SUV (04–07 Seater)">Luxury Car / SUV · 04–07</option>
+                  <option value="Luxury Van (07–10 Seater)">Luxury Van · 07–10</option>
+                  <option value="Force Urbania (09–17 Seater)">Force Urbania · 09–17</option>
+                  <option value="Tempo / Maharaja (09–26 Seater)">Tempo / Maharaja · 09–26</option>
+                  <option value="Luxury Bus (40–55 Seater)">Luxury Bus · 40–55</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn-rides-search">Get price</button>
+            </div>
+          </form>
+        </div>
+
+        <p class="rides-search-note">
+          Tell us your exact pickup point — Ballabgarh, Sohna, Noida, anywhere in NCR — and we'll confirm the price for your trip, not a generic one.
+        </p>
+
+        <!-- Notice Box -->
+        <div class="rides-notice-box" style="margin-top: 32px;">
+          <div class="rides-notice-icon">⏱</div>
+          <div class="rides-notice-content">
+            <h4>Pre-book your transfer, confirmed within 3 hours.</h4>
+            <p>
+              Send us your trip and you'll have a written confirmation — vehicle, driver and price — within three hours. No waiting, no wondering.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MEET OUR FLEET ===================== -->
+    <section class="rides-section rides-section-surface" id="fleet">
+      <div class="container">
+        <div class="rides-section-header">
+          <span class="rides-section-eyebrow">MEET OUR FLEET</span>
+          <h2 class="rides-section-title">Pick what fits your group.</h2>
+          <p class="rides-section-sub">
+            Every vehicle is ours or contracted under our standards — permits, insurance, fitness and pollution papers checked, drivers verified before they carry a single guest.
+          </p>
+        </div>
+
+        <div class="rides-fleet-grid">
+          <!-- Card 1 -->
+          <div class="rides-fleet-card">
+            <div class="rides-fleet-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10"/><path d="M7 12h10"/><path d="M7 16h10"/></svg>
+            </div>
+            <span class="rides-fleet-badge">09 – 26 SEATER</span>
+            <h3 class="rides-fleet-title">Tempo / Maharaja Traveller</h3>
+            <p class="rides-fleet-desc">
+              Big groups and celebration weekends. Room for the cake, the décor, the speakers and everyone's luggage.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="rides-fleet-card">
+            <div class="rides-fleet-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+            </div>
+            <span class="rides-fleet-badge">09 – 17 SEATER</span>
+            <h3 class="rides-fleet-title">Force Urbania</h3>
+            <p class="rides-fleet-desc">
+              The friends'-trip favourite. Push-back seats, standing room, and everyone travelling in one vehicle.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="rides-fleet-card">
+            <div class="rides-fleet-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M6 10h12"/><path d="M6 14h12"/></svg>
+            </div>
+            <span class="rides-fleet-badge">40 – 55 SEATER</span>
+            <h3 class="rides-fleet-title">Luxury Bus</h3>
+            <p class="rides-fleet-desc">
+              Corporate offsites, wedding parties and large reunions. One vehicle, one departure time, everyone together.
+            </p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="rides-fleet-card">
+            <div class="rides-fleet-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h2a1 1 0 0 0 1-1v-3.5a1.5 1.5 0 0 0-.44-1.06l-2-2A1.5 1.5 0 0 0 18.5 8H16M4 16H2a1 1 0 0 1-1-1v-3.5a1.5 1.5 0 0 1 .44-1.06l2-2A1.5 1.5 0 0 1 4.5 8H8"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
+            </div>
+            <span class="rides-fleet-badge">07 – 10 SEATER</span>
+            <h3 class="rides-fleet-title">Luxury Van</h3>
+            <p class="rides-fleet-desc">
+              Families travelling with elders and children. Extra legroom, extra boot space, an easier long drive.
+            </p>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="rides-fleet-card">
+            <div class="rides-fleet-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <span class="rides-fleet-badge">04 – 07 SEATER</span>
+            <h3 class="rides-fleet-title">Luxury Car / SUV</h3>
+            <p class="rides-fleet-desc">
+              When the drive is part of the occasion. Premium comfort for anniversaries and special weekends.
+            </p>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="rides-fleet-card">
+            <div class="rides-fleet-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+            </div>
+            <span class="rides-fleet-badge">04 – 07 SEATER</span>
+            <h3 class="rides-fleet-title">Car / SUV</h3>
+            <p class="rides-fleet-desc">
+              Couples and small families. Comfortable, air-conditioned, and sure-footed on the hill roads.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== POPULAR ROUTES ===================== -->
+    <section class="rides-section rides-section-muted" id="routes">
+      <div class="container">
+        <div class="rides-section-header">
+          <span class="rides-section-eyebrow">POPULAR ROUTES</span>
+          <h2 class="rides-section-title">Where most of our weekends go.</h2>
+          <p class="rides-section-sub">
+            All-inclusive starting prices for a 2-day round trip from Delhi NCR. Tell us your exact pickup point and we'll confirm the price for your trip.
+          </p>
+        </div>
+
+        <div class="rides-table-wrapper">
+          <table class="rides-table">
+            <thead>
+              <tr>
+                <th>Route <span>2 Days · round trip</span></th>
+                <th>Car / SUV <span>04–07</span></th>
+                <th>Luxury Car / SUV <span>04–07</span></th>
+                <th>Luxury Van <span>07–10</span></th>
+                <th>Force Urbania <span>09–17</span></th>
+                <th>Tempo / Maharaja <span>09–26</span></th>
+                <th>Luxury Bus <span>40–55</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span class="rides-route-name">Delhi NCR → Rishikesh</span>
+                  <span class="rides-route-dist">~250 km</span>
+                </td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹7,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹10,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹14,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹18,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹21,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹35,000</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="rides-route-name">Delhi NCR → Kasauli</span>
+                  <span class="rides-route-dist">~290 km</span>
+                </td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹8,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹11,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹15,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹19,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹23,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹38,000</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="rides-route-name">Delhi NCR → Neemrana</span>
+                  <span class="rides-route-dist">~120 km</span>
+                </td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹4,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹6,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹9,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹12,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹14,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹22,000</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="rides-route-name">Delhi NCR → Jim Corbett</span>
+                  <span class="rides-route-dist">~250 km</span>
+                </td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹7,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹10,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹14,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹18,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹21,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹35,000</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="rides-route-name">Within NCR</span>
+                  <span class="rides-route-dist">farmhouse transfers</span>
+                </td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹3,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹5,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹7,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹9,500</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹11,000</span></td>
+                <td><span class="rides-price-prefix">from</span><span class="rides-price-val">₹18,000</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rides-info-grid">
+          <div class="rides-info-card">
+            <h4>Prices shown are for a 2-day round trip.</h4>
+            <p>
+              Travelling for longer, or one way only? Tell us the plan and we'll price it the same way — one all-inclusive figure, agreed before you travel.
+            </p>
+          </div>
+          <div class="rides-info-card">
+            <h4>Why “starting from”?</h4>
+            <p>
+              Delhi NCR is large — a pickup in Ballabgarh or Greater Noida can add 50 km or more compared to central Gurugram. We quote against your actual pickup point rather than charging everyone the same. The price you're quoted at booking is the price you pay for that trip.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== AIRPORT TRANSFERS ===================== -->
+    <section class="rides-section rides-section-dark" id="airport">
+      <div class="container">
+        <div class="rides-airport-grid">
+          <div>
+            <span class="rides-section-eyebrow">ALSO AVAILABLE</span>
+            <h2 class="rides-section-title">Airport transfers, on time, every time.</h2>
+            <p class="rides-section-sub">
+              Delhi IGT and Hindon — arrivals and departures, day or night. Flight timings tracked, driver details shared before the day, and the same all-inclusive pricing. No meter, no waiting charges sprung on you at the kerb.
+            </p>
+          </div>
+
+          <div class="rides-airport-table">
+            <div class="rides-airport-row">
+              <span class="rides-airport-label">Airport pickup & drop</span>
+              <span class="rides-airport-badge">Available</span>
+            </div>
+            <div class="rides-airport-row">
+              <span class="rides-airport-label">Flight timing tracked</span>
+              <span class="rides-airport-badge">Included</span>
+            </div>
+            <div class="rides-airport-row">
+              <span class="rides-airport-label">Driver details in advance</span>
+              <span class="rides-airport-badge">Included</span>
+            </div>
+            <div class="rides-airport-row">
+              <span class="rides-airport-label">Tolls, parking & GST</span>
+              <span class="rides-airport-badge">Included</span>
+            </div>
+            <div class="rides-airport-row">
+              <span class="rides-airport-label">Confirmation</span>
+              <span class="rides-airport-badge">Within 3 hours</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WHAT'S IN THE PRICE ===================== -->
+    <section class="rides-section rides-section-surface" id="pricing-details">
+      <div class="container">
+        <div class="rides-section-header">
+          <span class="rides-section-eyebrow">NO SMALL PRINT</span>
+          <h2 class="rides-section-title">What's in the price — and what isn't.</h2>
+          <p class="rides-section-sub">
+            The fastest way to ruin a good trip is a bill you didn't expect. So here it is, plainly.
+          </p>
+        </div>
+
+        <div class="rides-transparency-grid">
+          <!-- Included -->
+          <div class="rides-included-card">
+            <h3><span>✓</span> Already included</h3>
+            <ul class="rides-list">
+              <li><span class="rides-list-check">✓</span> Fuel, for the whole journey</li>
+              <li><span class="rides-list-check">✓</span> All tolls and state taxes</li>
+              <li><span class="rides-list-check">✓</span> Parking charges</li>
+              <li><span class="rides-list-check">✓</span> Driver allowance and night charges</li>
+              <li><span class="rides-list-check">✓</span> Door-to-door pickup and drop</li>
+              <li><span class="rides-list-check">✓</span> GST</li>
+            </ul>
+          </div>
+
+          <!-- Excluded -->
+          <div class="rides-excluded-card">
+            <h3>Not included</h3>
+            <ul class="rides-list" style="color: var(--text-secondary);">
+              <li>• Extra sightseeing stops beyond the agreed route</li>
+              <li>• Additional days added mid-trip</li>
+              <li>• Meals for your group</li>
+              <li>• Anything requested on the road that wasn't booked</li>
+            </ul>
+            <p class="rides-disclaimer">
+              Anything extra is quoted and agreed before it's added. Never sprung on you at the end.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== HOW IT WORKS ===================== -->
+    <section class="rides-section rides-section-muted" id="how-it-works">
+      <div class="container">
+        <div class="rides-section-header">
+          <span class="rides-section-eyebrow">HOW IT WORKS</span>
+          <h2 class="rides-section-title">Booked in advance. Not hailed on the street.</h2>
+          <p class="rides-section-sub">
+            We're a travel company, not a cab app — every trip is planned, priced and confirmed before the day.
+          </p>
+        </div>
+
+        <div class="rides-steps-grid">
+          <div class="rides-step-card">
+            <div class="rides-step-num">1</div>
+            <h4 class="rides-step-title">Tell us the trip</h4>
+            <p class="rides-step-desc">
+              Your exact pickup point, where you're headed, dates and how many of you.
+            </p>
+          </div>
+
+          <div class="rides-step-card">
+            <div class="rides-step-num">2</div>
+            <h4 class="rides-step-title">Confirmed in 3 hours</h4>
+            <p class="rides-step-desc">
+              Vehicle, driver and one all-inclusive price — in writing, within three hours.
+            </p>
+          </div>
+
+          <div class="rides-step-card">
+            <div class="rides-step-num">3</div>
+            <h4 class="rides-step-title">Pay securely</h4>
+            <p class="rides-step-desc">
+              Written confirmation, with driver and vehicle details shared before the day.
+            </p>
+          </div>
+
+          <div class="rides-step-card">
+            <div class="rides-step-num">4</div>
+            <h4 class="rides-step-title">We pick you up</h4>
+            <p class="rides-step-desc">
+              At your door, at the agreed time. You get in. That's the whole job.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FINAL CTA ===================== -->
+    <section class="rides-section rides-section-dark">
+      <div class="container">
+        <div class="rides-cta-box">
+          <h2 class="rides-cta-title">
+            Where are we taking you?
+            <em>Tell us the trip.</em>
+          </h2>
+          <p class="rides-cta-desc">
+            Send us your pickup point, where you're headed and how many of you. You'll have an all-inclusive price back within three hours — from a real person, not a bot.
+          </p>
+          <a href="https://wa.me/919910340021?text=Hi%20Truniqe!%20I%20would%20like%20to%20quote%20a%20ride." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-cta">
+            <svg viewBox="0 0 448 512" width="20" height="20" fill="currentColor">
+              <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+            </svg>
+            WhatsApp us · 99103 40021
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer" role="contentinfo">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">Trun<span>iqe</span></div>
+            <p class="footer-tagline">
+              Curated weekend escapes near Delhi NCR — hand-picked stays, our own fleet, and a real person on call.
+            </p>
+          </div>
+          <div>
+            <div class="footer-col-title">Explore</div>
+            <div class="footer-links">
+              <a href="/properties.html" class="footer-link">Stays</a>
+              <a href="/rides.html" class="footer-link">Rides</a>
+              <a href="/properties.html?tag=Design+%26+Heritage" class="footer-link">Collections</a>
+              <a href="/our-story.html" class="footer-link">Our Story</a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-title">Account</div>
+            <div class="footer-links">
+              <a href="/auth.html" class="footer-link">Sign In</a>
+              <a href="/auth.html#signup" class="footer-link">Create Account</a>
+              <a href="/dashboard/index.html" class="footer-link">My Bookings</a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-title">Legal</div>
+            <div class="footer-links">
+              <a href="#" class="footer-link">Privacy Policy</a>
+              <a href="#" class="footer-link">Terms of Service</a>
+              <a href="#" class="footer-link">Cancellation Policy</a>
+              <a href="/our-story.html" class="footer-link">Contact</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Truniqe. All rights reserved.</span>
+          <span>Made with care for the curious traveller.</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+    <!-- Page Scripts -->
+    <script>
+      // Hamburger Menu Toggle
+      document.getElementById("nav-hamburger")?.addEventListener("click", function () {
+        this.classList.toggle("open");
+        document.getElementById("nav-mobile")?.classList.toggle("open");
+      });
+
+      document.addEventListener("click", function (event) {
+        const mobileMenu = document.getElementById("nav-mobile");
+        const hamburger = document.getElementById("nav-hamburger");
+        if (!mobileMenu || !hamburger) return;
+        if (
+          !mobileMenu.contains(event.target) &&
+          !hamburger.contains(event.target) &&
+          mobileMenu.classList.contains("open")
+        ) {
+          mobileMenu.classList.remove("open");
+          hamburger.classList.remove("open");
+        }
+      });
+
+      // Nav Scroll Toggle
+      (function () {
+        const nav = document.getElementById("main-nav");
+        const onScroll = () => {
+          if (!nav) return;
+          if (window.scrollY > 64) nav.classList.add("nav-solid");
+          else nav.classList.remove("nav-solid");
+        };
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+      })();
+
+      // Quote Form Handler
+      function handleRidesQuote(e) {
+        e.preventDefault();
+        const pickup = document.getElementById("pickup-from").value.trim();
+        const going = document.getElementById("going-to").value.trim();
+        const vehicle = document.getElementById("vehicle-type").value;
+
+        if (!pickup || !going) return;
+
+        const msg = `Hi Truniqe! I'd like a price quote for outstation ride:\n• Pickup: ${pickup}\n• Destination: ${going}\n• Vehicle: ${vehicle}`;
+        const waUrl = `https://wa.me/919910340021?text=${encodeURIComponent(msg)}`;
+
+        window.open(waUrl, '_blank');
+      }
+    </script>
+
+    <!-- Floating WhatsApp Widget -->
+    <a href="https://wa.me/919910340021" class="whatsapp-widget-floating" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+      <svg viewBox="0 0 448 512" width="22" height="22" fill="currentColor" style="display:inline-block; vertical-align:middle;">
+        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+      </svg>
+      <span>Chat with us</span>
+    </a>
+  </body>
+</html>
