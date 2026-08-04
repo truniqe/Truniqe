@@ -1,9 +1,9 @@
 
   /* ============================================================
-    HOME PAGE
+    OUR STORY PAGE — our-storyour-story.html
     ============================================================ */
 
-  /* Our Story page hero and point cards */
+  /* OUR STORY PAGE — hero and point cards (our-story.html) */
   .story-hero {
     padding-top: calc(var(--nav-height) + var(--sp-20));
     padding-bottom: var(--sp-16);
@@ -244,7 +244,7 @@
     }
   }
 
-  /* Story grid (Before / After) used in Transformation section */
+  /* OUR STORY PAGE — transformation story grid */
   .story-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -415,10 +415,7 @@
     }
   }
 
-  /* ============================================================
-    "WHAT MAKES TRUNIQE DIFFERENT" — Feature Showcase Box
-    Dark editorial with gold accents, static but captivating
-    ============================================================ */
+  /* OUR STORY PAGE — "What Makes Truniqe Different" feature showcase (our-story.html) */
 
   .difference-section {
     background: #f8f6f0;
@@ -748,6 +745,7 @@
     }
   }
 
+  /* OUR STORY PAGE — FAQ and timeline sections */
   .fair-questions-section {
     position: relative;
     overflow: hidden;
@@ -1289,7 +1287,7 @@
     }
   }
 
-  /* Hero */
+  /* HOME PAGE HERO — index.html */
   .hero {
     position: relative;
     min-height: 100vh;
@@ -1411,7 +1409,7 @@
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent);
   }
 
-  /* Angle filter bar */
+  /* HOME PAGE — angle filter bar */
   .angle-filter-section {
     background: var(--white);
     padding: var(--sp-8) 0;
@@ -1444,7 +1442,7 @@
     white-space: nowrap;
   }
 
-  /* Collections section */
+  /* HOME PAGE — collections section */
   .collections-grid {
     display: flex;
     overflow-x: auto;
@@ -1533,7 +1531,7 @@
   }
 
 
-  /* Featured properties grid */
+  /* HOME PAGE — featured properties grid */
   .properties-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1585,7 +1583,7 @@
     }
   }
 
-  /* Editorial strip / "Why Truniqe" */
+  /* HOME PAGE — editorial Why Truniqe section */
   .why-strip {
     background: var(--navy);
     padding: var(--sp-20) 0;
@@ -1646,6 +1644,682 @@
     .why-grid {
       grid-template-columns: 1fr;
       gap: var(--sp-10);
+    }
+  }
+
+  /* ============================================================
+    RIDES PAGE
+    ============================================================ */
+  .rides-hero {
+    padding-top: calc(var(--nav-height) + var(--sp-12));
+    padding-bottom: var(--sp-16);
+    background: radial-gradient(circle at 85% 12%, rgba(232, 184, 109, 0.15), transparent 30%),
+                radial-gradient(circle at 15% 70%, rgba(26, 26, 46, 0.5), transparent 40%),
+                linear-gradient(180deg, #111222 0%, #1A1A2E 100%);
+    color: var(--white);
+    position: relative;
+  }
+
+  .rides-hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 var(--sp-6);
+  }
+
+  .rides-eyebrow {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: var(--sp-3);
+    display: inline-block;
+  }
+
+  .rides-hero-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: var(--sp-4);
+  }
+
+  .rides-hero-title em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 300;
+    display: block;
+  }
+
+  .rides-hero-desc {
+    font-size: var(--text-lg);
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 760px;
+    line-height: 1.6;
+    margin-bottom: var(--sp-8);
+  }
+
+  .rides-search-card {
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+    box-shadow: var(--shadow-xl);
+    border: 1px solid rgba(232, 184, 109, 0.25);
+    color: var(--text-primary);
+    margin-bottom: var(--sp-6);
+  }
+
+  .rides-search-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr auto;
+    gap: var(--sp-4);
+    align-items: end;
+  }
+
+  .rides-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+
+  .rides-input-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .rides-input,
+  .rides-select {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid rgba(26, 26, 46, 0.12);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-family: var(--font-body);
+    color: var(--navy);
+    transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  }
+
+  .rides-input:focus,
+  .rides-select:focus {
+    outline: none;
+    border-color: var(--gold-dark);
+    box-shadow: 0 0 0 3px rgba(232, 184, 109, 0.2);
+    background: #ffffff;
+  }
+
+  .btn-rides-search {
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: 13px 28px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all var(--dur-fast) var(--ease-out);
+    box-shadow: var(--shadow-gold);
+  }
+
+  .btn-rides-search:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(232, 184, 109, 0.4);
+  }
+
+  .rides-search-note {
+    font-size: var(--text-xs);
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    margin-top: var(--sp-2);
+  }
+
+  .rides-notice-box {
+    background: rgba(232, 184, 109, 0.12);
+    border: 1px solid rgba(232, 184, 109, 0.35);
+    border-radius: var(--radius-md);
+    padding: var(--sp-5) var(--sp-6);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-4);
+    backdrop-filter: blur(8px);
+  }
+
+  .rides-notice-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .rides-notice-content h4 {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: var(--sp-1);
+  }
+
+  .rides-notice-content p {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .rides-section {
+    padding: var(--sp-20) 0;
+  }
+
+  .rides-section-surface {
+    background: var(--surface);
+  }
+
+  .rides-section-dark {
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .rides-section-muted {
+    background: var(--surface-dark);
+  }
+
+  .rides-section-header {
+    margin-bottom: var(--sp-12);
+  }
+
+  .rides-section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: var(--sp-2);
+    display: block;
+  }
+
+  .rides-section-dark .rides-section-eyebrow {
+    color: var(--gold);
+  }
+
+  .rides-section-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: var(--sp-3);
+    line-height: 1.2;
+  }
+
+  .rides-section-dark .rides-section-title {
+    color: var(--white);
+  }
+
+  .rides-section-sub {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    max-width: 720px;
+    line-height: 1.6;
+  }
+
+  .rides-section-dark .rides-section-sub {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .rides-fleet-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-6);
+  }
+
+  .rides-fleet-card {
+    background: var(--surface-card);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-8);
+    border: 1px solid rgba(26, 26, 46, 0.08);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rides-fleet-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .rides-fleet-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: rgba(232, 184, 109, 0.15);
+    color: var(--gold-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    margin-bottom: var(--sp-4);
+  }
+
+  .rides-fleet-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: #1A1A2E;
+    color: var(--gold);
+    margin-top: var(--sp-2);
+    margin-bottom: var(--sp-4);
+    width: fit-content;
+  }
+
+  .rides-fleet-title {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: var(--sp-3);
+    line-height: 1.25;
+  }
+
+  .rides-fleet-desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .rides-table-wrapper {
+    overflow-x: auto;
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(26, 26, 46, 0.08);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--sp-8);
+  }
+
+  .rides-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 800px;
+  }
+
+  .rides-table th {
+    background: var(--navy);
+    color: var(--white);
+    padding: 16px 20px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .rides-table th span {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--gold);
+    margin-top: 2px;
+  }
+
+  .rides-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(26, 26, 46, 0.06);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+  }
+
+  .rides-table tr:hover td {
+    background: rgba(232, 184, 109, 0.06);
+  }
+
+  .rides-route-name {
+    font-weight: 600;
+    color: var(--navy);
+    display: block;
+  }
+
+  .rides-route-dist {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .rides-price-prefix {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: block;
+  }
+
+  .rides-price-val {
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .rides-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-6);
+  }
+
+  .rides-info-card {
+    background: var(--surface-card);
+    padding: var(--sp-6);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--gold-dark);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .rides-info-card h4 {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: var(--sp-2);
+  }
+
+  .rides-info-card p {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .rides-airport-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-12);
+    align-items: center;
+  }
+
+  .rides-airport-table {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+  }
+
+  .rides-airport-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .rides-airport-row:last-child {
+    border-bottom: none;
+  }
+
+  .rides-airport-label {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .rides-airport-badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    background: rgba(232, 184, 109, 0.15);
+    color: var(--gold);
+    border: 1px solid rgba(232, 184, 109, 0.3);
+  }
+
+  .rides-transparency-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-8);
+  }
+
+  .rides-included-card {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-8);
+    box-shadow: var(--shadow-md);
+  }
+
+  .rides-included-card h3 {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    color: var(--gold);
+    margin-bottom: var(--sp-6);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  .rides-excluded-card {
+    background: var(--surface-card);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-8);
+    border: 1px solid rgba(26, 26, 46, 0.1);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .rides-excluded-card h3 {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: var(--sp-6);
+  }
+
+  .rides-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--sp-6) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+
+  .rides-list li {
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-3);
+  }
+
+  .rides-list-check {
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .rides-disclaimer {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.5;
+    border-top: 1px solid rgba(26, 26, 46, 0.08);
+    padding-top: var(--sp-4);
+    margin: 0;
+  }
+
+  .rides-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-6);
+  }
+
+  .rides-step-card {
+    background: var(--surface-card);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+    border: 1px solid rgba(26, 26, 46, 0.08);
+    box-shadow: var(--shadow-xs);
+  }
+
+  .rides-step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: var(--text-sm);
+    margin-bottom: var(--sp-4);
+  }
+
+  .rides-step-title {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: var(--sp-2);
+  }
+
+  .rides-step-desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .rides-cta-box {
+    background: radial-gradient(circle at 50% 0%, rgba(232, 184, 109, 0.15), transparent 70%),
+                var(--navy);
+    border-radius: var(--radius-2xl);
+    padding: var(--sp-16) var(--sp-8);
+    text-align: center;
+    color: var(--white);
+    border: 1px solid rgba(232, 184, 109, 0.2);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .rides-cta-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: var(--sp-2);
+  }
+
+  .rides-cta-title em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+
+  .rides-cta-desc {
+    font-size: var(--text-lg);
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 640px;
+    margin: 0 auto var(--sp-8);
+    line-height: 1.6;
+  }
+
+  .btn-whatsapp-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-3);
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 700;
+    padding: 16px 36px;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    box-shadow: var(--shadow-gold);
+    transition: all var(--dur-fast) var(--ease-out);
+  }
+
+  .btn-whatsapp-cta:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(232, 184, 109, 0.4);
+  }
+
+  @media (max-width: 1024px) {
+    .rides-fleet-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .rides-steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .rides-search-grid {
+      grid-template-columns: 1fr;
+    }
+    .rides-fleet-grid {
+      grid-template-columns: 1fr;
+    }
+    .rides-info-grid,
+    .rides-airport-grid,
+    .rides-transparency-grid {
+      grid-template-columns: 1fr;
+    }
+    .rides-steps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .rides-hero {
+      padding-top: calc(var(--nav-height) + var(--sp-10));
+      padding-bottom: var(--sp-12);
+    }
+
+    .rides-search-card {
+      padding: var(--sp-5);
+    }
+
+    .rides-search-grid {
+      gap: var(--sp-3);
+    }
+
+    .rides-input,
+    .rides-select,
+    .btn-rides-search {
+      width: 100%;
+    }
+
+    .btn-rides-search {
+      padding: 14px 18px;
+    }
+
+    .rides-fleet-card {
+      padding: var(--sp-6);
+    }
+
+    .rides-info-card,
+    .rides-airport-row,
+    .rides-included-card,
+    .rides-excluded-card,
+    .rides-step-card,
+    .rides-cta-box {
+      padding-left: var(--sp-5);
+      padding-right: var(--sp-5);
+    }
+
+    .rides-cta-box {
+      padding-top: var(--sp-12);
+      padding-bottom: var(--sp-12);
     }
   }
 
@@ -2969,10 +3643,7 @@
 
   }
 
-  /* ============================================================
-    JOURNEY + FOUNDER STORY SECTION — White Journey Theme
-    Truniqe — Curated Stays in India
-    ============================================================ */
+  /* OUR STORY PAGE — Journey + Founder Story Section (our-story.html) */
 
   .challenge-section,
   .founder-section {
@@ -3083,6 +3754,40 @@
     font-size: 0.95rem;
     font-weight: 700;
     white-space: nowrap;
+    animation: storyBubbleFloat 6s ease-in-out infinite;
+  }
+
+  .journey-section .story-tag:nth-child(odd) {
+    animation-delay: 0s;
+  }
+
+  .journey-section .story-tag:nth-child(2n) {
+    animation-delay: 0.35s;
+  }
+
+  .journey-section .story-tag:nth-child(3n) {
+    animation-delay: 0.7s;
+  }
+
+  @keyframes storyBubbleFloat {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(2px, -4px);
+    }
+    50% {
+      transform: translate(0, -8px);
+    }
+    75% {
+      transform: translate(-2px, -4px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .journey-section .story-tag {
+      animation: none;
+    }
   }
 
   @media (max-width: 768px) {
@@ -3102,11 +3807,7 @@
     }
   }
 
-  /* ============================================================
-    TEAM SECTION — Faces Behind Truniqe
-    Dark Editorial Luxury (Navy + Gold)
-    Truniqe — Curated Stays in India
-    ============================================================ */
+  /* OUR STORY PAGE — Team section (our-story.html) */
 
   .team-section {
     position: relative;
