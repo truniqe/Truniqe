@@ -2788,7 +2788,26 @@
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 560px) {
+   .team-card {
+      width: 180px;
+      flex: 0 0 180px;
+    }
+
+    .team-card--featured {
+      width: 180px;
+    }
+
+    .team-card--featured .team-image-wrapper {
+      width: 120px;
+      height: 120px;
+    }
+
+    .team-card--featured .team-image {
+      width: 120px;
+      height: 120px;
+    }
+    
     .team-section {
       padding: 72px 0;
     }
