@@ -738,7 +738,7 @@
     font-weight: 700;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #f5f0f0;
     margin-bottom: var(--sp-5);
     animation: fadeInUp var(--dur-slow) var(--ease-out) 0.2s both;
   }
